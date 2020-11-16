@@ -52,7 +52,7 @@ include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 
 list(APPEND CORE_SOURCE_FILES
         src/core/ideal_gas.cc
-        src/core/particle.cpp
+        src/core/person.cpp
         src/core/histogram.cpp)
 
 list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
@@ -60,7 +60,7 @@ list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
         src/visualizer/sketchpad.cc)
 
 list(APPEND TEST_FILES tests/test_ideal_gas.cc
-        tests/test_particle.cpp
+        tests/test_person.cpp
         tests/test_histogram.cpp)
 
 ci_make_app(
