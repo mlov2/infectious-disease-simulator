@@ -1,7 +1,6 @@
 #pragma once
 
 #include "cinder/gl/gl.h"
-#include "core/particle.h"
 #include <cmath>
 #include <string>
 #include <vector>
@@ -9,12 +8,27 @@
 using glm::vec2;
 using std::string;
 using std::vector;
-using disease::Particle;
 
 namespace disease {
 
+enum class Status {
+  kSusceptible,
+  kInfectious,
+  kRemoved,
+};
+
 class IdealGas {
  public:
+  struct Person {
+      double radius;
+      vec2 position;
+      vec2 velocity;
+      Status status;
+      vec3 color;
+      size_t continuous_exposure_time;
+      size_t time_infected;
+  };
+
   IdealGas() = default;
   IdealGas(double left_margin, double top_margin,
            double container_height, double container_width,
