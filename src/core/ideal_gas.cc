@@ -57,21 +57,6 @@ void IdealGas::UpdateParticles() {
       info_for_particles_[current].SetVelocity(new_velocity);
     }
 
-    // Check for particle collisions
-    for (size_t other = current + 1; other < info_for_particles_.size(); other++) {
-      if (HasCollidedWithParticle(info_for_particles_[current],
-                                  info_for_particles_[other])) {
-        // Get the new velocities
-        vec2 current_particle_new_velocity = CalculateVelocitiesAfterParticleCollision(
-            info_for_particles_[current], info_for_particles_[other]);
-        vec2 other_particle_new_velocity = CalculateVelocitiesAfterParticleCollision(
-            info_for_particles_[other], info_for_particles_[current]);
-
-        // Set the new velocities
-        info_for_particles_[current].SetVelocity(current_particle_new_velocity);
-        info_for_particles_[other].SetVelocity(other_particle_new_velocity);
-      }
-    }
 
     vec2 updated_position = info_for_particles_[current].GetPosition() +
         info_for_particles_[current].GetVelocity();
@@ -114,63 +99,6 @@ bool IdealGas::IsMovingTowardsWall(const Particle& current_particle,
     return true;
   }
   return false;
-}
-
-bool IdealGas::HasCollidedWithParticle(const Particle& current_particle,
-                                       const Particle& other_particle) const {
-  // Check if the particles are touching
-  if (AreParticlesTouching(current_particle, other_particle)) {
-    // Check if the particles are moving towards each other
-    if (IsMovingTowardsParticle(current_particle, other_particle)) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-bool IdealGas::AreParticlesTouching(const Particle& current_particle,
-                                    const Particle& other_particle) const {
-  // Calculate distance between center of particles
-  double position_x_val_difference = current_particle.GetPosition().x - other_particle.GetPosition().x;
-  double position_y_val_difference = current_particle.GetPosition().y - other_particle.GetPosition().y;
-  double sum_of_squared_differences = (position_x_val_difference * position_x_val_difference) +
-                                      (position_y_val_difference * position_y_val_difference);
-  double distance_between_centers = sqrt(sum_of_squared_differences);
-
-  return (distance_between_centers <= (current_particle.GetRadius() + other_particle.GetRadius()));
-}
-
-bool IdealGas::IsMovingTowardsParticle(const Particle& current_particle,
-                               const Particle& other_particle) const {
-  vec2 velocity_difference = current_particle.GetVelocity() - other_particle.GetVelocity();
-  vec2 position_difference = current_particle.GetPosition() - other_particle.GetPosition();
-
-  if (dot(velocity_difference, position_difference) < 0) {
-    return true;
-  }
-  return false;
-}
-
-vec2 IdealGas::CalculateVelocitiesAfterParticleCollision(const Particle& particle_one,
-                                                         const Particle& particle_two) {
-  vec2 velocity_difference = particle_one.GetVelocity() - particle_two.GetVelocity();
-  vec2 position_difference = particle_one.GetPosition() - particle_two.GetPosition();
-
-  double mass_component_numerator = 2 * particle_two.GetMass();
-  double mass_component_denominator = particle_one.GetMass() + particle_two.GetMass();
-  double scale_numerator = dot(velocity_difference, position_difference) *
-      mass_component_numerator;
-  double scale_denominator = length(position_difference) * length(position_difference) *
-      mass_component_denominator;
-  double scale = scale_numerator / scale_denominator;
-
-  // Scale the position difference vector
-  position_difference.x *= scale;
-  position_difference.y *= scale;
-
-  // Calculate the new velocities for particle
-  return particle_one.GetVelocity() - position_difference;
 }
 
 vec2 IdealGas::KeepWithinContainer(const vec2& updated_position, double current_particle_radius) {

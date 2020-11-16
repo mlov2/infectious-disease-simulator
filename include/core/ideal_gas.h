@@ -77,47 +77,9 @@ class IdealGas {
    */
   bool IsMovingTowardsWall(const Particle& current_particle, const vec2& wall_position) const;
 
-  /*
-   * Checks if the current particle has collided with another particle.
-   *
-   * @param current_particle The current Particle to check for a collision
-   * @param other_particle The Particle to check a collision with
-   * @return A bool representing if the current particle has collided with
-   *     another particle
-   */
-  bool HasCollidedWithParticle(const Particle& current_particle,
-                               const Particle& other_particle) const;
 
-  /*
-   * Checks if the given particles are touching.
-   *
-   * @param current_particle The current particle
-   * @param other_particle The particle to check
-   * @return A bool representing if the two particles are touching
-   */
-  bool AreParticlesTouching(const Particle& current_particle, const Particle& other_particle) const;
 
-  /*
-   * Checks if the current particle is moving towards the other particle.
-   *
-   * @param current_particle The current particle to check
-   * @param other_particle The other particle to check
-   * @return A bool representing if the two particles are moving towards
-   *     each other
-   */
-  bool IsMovingTowardsParticle(const Particle& current_particle,
-                               const Particle& other_particle) const;
 
-  /*
-   * Calculates the new velocity of a particle after it has collided with
-   * another particle.
-   *
-   * @param particle_one The current Particle that's moving
-   * @param particle_two The other particle the current Particle has
-   *     collided with
-   * @return a vec2 representing the new velocity of particle 1
-   */
-  vec2 CalculateVelocitiesAfterParticleCollision(const Particle& particle_one, const Particle& particle_two);
 
   /*
    * Adjusts the updated position so that the particle will still be within the
