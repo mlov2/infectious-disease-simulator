@@ -54,4 +54,4 @@ void NaiveBayesApp::keyDown(ci::app::KeyEvent event) {
 
 }  // namespace visualizer
 
-}  // namespace idealgas
+}  // namespace disease

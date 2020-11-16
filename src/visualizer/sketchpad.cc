@@ -89,4 +89,4 @@ size_t Sketchpad::GetMaxNumParticles() {
 
 }  // namespace visualizer
 
-}  // namespace idealgas
+}  // namespace disease

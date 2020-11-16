@@ -29,4 +29,4 @@ class NaiveBayesApp : public ci::app::App {
 
 }  // namespace visualizer
 
-}  // namespace idealgas
+}  // namespace disease

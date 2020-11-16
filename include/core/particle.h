@@ -39,4 +39,4 @@ class Particle {
   void SetColor(const string& color);
 };
 
-}  // namespace idealgas
+}  // namespace disease

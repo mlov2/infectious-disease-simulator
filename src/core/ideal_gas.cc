@@ -190,4 +190,4 @@ vec2 IdealGas::KeepWithinContainer(const vec2& updated_position, double current_
   return updated_position_within_container;
 }
 
-}  // namespace idealgas
+}  // namespace disease

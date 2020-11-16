@@ -76,4 +76,4 @@ class Sketchpad {
 
 }  // namespace visualizer
 
-}  // namespace idealgas
+}  // namespace disease

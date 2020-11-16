@@ -130,4 +130,4 @@ class IdealGas {
   vec2 KeepWithinContainer(const vec2& updated_position, double current_particle_radius);
 };
 
-}  // namespace idealgas
+}  // namespace disease
