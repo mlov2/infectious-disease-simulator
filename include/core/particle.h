@@ -8,7 +8,7 @@
 using glm::vec2;
 using std::string;
 
-namespace idealgas {
+namespace disease {
 
 class Particle {
  private:

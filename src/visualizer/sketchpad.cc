@@ -1,6 +1,6 @@
 #include <visualizer/sketchpad.h>
 
-namespace idealgas {
+namespace disease {
 
 namespace visualizer {
 

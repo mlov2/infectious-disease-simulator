@@ -1,6 +1,6 @@
 #include <visualizer/ideal_gas_app.h>
 
-using idealgas::visualizer::NaiveBayesApp;
+using disease::visualizer::NaiveBayesApp;
 
 void prepareSettings(NaiveBayesApp::Settings* settings) {
   settings->setResizable(false);

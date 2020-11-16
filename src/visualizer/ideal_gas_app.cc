@@ -1,6 +1,6 @@
 #include <visualizer/ideal_gas_app.h>
 
-namespace idealgas {
+namespace disease {
 
 namespace visualizer {
 

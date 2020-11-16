@@ -4,9 +4,9 @@
 #include "core/histogram.h"
 #include "core/ideal_gas.h"
 
-using idealgas::IdealGas;
+using disease::IdealGas;
 
-namespace idealgas {
+namespace disease {
 
 namespace visualizer {
 

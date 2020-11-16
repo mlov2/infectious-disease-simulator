@@ -3,7 +3,7 @@
 //
 #include "core/particle.h"
 
-namespace idealgas {
+namespace disease {
 
 Particle::Particle(double radius, double mass, const vec2& position, const vec2& velocity, double speed) {
   radius_ = radius;

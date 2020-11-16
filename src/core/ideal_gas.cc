@@ -1,6 +1,6 @@
 #include "core/ideal_gas.h"
 
-namespace idealgas {
+namespace disease {
 
 IdealGas::IdealGas(double left_margin, double top_margin,
                    double container_height, double container_width,

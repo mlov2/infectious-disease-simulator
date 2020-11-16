@@ -5,8 +5,8 @@
 
 #include <catch2/catch.hpp>
 
-using idealgas::Histogram;
-using idealgas::IdealGas;
+using disease::Histogram;
+using disease::IdealGas;
 
 TEST_CASE("Check particles get sorted") {
   Histogram histogram;

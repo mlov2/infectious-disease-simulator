@@ -9,9 +9,9 @@
 using glm::vec2;
 using std::string;
 using std::vector;
-using idealgas::Particle;
+using disease::Particle;
 
-namespace idealgas {
+namespace disease {
 
 class IdealGas {
  public:

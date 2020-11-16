@@ -5,7 +5,7 @@
 #include "cinder/gl/gl.h"
 #include "sketchpad.h"
 
-namespace idealgas {
+namespace disease {
 
 namespace visualizer {
 

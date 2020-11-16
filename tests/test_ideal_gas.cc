@@ -2,8 +2,8 @@
 
 #include <catch2/catch.hpp>
 
-using idealgas::IdealGas;
-using idealgas::Particle;
+using disease::IdealGas;
+using disease::Particle;
 
 TEST_CASE("Create particle", "[create particle]") {
   IdealGas ideal_gas = IdealGas(0, 0, 100, 100, 10);
