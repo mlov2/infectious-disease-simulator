@@ -65,12 +65,8 @@ class Sketchpad {
 
   const size_t kMaxNumParticles = 20;
 
-  // Histogram info
-  //const double kSpacingBetweenHistograms = 20;
-  //const size_t kNumHistograms = 3;
-
   IdealGas ideal_gas;
-  Histogram histogram_;
+  //Histogram histogram_;
   vector<Particle> particles_info;
 };
 

@@ -6,20 +6,14 @@ namespace visualizer {
 
 using glm::vec2;
 
-// TODO: uncomment the creation of a histogram instance once finished implementing
-Sketchpad::Sketchpad() : histogram_(ideal_gas.GetInfoForParticles(), kMaxNumParticles, kContainerHeight,
-                                    vec2(kLeftContainerMargin, kTopContainerMargin) +
-                                    vec2(kContainerWidth, 0)) {
+Sketchpad::Sketchpad() {
   ideal_gas = IdealGas(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth, kMaxNumParticles);
-  // TODO: figure out if this is where I want to do the following two lines
-  //double total_spacing_between_histograms = (kNumHistograms - 1) * kSpacingBetweenHistograms;
-  //histogram_graph_height_ = (kContainerHeight - total_spacing_between_histograms) / kNumHistograms;
 }
 
 void Sketchpad::Update() {
   ideal_gas.UpdateParticles();
   particles_info = ideal_gas.GetInfoForParticles();
-  histogram_.UpdateParticles(particles_info);
+  //histogram_.UpdateParticles(particles_info);
 }
 
 void Sketchpad::Draw() const {
@@ -49,8 +43,7 @@ void Sketchpad::Draw() const {
   }
 
   // Draws the histograms
-  // TODO: Call DrawHistogram() function for the three masses to draw a histogram for
-  histogram_.DrawHistograms();
+  //histogram_.DrawHistograms();
 }
 
 void Sketchpad::Clear() {
