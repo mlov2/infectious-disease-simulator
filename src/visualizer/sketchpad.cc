@@ -7,12 +7,12 @@ namespace visualizer {
 using glm::vec2;
 
 Sketchpad::Sketchpad() {
-  ideal_gas = IdealGas(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth);
+  disease = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth);
 }
 
 void Sketchpad::Update() {
-  ideal_gas.UpdateParticles();
-  particles_info = ideal_gas.GetInfoForParticles();
+  disease.UpdateParticles();
+  particles_info = disease.GetInfoForParticles();
   //histogram_.UpdateParticles(particles_info);
 }
 
@@ -27,7 +27,7 @@ void Sketchpad::Draw() const {
   ci::gl::drawSolidRect(pixel_bounding_box);
 
   if (!particles_info.empty()) {
-    for (IdealGas::Person particle : particles_info) {
+    for (Disease::Person particle : particles_info) {
       // Draws the particles
       // Figured out how to color a particle from:
       // https://libcinder.org/docs/guides/opengl/part1.html
@@ -46,7 +46,7 @@ double Sketchpad::GetTopMargin() {
   return kTopContainerMargin;
 }
 
-const vector<IdealGas::Person>& Sketchpad::GetParticlesInfo() {
+const vector<Disease::Person>& Sketchpad::GetParticlesInfo() {
   return particles_info;
 }
 

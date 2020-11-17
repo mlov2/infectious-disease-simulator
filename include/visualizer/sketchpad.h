@@ -4,7 +4,7 @@
 #include "core/histogram.h"
 #include "core/ideal_gas.h"
 
-using disease::IdealGas;
+using disease::Disease;
 
 namespace disease {
 
@@ -30,7 +30,7 @@ class Sketchpad {
    */
   void Draw() const;
 
-  const vector<IdealGas::Person>& GetParticlesInfo();
+  const vector<Disease::Person>& GetParticlesInfo();
 
   double GetTopMargin();
 
@@ -41,9 +41,9 @@ class Sketchpad {
   const double kContainerHeight = 580;
   const double kContainerWidth = 550;
 
-  IdealGas ideal_gas;
+  Disease disease;
   //Histogram histogram_;
-  vector<IdealGas::Person> particles_info;
+  vector<Disease::Person> particles_info;
 };
 
 }  // namespace visualizer

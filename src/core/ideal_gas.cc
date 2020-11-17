@@ -2,7 +2,7 @@
 
 namespace disease {
 
-IdealGas::IdealGas(double left_margin, double top_margin,
+Disease::Disease(double left_margin, double top_margin,
                    double container_height, double container_width) {
   left_wall_ = left_margin;
   top_wall_ = top_margin;
@@ -13,15 +13,15 @@ IdealGas::IdealGas(double left_margin, double top_margin,
   }
 }
 
-void IdealGas::SetInfoForParticles(const vector<IdealGas::Person>& particles_to_set_to) {
+void Disease::SetInfoForParticles(const vector<Disease::Person>& particles_to_set_to) {
   info_for_particles_ = particles_to_set_to;
 }
 
-const vector<IdealGas::Person>& IdealGas::GetInfoForParticles() {
+const vector<Disease::Person>& Disease::GetInfoForParticles() {
   return info_for_particles_;
 }
 
-void IdealGas::CreatePerson() {
+void Disease::CreatePerson() {
   Person new_person;
 
   new_person.radius = kRadius;
@@ -48,7 +48,7 @@ void IdealGas::CreatePerson() {
   info_for_particles_.push_back(new_person);
 }
 
-void IdealGas::UpdateParticles() {
+void Disease::UpdateParticles() {
   for (size_t current = 0; current < info_for_particles_.size(); current++) {
     // Check for wall collisions
     if (HasCollidedWithWall(info_for_particles_[current],
@@ -76,7 +76,7 @@ void IdealGas::UpdateParticles() {
   }
 }
 
-bool IdealGas::HasCollidedWithWall(const Person& current_particle,
+bool Disease::HasCollidedWithWall(const Person& current_particle,
                                    double wall_boundary,
                                    bool is_horizontal_wall) const {
   double particle_position_component_different = current_particle.position.x;
@@ -99,7 +99,7 @@ bool IdealGas::HasCollidedWithWall(const Person& current_particle,
   return false;
 }
 
-bool IdealGas::IsMovingTowardsWall(const Person& current_particle,
+bool Disease::IsMovingTowardsWall(const Person& current_particle,
                                    const vec2& wall_position) const {
   vec2 velocity_difference = current_particle.velocity;
   vec2 position_difference = current_particle.position - wall_position;
@@ -110,7 +110,7 @@ bool IdealGas::IsMovingTowardsWall(const Person& current_particle,
   return false;
 }
 
-vec2 IdealGas::KeepWithinContainer(const vec2& updated_position, double current_particle_radius) {
+vec2 Disease::KeepWithinContainer(const vec2& updated_position, double current_particle_radius) {
   vec2 updated_position_within_container = updated_position;
   if (updated_position.x + current_particle_radius > right_wall_) {
     updated_position_within_container.x = right_wall_ - current_particle_radius;

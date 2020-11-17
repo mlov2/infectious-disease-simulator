@@ -18,7 +18,7 @@ enum class Status {
   kRemoved,
 };
 
-class IdealGas {
+class Disease {
  public:
   struct Person {
       double radius;
@@ -30,8 +30,8 @@ class IdealGas {
       size_t time_infected;
   };
 
-  IdealGas() = default;
-  IdealGas(double left_margin, double top_margin,
+  Disease() = default;
+  Disease(double left_margin, double top_margin,
            double container_height, double container_width);
 
   void SetInfoForParticles(const vector<Person>& particles_to_set_to);

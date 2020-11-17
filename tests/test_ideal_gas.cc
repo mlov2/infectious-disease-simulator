@@ -2,12 +2,12 @@
 
 #include <catch2/catch.hpp>
 
-using disease::IdealGas;
+using disease::Disease;
 
 TEST_CASE("Create population", "[create population]") {
-  IdealGas ideal_gas = IdealGas(0, 0, 100, 100);
+  Disease disease = Disease(0, 0, 100, 100);
 
-  vector<IdealGas::Person> all_particles = ideal_gas.GetInfoForParticles();
+  vector<Disease::Person> all_particles = disease.GetInfoForParticles();
 
   REQUIRE(all_particles.size() == 200);
   for (size_t i = 0; i < all_particles.size(); i++) {
