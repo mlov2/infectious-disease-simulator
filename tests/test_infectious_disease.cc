@@ -119,10 +119,10 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     // Particle 2
     REQUIRE(updated_particles[1].position == vec2(50.0, 36.0));
     REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
-    REQUIRE(updated_particles[0].status == disease::Status::kSusceptible);
-    REQUIRE(updated_particles[0].color == vec3(0, 0, 1));
-    REQUIRE(updated_particles[0].continuous_exposure_time == 0);
-    REQUIRE(updated_particles[0].time_infected == 0);
+    REQUIRE(updated_particles[1].status == disease::Status::kSusceptible);
+    REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
+    REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+    REQUIRE(updated_particles[1].time_infected == 0);
   }
 
   SECTION("Three particles") {
@@ -173,18 +173,18 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     // Particle 2
     REQUIRE(updated_particles[1].position == vec2(50.0, 36.0));
     REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
-    REQUIRE(updated_particles[0].status == disease::Status::kSusceptible);
-    REQUIRE(updated_particles[0].color == vec3(0, 0, 1));
-    REQUIRE(updated_particles[0].continuous_exposure_time == 0);
-    REQUIRE(updated_particles[0].time_infected == 0);
+    REQUIRE(updated_particles[1].status == disease::Status::kSusceptible);
+    REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
+    REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+    REQUIRE(updated_particles[1].time_infected == 0);
 
     // Particle 3
     REQUIRE(updated_particles[2].position == vec2(62.3, 83.4));
     REQUIRE(updated_particles[2].velocity == vec2(-7.7, 3.4));
-    REQUIRE(updated_particles[0].status == disease::Status::kSusceptible);
-    REQUIRE(updated_particles[0].color == vec3(0, 0, 1));
-    REQUIRE(updated_particles[0].continuous_exposure_time == 0);
-    REQUIRE(updated_particles[0].time_infected == 0);
+    REQUIRE(updated_particles[2].status == disease::Status::kSusceptible);
+    REQUIRE(updated_particles[2].color == vec3(0, 0, 1));
+    REQUIRE(updated_particles[2].continuous_exposure_time == 0);
+    REQUIRE(updated_particles[2].time_infected == 0);
   }
 }
 /*
