@@ -51,6 +51,7 @@ class Disease {
   int kMinVelComponent = -1;
   int kAddToMinVelComponent = 2;
   double kScaleDenominatorVel = 10.0;
+  int kMaxScaleForVelNumerator = 9;
 
   size_t kPopulationSize = 200;
 

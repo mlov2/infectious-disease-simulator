@@ -49,8 +49,8 @@ vec2 Disease::GenerateVelocity() {
     x_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
     y_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
   }
-  int scale_x_velocity_numerator = rand() % 9 + 1;
-  int scale_y_velocity_numerator = rand() % 9 + 1;
+  int scale_x_velocity_numerator = rand() % kMaxScaleForVelNumerator + 1;
+  int scale_y_velocity_numerator = rand() % kMaxScaleForVelNumerator + 1;
 
   return vec2(double(x_velocity) * double(scale_x_velocity_numerator) / kScaleDenominatorVel,
               double(y_velocity) * double(scale_y_velocity_numerator) / kScaleDenominatorVel);
