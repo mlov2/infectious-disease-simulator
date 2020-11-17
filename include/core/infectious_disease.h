@@ -130,6 +130,16 @@ class Disease {
    * @return A vec2 representing the updated_position within the container bounds
    */
   vec2 KeepWithinContainer(const vec2& updated_position, double current_particle_radius);
+
+  /*
+   * Updates the person's status based on the current stats for the person (i.e.
+   * exposure time if currently susceptible or infected time if currently infected).
+   *
+   * @param current_person The current person's status to update
+   * @param current_index The index of the current person in the population vector
+   * @return The person with their status updated
+   */
+  Person UpdatePersonStatus(const Person& current_person, size_t current_index);
 };
 
 }  // namespace disease
