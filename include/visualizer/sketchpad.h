@@ -43,7 +43,7 @@ class Sketchpad {
    */
   void CreateOneParticle(double mass, const string& color);
 
-  const vector<Particle>& GetParticlesInfo();
+  const vector<IdealGas::Person>& GetParticlesInfo();
   size_t GetMaxNumParticles();
 
   double GetTopMargin();
@@ -67,7 +67,7 @@ class Sketchpad {
 
   IdealGas ideal_gas;
   //Histogram histogram_;
-  vector<Particle> particles_info;
+  vector<IdealGas::Person> particles_info;
 };
 
 }  // namespace visualizer

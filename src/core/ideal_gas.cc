@@ -12,11 +12,11 @@ IdealGas::IdealGas(double left_margin, double top_margin,
   max_num_particles_ = max_num_particles;
 }
 
-void IdealGas::SetInfoForParticles(const vector<Particle>& particles_to_set_to) {
+void IdealGas::SetInfoForParticles(const vector<IdealGas::Person>& particles_to_set_to) {
   info_for_particles_ = particles_to_set_to;
 }
 
-const vector<Particle>& IdealGas::GetInfoForParticles() {
+const vector<IdealGas::Person>& IdealGas::GetInfoForParticles() {
   return info_for_particles_;
 }
 
@@ -43,43 +43,40 @@ void IdealGas::UpdateParticles() {
                             top_wall_, true) ||
         HasCollidedWithWall(info_for_particles_[current],
                             bottom_wall_, true)) {
-      vec2 new_velocity = vec2(info_for_particles_[current].GetVelocity().x,
-                               -info_for_particles_[current].GetVelocity().y);
-      info_for_particles_[current].SetVelocity(new_velocity);
+      vec2 new_velocity = vec2(info_for_particles_[current].velocity.x,
+                               -info_for_particles_[current].velocity.y);
+      info_for_particles_[current].velocity = new_velocity;
     }
 
     if (HasCollidedWithWall(info_for_particles_[current],
                             left_wall_, false) ||
         HasCollidedWithWall(info_for_particles_[current],
                             right_wall_, false)) {
-      vec2 new_velocity = vec2(-info_for_particles_[current].GetVelocity().x,
-                               info_for_particles_[current].GetVelocity().y);
-      info_for_particles_[current].SetVelocity(new_velocity);
+      vec2 new_velocity = vec2(-info_for_particles_[current].velocity.x,
+                               info_for_particles_[current].velocity.y);
+      info_for_particles_[current].velocity = new_velocity;
     }
 
 
-    vec2 updated_position = info_for_particles_[current].GetPosition() +
-        info_for_particles_[current].GetVelocity();
-    info_for_particles_[current].SetPosition(KeepWithinContainer(updated_position, info_for_particles_[current].GetRadius()));
-        ;
-
-    info_for_particles_[current].SetSpeed(length(info_for_particles_[current].GetVelocity()));
+    vec2 updated_position = info_for_particles_[current].position +
+        info_for_particles_[current].velocity;
+    info_for_particles_[current].position = (KeepWithinContainer(updated_position, info_for_particles_[current].radius));
   }
 }
 
-bool IdealGas::HasCollidedWithWall(const Particle& current_particle,
+bool IdealGas::HasCollidedWithWall(const Person& current_particle,
                                    double wall_boundary,
                                    bool is_horizontal_wall) const {
-  double particle_position_component_different = current_particle.GetPosition().x;
+  double particle_position_component_different = current_particle.position.x;
   if (is_horizontal_wall) {
-    particle_position_component_different = current_particle.GetPosition().y;
+    particle_position_component_different = current_particle.position.y;
   }
 
   // Checks if the particle and wall are touching
-  if (abs(particle_position_component_different - wall_boundary) <= current_particle.GetRadius()) {
-    vec2 wall_position = vec2(wall_boundary, current_particle.GetPosition().y);
+  if (abs(particle_position_component_different - wall_boundary) <= current_particle.radius) {
+    vec2 wall_position = vec2(wall_boundary, current_particle.position.y);
     if (is_horizontal_wall) {
-      wall_position = vec2(current_particle.GetPosition().x, wall_boundary);
+      wall_position = vec2(current_particle.position.x, wall_boundary);
     }
 
     // Checks if the particle is moving towards the wall
@@ -90,10 +87,10 @@ bool IdealGas::HasCollidedWithWall(const Particle& current_particle,
   return false;
 }
 
-bool IdealGas::IsMovingTowardsWall(const Particle& current_particle,
+bool IdealGas::IsMovingTowardsWall(const Person& current_particle,
                                    const vec2& wall_position) const {
-  vec2 velocity_difference = current_particle.GetVelocity();
-  vec2 position_difference = current_particle.GetPosition() - wall_position;
+  vec2 velocity_difference = current_particle.velocity;
+  vec2 position_difference = current_particle.position - wall_position;
 
   if (dot(velocity_difference, position_difference) < 0) {
     return true;

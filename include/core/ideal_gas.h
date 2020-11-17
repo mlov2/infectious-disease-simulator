@@ -6,6 +6,7 @@
 #include <vector>
 
 using glm::vec2;
+using glm::vec3;
 using std::string;
 using std::vector;
 
@@ -34,8 +35,8 @@ class IdealGas {
            double container_height, double container_width,
            size_t max_num_particles);
 
-  void SetInfoForParticles(const vector<Particle>& particles_to_set_to);
-  const vector<Particle>& GetInfoForParticles();
+  void SetInfoForParticles(const vector<Person>& particles_to_set_to);
+  const vector<Person>& GetInfoForParticles();
 
   /*
    * Creates a particle with the specified mass.
@@ -52,7 +53,6 @@ class IdealGas {
   void UpdateParticles();
 
  private:
-  Particle particle;
 
   // ===================
   // Sketchpad variables
@@ -66,7 +66,7 @@ class IdealGas {
   /*
    * Holds all the particles.
    */
-  vector<Particle> info_for_particles_;
+  vector<Person> info_for_particles_;
 
   /*
    * Checks if the current particle has collided with a wall.
@@ -78,7 +78,7 @@ class IdealGas {
    * @return a bool representing if the current particle has collided with
    *     the wall
    */
-  bool HasCollidedWithWall(const Particle& current_particle, double wall_boundary, bool is_horizontal_wall) const;
+  bool HasCollidedWithWall(const Person& current_particle, double wall_boundary, bool is_horizontal_wall) const;
 
   /*
    * Checks if the current particle is moving towards a wall.
@@ -89,7 +89,7 @@ class IdealGas {
    * @return A bool representing if the current particle is moving towards
    *     the wall
    */
-  bool IsMovingTowardsWall(const Particle& current_particle, const vec2& wall_position) const;
+  bool IsMovingTowardsWall(const Person& current_particle, const vec2& wall_position) const;
 
 
 

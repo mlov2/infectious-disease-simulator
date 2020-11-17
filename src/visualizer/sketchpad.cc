@@ -27,18 +27,14 @@ void Sketchpad::Draw() const {
   ci::gl::drawSolidRect(pixel_bounding_box);
 
   if (!particles_info.empty()) {
-    for (Particle particle : particles_info) {
+    for (IdealGas::Person particle : particles_info) {
       // Draws the particles
-      if (particle.GetMass() == kRedParticleMass) {
-        ci::gl::color(ci::Color("red"));
-      } else if (particle.GetMass() == kBlueParticleMass) {
-        ci::gl::color(ci::Color("blue"));
-      } else if (particle.GetMass() == kGreenParticleMass) {
-        ci::gl::color(ci::Color("green"));
-      }
+      // Figured out how to color a particle from:
+      // https://libcinder.org/docs/guides/opengl/part1.html
+      ci::gl::color(ci::Color(particle.color.x, particle.color.y, particle.color.z));
 
-      vec2 center = particle.GetPosition();
-      ci::gl::drawSolidCircle(center, particle.GetRadius());
+      vec2 center = particle.position;
+      ci::gl::drawSolidCircle(center, particle.radius);
     }
   }
 
@@ -71,7 +67,7 @@ void Sketchpad::CreateOneParticle(double mass, const std::string& color) {
   ideal_gas.CreateParticle(mass, color);
 }
 
-const vector<Particle>& Sketchpad::GetParticlesInfo() {
+const vector<IdealGas::Person>& Sketchpad::GetParticlesInfo() {
   return particles_info;
 }
 
