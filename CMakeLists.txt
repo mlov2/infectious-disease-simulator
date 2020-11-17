@@ -64,14 +64,14 @@ list(APPEND TEST_FILES tests/test_infectious_disease.cc
         tests/test_histogram.cpp)
 
 ci_make_app(
-        APP_NAME        ideal-gas-ui
+        APP_NAME        infectious-disease-ui
         CINDER_PATH     ${CINDER_PATH}
         SOURCES apps/cinder_app_main.cc ${SOURCE_FILES}
         INCLUDES include
 )
 
 ci_make_app(
-        APP_NAME        ideal-gas-test
+        APP_NAME        infectious-disease-test
         CINDER_PATH     ${CINDER_PATH}
         SOURCES tests/test_main.cc ${SOURCE_FILES} ${TEST_FILES}
         INCLUDES include
@@ -79,5 +79,5 @@ ci_make_app(
 )
 
 if(MSVC)
-    set_property(TARGET ideal-gas-test APPEND_STRING PROPERTY LINK_FLAGS " /SUBSYSTEM:CONSOLE")
+    set_property(TARGET infectious-disease-test APPEND_STRING PROPERTY LINK_FLAGS " /SUBSYSTEM:CONSOLE")
 endif()
