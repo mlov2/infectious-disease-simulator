@@ -57,7 +57,7 @@ list(APPEND CORE_SOURCE_FILES
 
 list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
         src/visualizer/infectious_disease_app.cc
-        src/visualizer/sketchpad.cc)
+        src/visualizer/simulator.cc)
 
 list(APPEND TEST_FILES tests/test_infectious_disease.cc
         tests/test_person.cpp

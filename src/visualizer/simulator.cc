@@ -1,4 +1,4 @@
-#include <visualizer/sketchpad.h>
+#include <visualizer/simulator.h>
 
 namespace disease {
 
