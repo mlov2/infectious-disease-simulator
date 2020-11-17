@@ -42,6 +42,20 @@ Disease::Person Disease::CreatePerson() {
   return new_person;
 }
 
+vec2 Disease::GenerateVelocity() {
+  int x_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
+  int y_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
+  while (x_velocity == 0 || y_velocity == 0) {
+    x_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
+    y_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
+  }
+  int scale_x_velocity_numerator = rand() % 9 + 1;
+  int scale_y_velocity_numerator = rand() % 9 + 1;
+
+  return vec2(double(x_velocity) * double(scale_x_velocity_numerator) / kScaleDenominatorVel,
+              double(y_velocity) * double(scale_y_velocity_numerator) / kScaleDenominatorVel);
+}
+
 Disease::Person Disease::CreatePatientZero() {
   Disease::Person infected_person = CreatePerson();
 
