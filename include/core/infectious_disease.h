@@ -121,10 +121,6 @@ class Disease {
    */
   bool IsMovingTowardsWall(const Person& current_particle, const vec2& wall_position) const;
 
-
-
-
-
   /*
    * Adjusts the updated position so that the particle will still be within the
    * container walls when the position is updated.
