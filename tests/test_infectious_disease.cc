@@ -552,130 +552,221 @@ TEST_CASE("Person info updates after collision with wall",
     }
   }
 }
-/*
-TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards) (same mass)",
-          "[no collision][wall][touching][same mass]") {
-  IdealGas ideal_gas = IdealGas(0, 0, 100, 100, 10);
+
+TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
+          "[no collision][wall][touching]") {
+  Disease disease = Disease(0, 0, 100, 100, false);
+  Disease::Person person;
 
   SECTION("One particle") {
     SECTION("One particle touches but doesn't collide with right wall") {
-      vector<Particle> all_particles;
+      vector<Disease::Person> all_particles;
 
-      Particle particle1 = Particle(10, 5, glm::vec2(90.0, 30.0), glm::vec2(-5, 7), 0);
-      all_particles.push_back(particle1);
+      person.radius = 10;
+      person.position = vec2(90, 30);
+      person.velocity = vec2(-5, 7);
+      person.status = disease::Status::kInfectious;
+      person.color = vec3(1,0,0);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      all_particles.push_back(person);
 
-      ideal_gas.SetInfoForParticles(all_particles);
-      ideal_gas.UpdateParticles();
-      vector<Particle> updated_particles = ideal_gas.GetInfoForParticles();
+      disease.SetPopulation(all_particles);
+      disease.UpdateParticles();
+      vector<Disease::Person> updated_particles = disease.GetPopulation();
 
-      REQUIRE(updated_particles[0].GetPosition() == vec2(85.0, 37.0));
-      REQUIRE(updated_particles[0].GetVelocity() == vec2(-5.0, 7.0));
+      REQUIRE(updated_particles[0].position == vec2(85.0, 37.0));
+      REQUIRE(updated_particles[0].velocity == vec2(-5.0, 7.0));
+      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+      REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[0].time_infected == 1);
     }
 
     SECTION("One particle touches but doesn't collide with bottom wall") {
-      vector<Particle> all_particles;
+      vector<Disease::Person> all_particles;
 
-      Particle particle1 = Particle(10, 5, glm::vec2(30.0, 90.0), glm::vec2(5, -7), 0);
-      all_particles.push_back(particle1);
+      person.radius = 10;
+      person.position = vec2(30, 90);
+      person.velocity = vec2(5, -7);
+      person.status = disease::Status::kInfectious;
+      person.color = vec3(1,0,0);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      all_particles.push_back(person);
 
-      ideal_gas.SetInfoForParticles(all_particles);
-      ideal_gas.UpdateParticles();
-      vector<Particle> updated_particles = ideal_gas.GetInfoForParticles();
+      disease.SetPopulation(all_particles);
+      disease.UpdateParticles();
+      vector<Disease::Person> updated_particles = disease.GetPopulation();
 
-      REQUIRE(updated_particles[0].GetPosition() == vec2(35.0, 83.0));
-      REQUIRE(updated_particles[0].GetVelocity() == vec2(5.0, -7.0));
+      REQUIRE(updated_particles[0].position == vec2(35.0, 83.0));
+      REQUIRE(updated_particles[0].velocity == vec2(5.0, -7.0));
+      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+      REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[0].time_infected == 1);
     }
 
     SECTION("One particle touches but doesn't collide with left wall") {
-      vector<Particle> all_particles;
+      vector<Disease::Person> all_particles;
 
-      Particle particle1 = Particle(10, 5, glm::vec2(10.0, 30.0), glm::vec2(5, -7), 0);
-      all_particles.push_back(particle1);
+      person.radius = 10;
+      person.position = vec2(10, 30);
+      person.velocity = vec2(5, -7);
+      person.status = disease::Status::kInfectious;
+      person.color = vec3(1,0,0);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      all_particles.push_back(person);
 
-      ideal_gas.SetInfoForParticles(all_particles);
-      ideal_gas.UpdateParticles();
-      vector<Particle> updated_particles = ideal_gas.GetInfoForParticles();
+      disease.SetPopulation(all_particles);
+      disease.UpdateParticles();
+      vector<Disease::Person> updated_particles = disease.GetPopulation();
 
-      REQUIRE(updated_particles[0].GetPosition() == vec2(15.0, 23.0));
-      REQUIRE(updated_particles[0].GetVelocity() == vec2(5.0, -7.0));
+      REQUIRE(updated_particles[0].position == vec2(15.0, 23.0));
+      REQUIRE(updated_particles[0].velocity == vec2(5.0, -7.0));
+      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+      REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[0].time_infected == 1);
     }
 
     SECTION("One particle touches but doesn't collide with top wall") {
-      vector<Particle> all_particles;
+      vector<Disease::Person> all_particles;
 
-      Particle particle1 = Particle(10, 5, glm::vec2(30.0, 10.0), glm::vec2(5, 7), 0);
-      all_particles.push_back(particle1);
+      person.radius = 10;
+      person.position = vec2(30, 10);
+      person.velocity = vec2(5, 7);
+      person.status = disease::Status::kInfectious;
+      person.color = vec3(1,0,0);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      all_particles.push_back(person);
 
-      ideal_gas.SetInfoForParticles(all_particles);
-      ideal_gas.UpdateParticles();
-      vector<Particle> updated_particles = ideal_gas.GetInfoForParticles();
+      disease.SetPopulation(all_particles);
+      disease.UpdateParticles();
+      vector<Disease::Person> updated_particles = disease.GetPopulation();
 
-      REQUIRE(updated_particles[0].GetPosition() == vec2(35.0, 17.0));
-      REQUIRE(updated_particles[0].GetVelocity() == vec2(5.0, 7.0));
+      REQUIRE(updated_particles[0].position == vec2(35.0, 17.0));
+      REQUIRE(updated_particles[0].velocity == vec2(5.0, 7.0));
+      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+      REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[0].time_infected == 1);
     }
 
     SECTION("One particle touches but doesn't collide with two walls at once") {
-      vector<Particle> all_particles;
+      vector<Disease::Person> all_particles;
 
-      Particle particle1 = Particle(10, 5, glm::vec2(90.0, 90.0), glm::vec2(-5, -7), 0);
-      all_particles.push_back(particle1);
+      person.radius = 10;
+      person.position = vec2(90, 90);
+      person.velocity = vec2(-5, -7);
+      person.status = disease::Status::kInfectious;
+      person.color = vec3(1,0,0);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      all_particles.push_back(person);
 
-      ideal_gas.SetInfoForParticles(all_particles);
-      ideal_gas.UpdateParticles();
-      vector<Particle> updated_particles = ideal_gas.GetInfoForParticles();
+      disease.SetPopulation(all_particles);
+      disease.UpdateParticles();
+      vector<Disease::Person> updated_particles = disease.GetPopulation();
 
-      REQUIRE(updated_particles[0].GetPosition() == vec2(85.0, 83.0));
-      REQUIRE(updated_particles[0].GetVelocity() == vec2(-5.0, -7.0));
+      REQUIRE(updated_particles[0].position == vec2(85.0, 83.0));
+      REQUIRE(updated_particles[0].velocity == vec2(-5.0, -7.0));
+      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+      REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[0].time_infected == 1);
     }
   }
 
   SECTION("Two particles") {
     SECTION("Two particles touches but doesn't collide with a wall in a frame") {
-      vector<Particle> all_particles;
+      vector<Disease::Person> all_particles;
 
       // Particle 1 touches but doesn't collide with top wall
-      Particle particle1 = Particle(10, 5, glm::vec2(30.0, 10.0), glm::vec2(5, 7), 0);
-      all_particles.push_back(particle1);
+      person.radius = 10;
+      person.position = vec2(30, 10);
+      person.velocity = vec2(5, 7);
+      person.status = disease::Status::kInfectious;
+      person.color = vec3(1,0,0);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      all_particles.push_back(person);
 
       // Particle 2 touches but doesn't collide with bottom wall
-      Particle particle2 = Particle(10, 5, glm::vec2(30.0, 90.0), glm::vec2(5, -7), 0);
-      all_particles.push_back(particle2);
+      person.radius = 10;
+      person.position = vec2(30, 90);
+      person.velocity = vec2(5, -7);
+      person.status = disease::Status::kSusceptible;
+      person.color = vec3(0,0,1);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      all_particles.push_back(person);
 
-      ideal_gas.SetInfoForParticles(all_particles);
-      ideal_gas.UpdateParticles();
-      vector<Particle> updated_particles = ideal_gas.GetInfoForParticles();
+      disease.SetPopulation(all_particles);
+      disease.UpdateParticles();
+      vector<Disease::Person> updated_particles = disease.GetPopulation();
 
       // Particle 1
-      REQUIRE(updated_particles[0].GetPosition() == vec2(35.0, 17.0));
-      REQUIRE(updated_particles[0].GetVelocity() == vec2(5.0, 7.0));
+      REQUIRE(updated_particles[0].position == vec2(35.0, 17.0));
+      REQUIRE(updated_particles[0].velocity == vec2(5.0, 7.0));
+      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+      REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[0].time_infected == 1);
 
       // Particle 2
-      REQUIRE(updated_particles[1].GetPosition() == vec2(35.0, 83.0));
-      REQUIRE(updated_particles[1].GetVelocity() == vec2(5.0, -7.0));
+      REQUIRE(updated_particles[1].position == vec2(35.0, 83.0));
+      REQUIRE(updated_particles[1].velocity == vec2(5.0, -7.0));
+      REQUIRE(updated_particles[1].status == disease::Status::kSusceptible);
+      REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
+      REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[1].time_infected == 0);
     }
 
     SECTION("One of two particles touches but doesn't collide with a wall in a frame") {
-      vector<Particle> all_particles;
+      vector<Disease::Person> all_particles;
 
       // Particle 1 touches but doesn't collide with top wall
-      Particle particle1 = Particle(10, 5, glm::vec2(30.0, 10.0), glm::vec2(5, 7), 0);
-      all_particles.push_back(particle1);
+      person.radius = 10;
+      person.position = vec2(30, 10);
+      person.velocity = vec2(5, 7);
+      person.status = disease::Status::kInfectious;
+      person.color = vec3(1,0,0);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      all_particles.push_back(person);
 
       // Particle 2 doesn't collide with anything
-      Particle particle2 = Particle(10, 5, glm::vec2(30.0, 50.0), glm::vec2(5, 7), 0);
-      all_particles.push_back(particle2);
+      person.radius = 10;
+      person.position = vec2(30, 50);
+      person.velocity = vec2(5, 7);
+      person.status = disease::Status::kInfectious;
+      person.color = vec3(1,0,0);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      all_particles.push_back(person);
 
-      ideal_gas.SetInfoForParticles(all_particles);
-      ideal_gas.UpdateParticles();
-      vector<Particle> updated_particles = ideal_gas.GetInfoForParticles();
+      disease.SetPopulation(all_particles);
+      disease.UpdateParticles();
+      vector<Disease::Person> updated_particles = disease.GetPopulation();
 
       // Particle 1
-      REQUIRE(updated_particles[0].GetPosition() == vec2(35.0, 17.0));
-      REQUIRE(updated_particles[0].GetVelocity() == vec2(5.0, 7.0));
+      REQUIRE(updated_particles[0].position == vec2(35.0, 17.0));
+      REQUIRE(updated_particles[0].velocity == vec2(5.0, 7.0));
+      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+      REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[0].time_infected == 1);
 
       // Particle 2
-      REQUIRE(updated_particles[1].GetPosition() == vec2(35.0, 57.0));
-      REQUIRE(updated_particles[1].GetVelocity() == vec2(5.0, 7.0));
+      REQUIRE(updated_particles[1].position == vec2(35.0, 57.0));
+      REQUIRE(updated_particles[1].velocity == vec2(5.0, 7.0));
+      REQUIRE(updated_particles[1].status == disease::Status::kSusceptible);
+      REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
+      REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[1].time_infected == 0);
     }
   }
-}*/
+}
