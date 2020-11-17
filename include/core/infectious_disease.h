@@ -28,7 +28,7 @@ class Disease {
       vec3 color;
       size_t continuous_exposure_time;
       size_t time_infected;
-      bool has_been_infected_in_frame;
+      bool has_been_exposed_in_frame;
   };
 
   Disease() = default;

@@ -41,7 +41,7 @@ Disease::Person Disease::CreatePerson() {
   new_person.color = vec3(0,0,1);
   new_person.continuous_exposure_time = 0;
   new_person.time_infected = 0;
-  new_person.has_been_infected_in_frame = false;
+  new_person.has_been_exposed_in_frame = false;
 
   return new_person;
 }
