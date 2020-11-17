@@ -10,6 +10,9 @@ IdealGas::IdealGas(double left_margin, double top_margin,
   bottom_wall_ = top_wall_ + container_height;
   right_wall_ = left_wall_ + container_width;
   max_num_particles_ = max_num_particles;
+  for (size_t i = 0; i < kPopulationSize; i++) {
+    CreatePerson();
+  }
 }
 
 void IdealGas::SetInfoForParticles(const vector<IdealGas::Person>& particles_to_set_to) {
@@ -20,20 +23,31 @@ const vector<IdealGas::Person>& IdealGas::GetInfoForParticles() {
   return info_for_particles_;
 }
 
-void IdealGas::CreateParticle(double mass, const string& color) {
-  if (info_for_particles_.size() != max_num_particles_) {
-    Particle new_particle;
+void IdealGas::CreatePerson() {
+  Person new_person;
 
-    new_particle.SetRadius(mass * 2);
-    new_particle.SetMass(mass);
-    new_particle.SetPosition(vec2(left_wall_, top_wall_) +
-                            vec2(new_particle.GetRadius(), new_particle.GetRadius()));
-    new_particle.SetVelocity(vec2(new_particle.GetRadius() / 4, new_particle.GetRadius() /4));
-    new_particle.SetSpeed(length(new_particle.GetVelocity()));
-    new_particle.SetColor(color);
+  new_person.radius = kRadius;
+  int x_position = rand() % int(right_wall_) + int(left_wall_);
+  int y_position = rand() % int(bottom_wall_) + int(top_wall_);
+  new_person.position = vec2(x_position, y_position);
 
-    info_for_particles_.push_back(new_particle);
+  int x_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
+  int y_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
+  while (x_velocity == 0 || y_velocity == 0) {
+    x_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
+    y_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
   }
+  int scale_x_velocity_numerator = rand() % 9 + 1;
+  int scale_y_velocity_numerator = rand() % 9 + 1;
+
+  new_person.velocity = vec2(double(x_velocity) * double(scale_x_velocity_numerator) / kScaleDenominatorVel,
+                             double(y_velocity) * double(scale_y_velocity_numerator) / kScaleDenominatorVel);
+  new_person.status = Status::kSusceptible;
+  new_person.color = vec3(0,0,1);
+  new_person.continuous_exposure_time = 0;
+  new_person.time_infected = 0;
+
+  info_for_particles_.push_back(new_person);
 }
 
 void IdealGas::UpdateParticles() {

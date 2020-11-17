@@ -39,12 +39,9 @@ class IdealGas {
   const vector<Person>& GetInfoForParticles();
 
   /*
-   * Creates a particle with the specified mass.
-   *
-   * @param mass The mass the new particle should have
-   * @param color The color the new particle should have
+   * Creates a person.
    */
-  void CreateParticle(double mass, const string& color);
+  void CreatePerson();
 
   /*
    * Updates the information of all particles in the container,
@@ -53,6 +50,14 @@ class IdealGas {
   void UpdateParticles();
 
  private:
+  // ================
+  // Person constants
+  // ================
+  double kRadius = 10;
+  int kMinVelComponent = -1;
+  int kAddToMinVelComponent = 2;
+  double kScaleDenominatorVel = 10.0;
+  size_t kPopulationSize = 200;
 
   // ===================
   // Sketchpad variables
