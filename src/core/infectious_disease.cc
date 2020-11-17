@@ -9,6 +9,7 @@ Disease::Disease(double left_margin, double top_margin,
   bottom_wall_ = top_wall_ + container_height;
   right_wall_ = left_wall_ + container_width;
 
+  // Add people to population
   for (size_t i = 0; i < kPopulationSize; i++) {
     population_.push_back(CreatePerson());
   }
@@ -24,9 +25,10 @@ const vector<Disease::Person>& Disease::GetPopulation() {
 }
 
 Disease::Person Disease::CreatePerson() {
-  Person new_person;
+  Disease::Person new_person;
 
   new_person.radius = kRadius;
+
   int x_position = rand() % int(right_wall_) + int(left_wall_);
   int y_position = rand() % int(bottom_wall_) + int(top_wall_);
   new_person.position = vec2(x_position, y_position);
@@ -47,20 +49,6 @@ Disease::Person Disease::CreatePatientZero() {
   infected_person.color = vec3(1,0,0);
 
   return infected_person;
-}
-
-vec2 Disease::GenerateVelocity() {
-  int x_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
-  int y_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
-  while (x_velocity == 0 || y_velocity == 0) {
-    x_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
-    y_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
-  }
-  int scale_x_velocity_numerator = rand() % 9 + 1;
-  int scale_y_velocity_numerator = rand() % 9 + 1;
-
-  return vec2(double(x_velocity) * double(scale_x_velocity_numerator) / kScaleDenominatorVel,
-              double(y_velocity) * double(scale_y_velocity_numerator) / kScaleDenominatorVel);
 }
 
 void Disease::UpdateParticles() {
