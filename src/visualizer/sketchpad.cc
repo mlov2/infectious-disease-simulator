@@ -42,11 +42,6 @@ void Sketchpad::Draw() const {
   //histogram_.DrawHistograms();
 }
 
-void Sketchpad::Clear() {
-  particles_info.clear();
-  ideal_gas.SetInfoForParticles(particles_info);
-}
-
 double Sketchpad::GetTopMargin() {
   return kTopContainerMargin;
 }
@@ -61,10 +56,6 @@ double Sketchpad::GetBlueParticleMass() {
 
 double Sketchpad::GetGreenParticleMass() {
   return kGreenParticleMass;
-}
-
-void Sketchpad::CreateOneParticle(double mass, const std::string& color) {
-  ideal_gas.CreateParticle(mass, color);
 }
 
 const vector<IdealGas::Person>& Sketchpad::GetParticlesInfo() {

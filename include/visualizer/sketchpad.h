@@ -30,19 +30,6 @@ class Sketchpad {
    */
   void Draw() const;
 
-  /**
-   * Deletes all of the particles in the sketchpad.
-   */
-  void Clear();
-
-  /**
-   * Creates one particle inside the container.
-   *
-   * @param mass The mass of the particle to create
-   * @param color The color of the particle to create
-   */
-  void CreateOneParticle(double mass, const string& color);
-
   const vector<IdealGas::Person>& GetParticlesInfo();
   size_t GetMaxNumParticles();
 
