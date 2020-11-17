@@ -1141,11 +1141,91 @@ TEST_CASE("Check person status updates") {
 
   SECTION("Current status is removed") {
     SECTION("Person exposed") {
+      vector<Disease::Person> all_particles;
 
+      // Particle 1
+      person.radius = 10;
+      person.position = vec2(15, 15);
+      person.velocity = vec2(5, 5);
+      person.status = disease::Status::kInfectious;
+      person.color = vec3(1,0,0);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      all_particles.push_back(person);
+
+      // Particle 2
+      person.radius = 10;
+      person.position = vec2(15, 20);
+      person.velocity = vec2(-5, 6);
+      person.status = disease::Status::kRemoved;
+      person.color = vec3(0.5,0.5,0.5);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      all_particles.push_back(person);
+
+      disease.SetPopulation(all_particles);
+      disease.UpdateParticles();
+      vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+      // Particle 1
+      REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
+      REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
+      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+      REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[0].time_infected == 1);
+
+      // Particle 2
+      REQUIRE(updated_particles[1].position == vec2(10.0, 26.0));
+      REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
+      REQUIRE(updated_particles[1].status == disease::Status::kRemoved);
+      REQUIRE(updated_particles[1].color == vec3(0.5, 0.5, 0.5));
+      REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[1].time_infected == 0);
     }
 
     SECTION("Person not exposed") {
+      vector<Disease::Person> all_particles;
 
+      // Particle 1
+      person.radius = 10;
+      person.position = vec2(15, 15);
+      person.velocity = vec2(5, 5);
+      person.status = disease::Status::kInfectious;
+      person.color = vec3(1,0,0);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      all_particles.push_back(person);
+
+      // Particle 2
+      person.radius = 10;
+      person.position = vec2(60, 15);
+      person.velocity = vec2(-5, 6);
+      person.status = disease::Status::kRemoved;
+      person.color = vec3(0.5,0.5,0.5);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      all_particles.push_back(person);
+
+      disease.SetPopulation(all_particles);
+      disease.UpdateParticles();
+      vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+      // Particle 1
+      REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
+      REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
+      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+      REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[0].time_infected == 1);
+
+      // Particle 2
+      REQUIRE(updated_particles[1].position == vec2(55.0, 21.0));
+      REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
+      REQUIRE(updated_particles[1].status == disease::Status::kRemoved);
+      REQUIRE(updated_particles[1].color == vec3(0.5, 0.5, 0.5));
+      REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[1].time_infected == 0);
     }
   }
 }
