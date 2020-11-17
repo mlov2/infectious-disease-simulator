@@ -9,14 +9,14 @@ InfectiousDiseaseApp::InfectiousDiseaseApp() {
 }
 
 void InfectiousDiseaseApp::update() {
-  sketchpad_.Update();
+  simulator_.Update();
 }
 
 void InfectiousDiseaseApp::draw() {
   ci::Color8u background_color(255, 246, 148);  // light yellow
   ci::gl::clear(background_color);
 
-  sketchpad_.Draw();
+  simulator_.Draw();
 }
 
 }  // namespace visualizer

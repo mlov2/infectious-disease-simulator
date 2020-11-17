@@ -23,7 +23,7 @@ class InfectiousDiseaseApp : public ci::app::App {
   const double kWindowSizeX = 1000;
 
  private:
-  Sketchpad sketchpad_;
+  Simulator simulator_;
 };
 
 }  // namespace visualizer

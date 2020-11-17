@@ -11,14 +11,14 @@ namespace disease {
 namespace visualizer {
 
 /**
- * A sketchpad which will be displayed in the Cinder application.
+ * A simulator which will be displayed in the Cinder application.
  */
-class Sketchpad {
+class Simulator {
  public:
   /**
-   * Creates a sketchpad.
+   * Creates a simulator.
    */
-  Sketchpad();
+  Simulator();
 
   /**
    * Updates particles' info.

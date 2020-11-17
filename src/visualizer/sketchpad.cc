@@ -6,17 +6,17 @@ namespace visualizer {
 
 using glm::vec2;
 
-Sketchpad::Sketchpad() {
+Simulator::Simulator() {
   disease = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth);
 }
 
-void Sketchpad::Update() {
+void Simulator::Update() {
   disease.UpdateParticles();
   particles_info = disease.GetInfoForParticles();
   //histogram_.UpdateParticles(particles_info);
 }
 
-void Sketchpad::Draw() const {
+void Simulator::Draw() const {
   // Draws the container
   vec2 pixel_top_left = vec2(kLeftContainerMargin, kTopContainerMargin);
   vec2 pixel_bottom_right =
@@ -42,11 +42,11 @@ void Sketchpad::Draw() const {
   //histogram_.DrawHistograms();
 }
 
-double Sketchpad::GetTopMargin() {
+double Simulator::GetTopMargin() {
   return kTopContainerMargin;
 }
 
-const vector<Disease::Person>& Sketchpad::GetParticlesInfo() {
+const vector<Disease::Person>& Simulator::GetParticlesInfo() {
   return particles_info;
 }
 
