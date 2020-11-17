@@ -100,7 +100,7 @@ void Disease::CheckForWallCollisions(size_t current) {
   }
 }
 
-bool Disease::HasCollidedWithWall(const Person& current_particle,
+bool Disease::HasCollidedWithWall(const Disease::Person& current_particle,
                                    double wall_boundary,
                                    bool is_horizontal_wall) const {
   double particle_position_component_different = current_particle.position.x;
@@ -123,7 +123,7 @@ bool Disease::HasCollidedWithWall(const Person& current_particle,
   return false;
 }
 
-bool Disease::IsMovingTowardsWall(const Person& current_particle,
+bool Disease::IsMovingTowardsWall(const Disease::Person& current_particle,
                                    const vec2& wall_position) const {
   vec2 velocity_difference = current_particle.velocity;
   vec2 position_difference = current_particle.position - wall_position;
