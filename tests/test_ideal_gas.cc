@@ -4,66 +4,29 @@
 
 using disease::IdealGas;
 
-/*TEST_CASE("Create particle", "[create particle]") {
-  IdealGas ideal_gas = IdealGas(0, 0, 100, 100, 10);
+TEST_CASE("Create population", "[create population]") {
+  IdealGas ideal_gas = IdealGas(0, 0, 100, 100);
 
-  SECTION("Create particle when container is empty") {
-    ideal_gas.CreateParticle(10, "red");
+  vector<IdealGas::Person> all_particles = ideal_gas.GetInfoForParticles();
 
-    vector<Particle> all_particles = ideal_gas.GetInfoForParticles();
-
-    REQUIRE(all_particles.size() == 1);
-    REQUIRE(all_particles[0].GetRadius() == 20);
-    REQUIRE(all_particles[0].GetMass() == 10);
-    REQUIRE(all_particles[0].GetPosition() == vec2(20, 20));
-    REQUIRE(all_particles[0].GetVelocity() == vec2(5, 5));
-    REQUIRE(all_particles[0].GetSpeed() == Approx(7.071).margin(0.01));
-    REQUIRE(all_particles[0].GetColor() == "red");
-  }
-
-  SECTION("Create particle when container is not empty") {
-    vector<Particle> existing_particles;
-
-    // Create existing particles
-    Particle particle;
-    particle.SetRadius(20);
-    particle.SetMass(10);
-    particle.SetPosition(vec2(80, 80));
-    particle.SetVelocity(vec2(-7, -9));
-    particle.SetSpeed(11.401);
-
-    existing_particles.push_back(particle);
-    ideal_gas.SetInfoForParticles(existing_particles);
-
-    // Create a new particle
-    ideal_gas.CreateParticle(16, "red");
-
-    // Get all particles
-    vector<Particle> all_particles = ideal_gas.GetInfoForParticles();
-
-    REQUIRE(all_particles[0].GetRadius() == 20);
-    REQUIRE(all_particles[0].GetMass() == 10);
-    REQUIRE(all_particles[0].GetPosition() == vec2(80, 80));
-    REQUIRE(all_particles[0].GetVelocity() == vec2(-7, -9));
-    REQUIRE(all_particles[0].GetSpeed() == Approx(11.401).margin(0.01));
-
-    REQUIRE(all_particles[1].GetRadius() == 32);
-    REQUIRE(all_particles[1].GetMass() == 16);
-    REQUIRE(all_particles[1].GetPosition() == vec2(32, 32));
-    REQUIRE(all_particles[1].GetVelocity() == vec2(8, 8));
-    REQUIRE(all_particles[1].GetSpeed() == Approx(11.314). margin(0.01));
-    REQUIRE(all_particles[1].GetColor() == "red");
-  }
-
-  SECTION("Particles aren't created if max is reached") {
-    for (size_t i = 0; i < 25; i++) {
-      ideal_gas.CreateParticle(10, "red");
-    }
-
-    REQUIRE(ideal_gas.GetInfoForParticles().size() == 10);
+  REQUIRE(all_particles.size() == 200);
+  for (size_t i = 0; i < all_particles.size(); i++) {
+    REQUIRE(all_particles[i].radius == 10);
+    REQUIRE(all_particles[i].position.x >= 0);
+    REQUIRE(all_particles[i].position.x <= 100);
+    REQUIRE(all_particles[i].position.y >= 0);
+    REQUIRE(all_particles[i].position.y <= 100);
+    REQUIRE(all_particles[i].velocity.x >= -1);
+    REQUIRE(all_particles[i].velocity.x <= 1);
+    REQUIRE(all_particles[i].velocity.y >= -1);
+    REQUIRE(all_particles[i].velocity.y <= 1);
+    REQUIRE(all_particles[i].status == disease::Status::kSusceptible);
+    REQUIRE(all_particles[i].color == vec3(0, 0, 1));
+    REQUIRE(all_particles[i].continuous_exposure_time == 0);
+    REQUIRE(all_particles[i].time_infected == 0);
   }
 }
-
+/*
 TEST_CASE("Particle position updates after 1 frame (no collision)  (same mass)",
           "[position][one frame][no collision][same mass]") {
   IdealGas ideal_gas = IdealGas(0, 0, 100, 100, 10);
