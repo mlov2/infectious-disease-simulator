@@ -770,3 +770,59 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
     }
   }
 }
+
+TEST_CASE("Check person status updates") {
+  SECTION("Current status is susceptible") {
+    SECTION("Exposure time is at max") {
+      SECTION("Person exposed") {
+
+      }
+
+      SECTION("Person not exposed") {
+
+      }
+    }
+
+    SECTION("Exposure time is not at max") {
+      SECTION("Person exposed") {
+
+      }
+
+      SECTION("Person not exposed") {
+
+      }
+    }
+  }
+
+  SECTION("Current status is infectious") {
+    SECTION("Time infected is at max") {
+      SECTION("Person exposed") {
+
+      }
+
+      SECTION("Person not exposed") {
+
+      }
+    }
+
+    SECTION("Time infected is not at max") {
+      SECTION("Person exposed") {
+
+      }
+
+      SECTION("Person not exposed") {
+
+      }
+    }
+  }
+
+  SECTION("Current status is removed") {
+    SECTION("Person exposed") {
+
+    }
+
+    SECTION("Person not exposed") {
+
+    }
+  }
+}
