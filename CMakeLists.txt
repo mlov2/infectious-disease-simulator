@@ -56,7 +56,7 @@ list(APPEND CORE_SOURCE_FILES
         src/core/histogram.cpp)
 
 list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
-        src/visualizer/ideal_gas_app.cc
+        src/visualizer/infectious_disease_app.cc
         src/visualizer/sketchpad.cc)
 
 list(APPEND TEST_FILES tests/test_infectious_disease.cc

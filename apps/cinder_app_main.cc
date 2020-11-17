@@ -1,4 +1,4 @@
-#include <visualizer/ideal_gas_app.h>
+#include <visualizer/infectious_disease_app.h>
 
 using disease::visualizer::NaiveBayesApp;
 
