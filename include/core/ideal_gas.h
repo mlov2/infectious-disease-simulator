@@ -32,8 +32,7 @@ class IdealGas {
 
   IdealGas() = default;
   IdealGas(double left_margin, double top_margin,
-           double container_height, double container_width,
-           size_t max_num_particles);
+           double container_height, double container_width);
 
   void SetInfoForParticles(const vector<Person>& particles_to_set_to);
   const vector<Person>& GetInfoForParticles();
@@ -66,7 +65,6 @@ class IdealGas {
   double top_wall_;
   double bottom_wall_;
   double right_wall_;
-  size_t max_num_particles_;
 
   /*
    * Holds all the particles.

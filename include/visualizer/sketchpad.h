@@ -31,12 +31,8 @@ class Sketchpad {
   void Draw() const;
 
   const vector<IdealGas::Person>& GetParticlesInfo();
-  size_t GetMaxNumParticles();
 
   double GetTopMargin();
-  double GetRedParticleMass();
-  double GetBlueParticleMass();
-  double GetGreenParticleMass();
 
  private:
   // Container info
@@ -44,13 +40,6 @@ class Sketchpad {
   const double kLeftContainerMargin = 25;
   const double kContainerHeight = 580;
   const double kContainerWidth = 550;
-
-  // Particle info
-  const double kRedParticleMass = 10;
-  const double kBlueParticleMass = 5;
-  const double kGreenParticleMass = 15;
-
-  const size_t kMaxNumParticles = 20;
 
   IdealGas ideal_gas;
   //Histogram histogram_;

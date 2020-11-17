@@ -7,7 +7,7 @@ namespace visualizer {
 using glm::vec2;
 
 Sketchpad::Sketchpad() {
-  ideal_gas = IdealGas(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth, kMaxNumParticles);
+  ideal_gas = IdealGas(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth);
 }
 
 void Sketchpad::Update() {
@@ -46,26 +46,9 @@ double Sketchpad::GetTopMargin() {
   return kTopContainerMargin;
 }
 
-double Sketchpad::GetRedParticleMass() {
-  return kRedParticleMass;
-}
-
-double Sketchpad::GetBlueParticleMass() {
-  return kBlueParticleMass;
-}
-
-double Sketchpad::GetGreenParticleMass() {
-  return kGreenParticleMass;
-}
-
 const vector<IdealGas::Person>& Sketchpad::GetParticlesInfo() {
   return particles_info;
 }
-
-size_t Sketchpad::GetMaxNumParticles() {
-  return kMaxNumParticles;
-}
-
 
 }  // namespace visualizer
 

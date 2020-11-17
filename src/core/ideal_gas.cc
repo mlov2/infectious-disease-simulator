@@ -3,13 +3,11 @@
 namespace disease {
 
 IdealGas::IdealGas(double left_margin, double top_margin,
-                   double container_height, double container_width,
-                   size_t max_num_particles) {
+                   double container_height, double container_width) {
   left_wall_ = left_margin;
   top_wall_ = top_margin;
   bottom_wall_ = top_wall_ + container_height;
   right_wall_ = left_wall_ + container_width;
-  max_num_particles_ = max_num_particles;
   for (size_t i = 0; i < kPopulationSize; i++) {
     CreatePerson();
   }
