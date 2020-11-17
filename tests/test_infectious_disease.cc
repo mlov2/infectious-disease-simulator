@@ -187,9 +187,9 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     REQUIRE(updated_particles[2].time_infected == 0);
   }
 }
-/*
-TEST_CASE("Particle position updates after 2 frames (no collision) (same mass)",
-          "[position][two frames][no collision][same mass]") {
+
+TEST_CASE("Person info updates after 2 frames (no collision)",
+          "[two frames][no collision]") {
   Disease disease = Disease(0, 0, 100, 100, false);
   Disease::Person person;
 
@@ -207,8 +207,8 @@ TEST_CASE("Particle position updates after 2 frames (no collision) (same mass)",
     person.radius = 10;
     person.position = vec2(15, 15);
     person.velocity = vec2(5, 5);
-    person.status = disease::Status::kSusceptible;
-    person.color = vec3(0,0,1);
+    person.status = disease::Status::kInfectious;
+    person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     all_particles.push_back(person);
@@ -220,6 +220,10 @@ TEST_CASE("Particle position updates after 2 frames (no collision) (same mass)",
 
     REQUIRE(updated_particles[0].position == vec2(25.0, 25.0));
     REQUIRE(updated_particles[0].velocity == vec2(5, 5));
+    REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+    REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+    REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+    REQUIRE(updated_particles[0].time_infected == 2);
   }
 
   SECTION("Two particles") {
@@ -229,8 +233,8 @@ TEST_CASE("Particle position updates after 2 frames (no collision) (same mass)",
     person.radius = 10;
     person.position = vec2(15, 15);
     person.velocity = vec2(5, 5);
-    person.status = disease::Status::kSusceptible;
-    person.color = vec3(0,0,1);
+    person.status = disease::Status::kInfectious;
+    person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     all_particles.push_back(person);
@@ -245,63 +249,92 @@ TEST_CASE("Particle position updates after 2 frames (no collision) (same mass)",
     person.time_infected = 0;
     all_particles.push_back(person);
 
-    ideal_gas.SetInfoForParticles(all_particles);
-    ideal_gas.UpdateParticles();
-    ideal_gas.UpdateParticles();
-    vector<Particle> updated_particles = ideal_gas.GetInfoForParticles();
+    disease.SetPopulation(all_particles);
+    disease.UpdateParticles();
+    disease.UpdateParticles();
+    vector<Disease::Person> updated_particles = disease.GetPopulation();
 
     // Particle 1
-    REQUIRE(updated_particles[0].GetPosition() == vec2(25.0, 25.0));
-    REQUIRE(updated_particles[0].GetVelocity() == vec2(5.0, 5.0));
+    REQUIRE(updated_particles[0].position == vec2(25.0, 25.0));
+    REQUIRE(updated_particles[0].velocity == vec2(5, 5));
+    REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+    REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+    REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+    REQUIRE(updated_particles[0].time_infected == 2);
 
     // Particle 2
-    REQUIRE(updated_particles[1].GetPosition() == vec2(45.0, 42.0));
-    REQUIRE(updated_particles[1].GetVelocity() == vec2(-5.0, 6.0));
+    REQUIRE(updated_particles[1].position == vec2(45.0, 42.0));
+    REQUIRE(updated_particles[1].velocity == vec2(-5, 6));
+    REQUIRE(updated_particles[1].status == disease::Status::kSusceptible);
+    REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
+    REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+    REQUIRE(updated_particles[1].time_infected == 0);
   }
 
   SECTION("Three particles") {
-    vector<Particle> all_particles;
+    vector<Disease::Person> all_particles;
 
     // Particle 1
-    particle.SetRadius(10);
-    particle.SetMass(5);
-    particle.SetPosition(glm::vec2(15.0, 15.0));
-    particle.SetVelocity(glm::vec2(5.0, 5.0));
-    all_particles.push_back(particle);
+    person.radius = 10;
+    person.position = vec2(15, 15);
+    person.velocity = vec2(5, 5);
+    person.status = disease::Status::kInfectious;
+    person.color = vec3(1,0,0);
+    person.continuous_exposure_time = 0;
+    person.time_infected = 0;
+    all_particles.push_back(person);
 
     // Particle 2
-    particle.SetRadius(10);
-    particle.SetMass(5);
-    particle.SetPosition(vec2(55.0, 30.0));
-    particle.SetVelocity(vec2(-5.0, 6.0));
-    all_particles.push_back(particle);
+    person.radius = 10;
+    person.position = vec2(55, 30);
+    person.velocity = vec2(-5, 6);
+    person.status = disease::Status::kSusceptible;
+    person.color = vec3(0,0,1);
+    person.continuous_exposure_time = 0;
+    person.time_infected = 0;
+    all_particles.push_back(person);
 
     // Particle 3
-    particle.SetRadius(10);
-    particle.SetMass(5);
-    particle.SetPosition(vec2(70.0, 80.0));
-    particle.SetVelocity(vec2(-7.7, 3.4));
-    all_particles.push_back(particle);
+    person.radius = 10;
+    person.position = vec2(70, 80);
+    person.velocity = vec2(-7.7, 3.4);
+    person.status = disease::Status::kSusceptible;
+    person.color = vec3(0,0,1);
+    person.continuous_exposure_time = 0;
+    person.time_infected = 0;
+    all_particles.push_back(person);
 
-    ideal_gas.SetInfoForParticles(all_particles);
-    ideal_gas.UpdateParticles();
-    ideal_gas.UpdateParticles();
-    vector<Particle> updated_particles = ideal_gas.GetInfoForParticles();
+    disease.SetPopulation(all_particles);
+    disease.UpdateParticles();
+    disease.UpdateParticles();
+    vector<Disease::Person> updated_particles = disease.GetPopulation();
 
     // Particle 1
-    REQUIRE(updated_particles[0].GetPosition() == vec2(25.0, 25.0));
-    REQUIRE(updated_particles[0].GetVelocity() == vec2(5.0, 5.0));
+    REQUIRE(updated_particles[0].position == vec2(25.0, 25.0));
+    REQUIRE(updated_particles[0].velocity == vec2(5, 5));
+    REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+    REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+    REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+    REQUIRE(updated_particles[0].time_infected == 2);
 
     // Particle 2
-    REQUIRE(updated_particles[1].GetPosition() == vec2(45.0, 42.0));
-    REQUIRE(updated_particles[1].GetVelocity() == vec2(-5.0, 6.0));
+    REQUIRE(updated_particles[1].position == vec2(45.0, 42.0));
+    REQUIRE(updated_particles[1].velocity == vec2(-5, 6));
+    REQUIRE(updated_particles[1].status == disease::Status::kSusceptible);
+    REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
+    REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+    REQUIRE(updated_particles[1].time_infected == 0);
 
     // Particle 3
-    REQUIRE(updated_particles[2].GetPosition() == vec2(54.6, 86.8));
-    REQUIRE(updated_particles[2].GetVelocity() == vec2(-7.7, 3.4));
+    REQUIRE(updated_particles[2].position == vec2(54.6, 86.8));
+    REQUIRE(updated_particles[2].velocity == vec2(-7.7, 3.4));
+    REQUIRE(updated_particles[2].status == disease::Status::kSusceptible);
+    REQUIRE(updated_particles[2].color == vec3(0, 0, 1));
+    REQUIRE(updated_particles[2].continuous_exposure_time == 0);
+    REQUIRE(updated_particles[2].time_infected == 0);
   }
 }
-
+/*
 TEST_CASE("Particle position updates after collision with wall (same mass)",
           "[position][one frame][collision][wall][same mass]") {
   IdealGas ideal_gas = IdealGas(0, 0, 100, 100, 10);
