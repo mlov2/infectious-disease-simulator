@@ -55,28 +55,31 @@ vec2 Disease::GenerateVelocity() {
 void Disease::UpdateParticles() {
   for (size_t current = 0; current < info_for_particles_.size(); current++) {
     // Check for wall collisions
-    if (HasCollidedWithWall(info_for_particles_[current],
-                            top_wall_, true) ||
-        HasCollidedWithWall(info_for_particles_[current],
-                            bottom_wall_, true)) {
-      vec2 new_velocity = vec2(info_for_particles_[current].velocity.x,
-                               -info_for_particles_[current].velocity.y);
-      info_for_particles_[current].velocity = new_velocity;
-    }
-
-    if (HasCollidedWithWall(info_for_particles_[current],
-                            left_wall_, false) ||
-        HasCollidedWithWall(info_for_particles_[current],
-                            right_wall_, false)) {
-      vec2 new_velocity = vec2(-info_for_particles_[current].velocity.x,
-                               info_for_particles_[current].velocity.y);
-      info_for_particles_[current].velocity = new_velocity;
-    }
-
+    CheckForWallCollisions(current);
 
     vec2 updated_position = info_for_particles_[current].position +
         info_for_particles_[current].velocity;
     info_for_particles_[current].position = (KeepWithinContainer(updated_position, info_for_particles_[current].radius));
+  }
+}
+
+void Disease::CheckForWallCollisions(size_t current) {
+  if (HasCollidedWithWall(info_for_particles_[current],
+                          top_wall_, true) ||
+      HasCollidedWithWall(info_for_particles_[current],
+                          bottom_wall_, true)) {
+    vec2 new_velocity = vec2(info_for_particles_[current].velocity.x,
+                             -info_for_particles_[current].velocity.y);
+    info_for_particles_[current].velocity = new_velocity;
+  }
+
+  if (HasCollidedWithWall(info_for_particles_[current],
+                          left_wall_, false) ||
+      HasCollidedWithWall(info_for_particles_[current],
+                          right_wall_, false)) {
+    vec2 new_velocity = vec2(-info_for_particles_[current].velocity.x,
+                             info_for_particles_[current].velocity.y);
+    info_for_particles_[current].velocity = new_velocity;
   }
 }
 

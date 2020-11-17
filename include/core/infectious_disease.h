@@ -80,7 +80,14 @@ class Disease {
   vec2 GenerateVelocity();
 
   /*
-   * Checks if the current particle has collided with a wall.
+   * Checks for wall collisions with the current particle.
+   *
+   * @param current The index of the current particle
+   */
+  void CheckForWallCollisions(size_t current);
+
+  /*
+   * Checks if the current particle has collided with a specific wall.
    *
    * @param particle the current Particle to check for a collision
    * @param wall_boundary the wall to check for a collision with
