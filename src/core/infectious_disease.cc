@@ -12,6 +12,7 @@ Disease::Disease(double left_margin, double top_margin,
   for (size_t i = 0; i < kPopulationSize; i++) {
     population_.push_back(CreatePerson());
   }
+  population_.push_back(CreatePatientZero());
 }
 
 void Disease::SetPopulation(const vector<Disease::Person>& population_to_set_to) {
@@ -37,6 +38,15 @@ Disease::Person Disease::CreatePerson() {
   new_person.time_infected = 0;
 
   return new_person;
+}
+
+Disease::Person Disease::CreatePatientZero() {
+  Disease::Person infected_person = CreatePerson();
+
+  infected_person.status = Status::kInfectious;
+  infected_person.color = vec3(1,0,0);
+
+  return infected_person;
 }
 
 vec2 Disease::GenerateVelocity() {

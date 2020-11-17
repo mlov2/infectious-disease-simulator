@@ -82,6 +82,13 @@ class Disease {
   vec2 GenerateVelocity();
 
   /*
+   * Creates a person who is infected.
+   *
+   * @return The person with their info initialized as an infected person
+   */
+  Person CreatePatientZero();
+
+  /*
    * Checks for wall collisions with the current particle.
    *
    * @param current The index of the current particle
