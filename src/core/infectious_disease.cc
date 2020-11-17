@@ -13,12 +13,12 @@ Disease::Disease(double left_margin, double top_margin,
   }
 }
 
-void Disease::SetInfoForParticles(const vector<Disease::Person>& particles_to_set_to) {
-  info_for_particles_ = particles_to_set_to;
+void Disease::SetPopulation(const vector<Disease::Person>& population_to_set_to) {
+  population_ = population_to_set_to;
 }
 
-const vector<Disease::Person>& Disease::GetInfoForParticles() {
-  return info_for_particles_;
+const vector<Disease::Person>& Disease::GetPopulation() {
+  return population_;
 }
 
 void Disease::CreatePerson() {
@@ -35,7 +35,7 @@ void Disease::CreatePerson() {
   new_person.continuous_exposure_time = 0;
   new_person.time_infected = 0;
 
-  info_for_particles_.push_back(new_person);
+  population_.push_back(new_person);
 }
 
 vec2 Disease::GenerateVelocity() {
@@ -53,33 +53,34 @@ vec2 Disease::GenerateVelocity() {
 }
 
 void Disease::UpdateParticles() {
-  for (size_t current = 0; current < info_for_particles_.size(); current++) {
+  for (size_t current = 0; current < population_.size(); current++) {
     // Check for wall collisions
     CheckForWallCollisions(current);
 
-    vec2 updated_position = info_for_particles_[current].position +
-        info_for_particles_[current].velocity;
-    info_for_particles_[current].position = (KeepWithinContainer(updated_position, info_for_particles_[current].radius));
+    vec2 updated_position = population_[current].position +
+        population_[current].velocity;
+    population_[current].position = (KeepWithinContainer(updated_position, population_[current].radius));
+
   }
 }
 
 void Disease::CheckForWallCollisions(size_t current) {
-  if (HasCollidedWithWall(info_for_particles_[current],
+  if (HasCollidedWithWall(population_[current],
                           top_wall_, true) ||
-      HasCollidedWithWall(info_for_particles_[current],
+      HasCollidedWithWall(population_[current],
                           bottom_wall_, true)) {
-    vec2 new_velocity = vec2(info_for_particles_[current].velocity.x,
-                             -info_for_particles_[current].velocity.y);
-    info_for_particles_[current].velocity = new_velocity;
+    vec2 new_velocity = vec2(population_[current].velocity.x,
+                             -population_[current].velocity.y);
+    population_[current].velocity = new_velocity;
   }
 
-  if (HasCollidedWithWall(info_for_particles_[current],
+  if (HasCollidedWithWall(population_[current],
                           left_wall_, false) ||
-      HasCollidedWithWall(info_for_particles_[current],
+      HasCollidedWithWall(population_[current],
                           right_wall_, false)) {
-    vec2 new_velocity = vec2(-info_for_particles_[current].velocity.x,
-                             info_for_particles_[current].velocity.y);
-    info_for_particles_[current].velocity = new_velocity;
+    vec2 new_velocity = vec2(-population_[current].velocity.x,
+                             population_[current].velocity.y);
+    population_[current].velocity = new_velocity;
   }
 }
 

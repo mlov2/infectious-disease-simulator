@@ -12,7 +12,7 @@ Simulator::Simulator() {
 
 void Simulator::Update() {
   disease.UpdateParticles();
-  particles_info = disease.GetInfoForParticles();
+  particles_info = disease.GetPopulation();
   //histogram_.UpdateParticles(particles_info);
 }
 

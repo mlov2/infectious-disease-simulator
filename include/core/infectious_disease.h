@@ -34,8 +34,8 @@ class Disease {
   Disease(double left_margin, double top_margin,
            double container_height, double container_width);
 
-  void SetInfoForParticles(const vector<Person>& particles_to_set_to);
-  const vector<Person>& GetInfoForParticles();
+  void SetPopulation(const vector<Person>& population_to_set_to);
+  const vector<Person>& GetPopulation();
 
   /*
    * Creates a person.
@@ -68,9 +68,9 @@ class Disease {
   double right_wall_;
 
   /*
-   * Holds all the particles.
+   * Holds all the particles, each representing a person.
    */
-  vector<Person> info_for_particles_;
+  vector<Person> population_;
 
   /*
    * Generates a random velocity.
