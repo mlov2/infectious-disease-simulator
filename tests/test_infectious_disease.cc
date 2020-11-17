@@ -1,4 +1,4 @@
-#include <core/ideal_gas.h>
+#include <core/infectious_disease.h>
 
 #include <catch2/catch.hpp>
 

@@ -51,7 +51,7 @@ get_filename_component(APP_PATH "." ABSOLUTE)
 include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 
 list(APPEND CORE_SOURCE_FILES
-        src/core/ideal_gas.cc
+        src/core/infectious_disease.cc
         src/core/person.cpp
         src/core/histogram.cpp)
 
@@ -59,7 +59,7 @@ list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
         src/visualizer/ideal_gas_app.cc
         src/visualizer/sketchpad.cc)
 
-list(APPEND TEST_FILES tests/test_ideal_gas.cc
+list(APPEND TEST_FILES tests/test_infectious_disease.cc
         tests/test_person.cpp
         tests/test_histogram.cpp)
 

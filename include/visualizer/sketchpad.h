@@ -2,7 +2,7 @@
 
 #include "cinder/gl/gl.h"
 #include "core/histogram.h"
-#include "core/ideal_gas.h"
+#include "core/infectious_disease.h"
 
 using disease::Disease;
 
