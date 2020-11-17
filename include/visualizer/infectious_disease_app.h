@@ -12,9 +12,9 @@ namespace visualizer {
 /**
  * Allows a user to add particles to a container and delete them.
  */
-class NaiveBayesApp : public ci::app::App {
+class InfectiousDiseaseApp : public ci::app::App {
  public:
-  NaiveBayesApp();
+  InfectiousDiseaseApp();
 
   void update() override;
   void draw() override;

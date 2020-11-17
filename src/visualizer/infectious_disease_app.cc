@@ -4,15 +4,15 @@ namespace disease {
 
 namespace visualizer {
 
-NaiveBayesApp::NaiveBayesApp() {
+InfectiousDiseaseApp::InfectiousDiseaseApp() {
   ci::app::setWindowSize((int) kWindowSizeX, (int) kWindowSizeY);
 }
 
-void NaiveBayesApp::update() {
+void InfectiousDiseaseApp::update() {
   sketchpad_.Update();
 }
 
-void NaiveBayesApp::draw() {
+void InfectiousDiseaseApp::draw() {
   ci::Color8u background_color(255, 246, 148);  // light yellow
   ci::gl::clear(background_color);
 

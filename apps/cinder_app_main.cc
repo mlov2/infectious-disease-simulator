@@ -1,10 +1,10 @@
 #include <visualizer/infectious_disease_app.h>
 
-using disease::visualizer::NaiveBayesApp;
+using disease::visualizer::InfectiousDiseaseApp;
 
-void prepareSettings(NaiveBayesApp::Settings* settings) {
+void prepareSettings(InfectiousDiseaseApp::Settings* settings) {
   settings->setResizable(false);
 }
 
 // This line is a macro that expands into an "int main()" function.
-CINDER_APP(NaiveBayesApp, ci::app::RendererGl, prepareSettings);
+CINDER_APP(InfectiousDiseaseApp, ci::app::RendererGl, prepareSettings);
