@@ -32,7 +32,8 @@ class Disease {
 
   Disease() = default;
   Disease(double left_margin, double top_margin,
-           double container_height, double container_width);
+          double container_height, double container_width,
+          bool should_create_population);
 
   void SetPopulation(const vector<Person>& population_to_set_to);
   const vector<Person>& GetPopulation();

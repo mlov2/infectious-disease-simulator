@@ -7,7 +7,7 @@ namespace visualizer {
 using glm::vec2;
 
 Simulator::Simulator() {
-  disease = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth);
+  disease = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth, true);
 }
 
 void Simulator::Update() {

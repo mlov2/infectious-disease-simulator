@@ -3,17 +3,20 @@
 namespace disease {
 
 Disease::Disease(double left_margin, double top_margin,
-                   double container_height, double container_width) {
+                 double container_height, double container_width,
+                 bool should_create_population) {
   left_wall_ = left_margin;
   top_wall_ = top_margin;
   bottom_wall_ = top_wall_ + container_height;
   right_wall_ = left_wall_ + container_width;
 
-  // Add people to population
-  for (size_t i = 0; i < kPopulationSize; i++) {
-    population_.push_back(CreatePerson());
+  if (should_create_population) {
+    // Add people to population
+    for (size_t i = 0; i < kPopulationSize; i++) {
+      population_.push_back(CreatePerson());
+    }
+    population_.push_back(CreatePatientZero());
   }
-  population_.push_back(CreatePatientZero());
 }
 
 void Disease::SetPopulation(const vector<Disease::Person>& population_to_set_to) {
