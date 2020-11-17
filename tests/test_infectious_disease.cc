@@ -63,8 +63,8 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.radius = 10;
     person.position = vec2(15, 15);
     person.velocity = vec2(5, 5);
-    person.status = disease::Status::kSusceptible;
-    person.color = vec3(0,0,1);
+    person.status = disease::Status::kInfectious;
+    person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     all_particles.push_back(person);
@@ -75,10 +75,10 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
 
     REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
     REQUIRE(updated_particles[0].velocity == vec2(5, 5));
-    REQUIRE(updated_particles[0].status == disease::Status::kSusceptible);
-    REQUIRE(updated_particles[0].color == vec3(0, 0, 1));
+    REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+    REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
     REQUIRE(updated_particles[0].continuous_exposure_time == 0);
-    REQUIRE(updated_particles[0].time_infected == 0);
+    REQUIRE(updated_particles[0].time_infected == 1);
   }
 
   SECTION("Two particles") {
@@ -88,8 +88,8 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.radius = 10;
     person.position = vec2(15, 15);
     person.velocity = vec2(5, 5);
-    person.status = disease::Status::kSusceptible;
-    person.color = vec3(0,0,1);
+    person.status = disease::Status::kInfectious;
+    person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     all_particles.push_back(person);
@@ -111,10 +111,10 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     // Particle 1
     REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
     REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-    REQUIRE(updated_particles[0].status == disease::Status::kSusceptible);
-    REQUIRE(updated_particles[0].color == vec3(0, 0, 1));
+    REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+    REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
     REQUIRE(updated_particles[0].continuous_exposure_time == 0);
-    REQUIRE(updated_particles[0].time_infected == 0);
+    REQUIRE(updated_particles[0].time_infected == 1);
 
     // Particle 2
     REQUIRE(updated_particles[1].position == vec2(50.0, 36.0));
@@ -132,8 +132,8 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.radius = 10;
     person.position = vec2(15, 15);
     person.velocity = vec2(5, 5);
-    person.status = disease::Status::kSusceptible;
-    person.color = vec3(0,0,1);
+    person.status = disease::Status::kInfectious;
+    person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     all_particles.push_back(person);
@@ -165,10 +165,10 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     // Particle 1
     REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
     REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-    REQUIRE(updated_particles[0].status == disease::Status::kSusceptible);
-    REQUIRE(updated_particles[0].color == vec3(0, 0, 1));
+    REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+    REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
     REQUIRE(updated_particles[0].continuous_exposure_time == 0);
-    REQUIRE(updated_particles[0].time_infected == 0);
+    REQUIRE(updated_particles[0].time_infected == 1);
 
     // Particle 2
     REQUIRE(updated_particles[1].position == vec2(50.0, 36.0));
