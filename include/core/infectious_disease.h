@@ -56,6 +56,7 @@ class Disease {
   int kMinVelComponent = -1;
   int kAddToMinVelComponent = 2;
   double kScaleDenominatorVel = 10.0;
+
   size_t kPopulationSize = 200;
 
   // ===================
@@ -70,6 +71,13 @@ class Disease {
    * Holds all the particles.
    */
   vector<Person> info_for_particles_;
+
+  /*
+   * Generates a random velocity.
+   *
+   * @return A vec2 representing the generated particle velocity
+   */
+  vec2 GenerateVelocity();
 
   /*
    * Checks if the current particle has collided with a wall.
