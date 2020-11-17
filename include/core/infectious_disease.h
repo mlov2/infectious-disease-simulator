@@ -140,6 +140,35 @@ class Disease {
    * @return The person with their status updated
    */
   Person UpdatePersonStatus(const Person& current_person, size_t current_index);
+
+/*
+ * Updates the exposure time for a susceptible person.
+ *
+ * @param current_person The current person's exposure time to update
+ * @param current_index The index of the current person in the population vector
+ * @return The person with their exposure time updated
+ */
+  Person UpdateExposureTime(const Person& current_person, size_t current_index);
+
+/*
+ * Checks if the current person is within the radius of an infected person.
+ *
+ * @param current_person The current person to check
+ * @param current_index The index of the current person in the population vector
+ * @return A bool representing if the current person is within the radius
+ *     of an infected person
+ */
+  bool WithinInfectionRadius(const Person& current_person, size_t current_index) const;
+
+/*
+ * Checks if the current person is within the radius of the specified infected person.
+ *
+ * @param current_person The current person to check
+ * @param other_person The person to check if the current person is within their infection radius
+ * @return A bool representing if the current person is within the radius
+ *     of an infected person
+ */
+  bool WithinOneInfectionRadius(const Person& current_person, const Person& other_person) const;
 };
 
 }  // namespace disease
