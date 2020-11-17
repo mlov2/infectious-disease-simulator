@@ -8,8 +8,9 @@ Disease::Disease(double left_margin, double top_margin,
   top_wall_ = top_margin;
   bottom_wall_ = top_wall_ + container_height;
   right_wall_ = left_wall_ + container_width;
+
   for (size_t i = 0; i < kPopulationSize; i++) {
-    CreatePerson();
+    population_.push_back(CreatePerson());
   }
 }
 
@@ -21,7 +22,7 @@ const vector<Disease::Person>& Disease::GetPopulation() {
   return population_;
 }
 
-void Disease::CreatePerson() {
+Disease::Person Disease::CreatePerson() {
   Person new_person;
 
   new_person.radius = kRadius;
@@ -35,7 +36,7 @@ void Disease::CreatePerson() {
   new_person.continuous_exposure_time = 0;
   new_person.time_infected = 0;
 
-  population_.push_back(new_person);
+  return new_person;
 }
 
 vec2 Disease::GenerateVelocity() {

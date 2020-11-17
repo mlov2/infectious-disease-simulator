@@ -38,11 +38,6 @@ class Disease {
   const vector<Person>& GetPopulation();
 
   /*
-   * Creates a person.
-   */
-  void CreatePerson();
-
-  /*
    * Updates the information of all particles in the container,
    * specifically the velocity, speed, and position.
    */
@@ -71,6 +66,13 @@ class Disease {
    * Holds all the particles, each representing a person.
    */
   vector<Person> population_;
+
+  /*
+   * Creates a susceptible person with their info initialized.
+   *
+   * @return The person with their info initialized as a susceptible person
+   */
+  Person CreatePerson();
 
   /*
    * Generates a random velocity.
