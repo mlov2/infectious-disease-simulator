@@ -40,6 +40,7 @@ class Simulator {
   const double kLeftContainerMargin = 25;
   const double kContainerHeight = 580;
   const double kContainerWidth = 550;
+  //const size_t kUpdatesPerSecond = 50;
 
   Disease disease_;
   Histogram histogram_;
