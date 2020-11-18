@@ -29,6 +29,7 @@ class Histogram {
 
   double upper_bound_for_y_;  // i.e. the highest label value for y axis
   vec2 container_top_right_corner_;
+  size_t time_elapsed_since_outbreak_;
 
   /*
    * Draws the background of the histogram (i.e. the graph).
@@ -56,11 +57,13 @@ class Histogram {
   void SortPopulation(const vector<Disease::Person>& population);
 
   /*
-   * Updates the information of everyone in the population.
+   * Updates the information of everyone in the population and
+   * of the time passed.
    *
    * @param updated_population The updated population
+   * @param time_passed The time elapsed since outbreak started
    */
-  void UpdatePopulation(const vector<Disease::Person>& updated_population);
+  void Update(const vector<Disease::Person>& updated_population, size_t time_passed);
 
   /*
    * Draws the histogram.

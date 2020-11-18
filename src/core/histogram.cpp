@@ -9,6 +9,7 @@ Histogram::Histogram(const vector<Disease::Person>& people,
                      const vec2& container_top_right_corner) {
   upper_bound_for_y_ = people.size();
   container_top_right_corner_ = container_top_right_corner;
+  time_elapsed_since_outbreak_ = 0;
 }
 
 const map<Status, vector<Disease::Person>>& Histogram::GetSortedPopulation() const {
@@ -23,8 +24,9 @@ void Histogram::SortPopulation(const vector<Disease::Person>& population) {
   }
 }
 
-void Histogram::UpdatePopulation(const vector<Disease::Person>& updated_population) {
+void Histogram::Update(const vector<Disease::Person>& updated_population, size_t time_passed) {
   SortPopulation(updated_population);
+  time_elapsed_since_outbreak_ = time_passed;
 }
 
 void Histogram::DrawHistogram() const {

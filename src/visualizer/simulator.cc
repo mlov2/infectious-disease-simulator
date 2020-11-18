@@ -10,12 +10,14 @@ Simulator::Simulator() : histogram_(disease_.GetPopulation(),
                                    vec2(kLeftContainerMargin, kTopContainerMargin) +
                                    vec2(kContainerWidth, 0)) {
   disease_ = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth, true);
+  time_passed_ = 0;
 }
 
 void Simulator::Update() {
   disease_.UpdateParticles();
   particles_info = disease_.GetPopulation();
-  histogram_.UpdatePopulation(particles_info);
+  time_passed_++;
+  histogram_.Update(particles_info, time_passed_);
 }
 
 void Simulator::Draw() const {

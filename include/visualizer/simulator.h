@@ -44,6 +44,7 @@ class Simulator {
   Disease disease_;
   Histogram histogram_;
   vector<Disease::Person> particles_info;
+  size_t time_passed_;
 };
 
 }  // namespace visualizer

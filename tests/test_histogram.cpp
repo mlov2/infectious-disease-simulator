@@ -113,7 +113,7 @@ TEST_CASE("Check population get updated") {
   person.color = vec3(0.5,0.5,0.5);
   updated_people.push_back(person);
 
-  histogram.UpdatePopulation(updated_people);
+  histogram.Update(updated_people, 10);
 
   map<Status, vector<Disease::Person>> actual_sorted_people = histogram.GetSortedPopulation();
 
