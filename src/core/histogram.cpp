@@ -28,4 +28,8 @@ void Histogram::SortPopulation(const vector<Disease::Person>& population) {
   }
 }
 
+void Histogram::UpdatePopulation(const vector<Disease::Person>& updated_population) {
+  SortPopulation(updated_population);
+}
+
 }  // namespace disease

@@ -47,6 +47,13 @@ class Histogram {
    * @param particles The vector of people to sort
    */
   void SortPopulation(const vector<Disease::Person>& population);
+
+  /*
+   * Updates the information of everyone in the population.
+   *
+   * @param updated_population The updated population
+   */
+  void UpdatePopulation(const vector<Disease::Person>& updated_population);
 };
 
 }  // namespace disease
