@@ -36,7 +36,6 @@ Disease::Person Disease::CreatePerson() {
   int y_position = rand() % int(bottom_wall_) + int(top_wall_);
   new_person.position = vec2(x_position, y_position);
 
-  //new_person.velocity = GenerateVelocity();
   new_person.velocity = vec2(ci::randFloat(-1,1), ci::randFloat(-1,1));
   new_person.status = Status::kSusceptible;
   new_person.color = vec3(0,0,1);
@@ -45,20 +44,6 @@ Disease::Person Disease::CreatePerson() {
   new_person.has_been_exposed_in_frame = false;
 
   return new_person;
-}
-
-vec2 Disease::GenerateVelocity() {
-  int x_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
-  int y_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
-  while (x_velocity == 0 || y_velocity == 0) {
-    x_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
-    y_velocity = rand() % kAddToMinVelComponent + kMinVelComponent;
-  }
-  int scale_x_velocity_numerator = rand() % kMaxScaleForVelNumerator + 1;
-  int scale_y_velocity_numerator = rand() % kMaxScaleForVelNumerator + 1;
-
-  return vec2(double(x_velocity) * double(scale_x_velocity_numerator) / kScaleDenominatorVel,
-              double(y_velocity) * double(scale_y_velocity_numerator) / kScaleDenominatorVel);
 }
 
 Disease::Person Disease::CreatePatientZero() {
@@ -83,7 +68,6 @@ void Disease::UpdateParticles() {
     vec2 updated_position = population_[current].position +
         population_[current].velocity;
     population_[current].position = (KeepWithinContainer(updated_position, population_[current].radius));
-
   }
 }
 

@@ -108,13 +108,6 @@ class Disease {
   Person CreatePerson();
 
   /*
-   * Generates a random velocity.
-   *
-   * @return A vec2 representing the generated particle velocity
-   */
-  vec2 GenerateVelocity();
-
-  /*
    * Creates a person who is infected.
    *
    * @return The person with their info initialized as an infected person
