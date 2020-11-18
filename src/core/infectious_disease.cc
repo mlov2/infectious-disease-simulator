@@ -72,6 +72,9 @@ Disease::Person Disease::CreatePatientZero() {
 
 void Disease::UpdateParticles() {
   for (size_t current = 0; current < population_.size(); current++) {
+    // Update Status
+    population_[current] = UpdatePersonStatus(population_[current], current);
+
     // Check for wall collisions
     CheckForWallCollisions(current);
 
