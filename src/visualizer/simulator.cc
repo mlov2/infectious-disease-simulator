@@ -21,6 +21,10 @@ void Simulator::Update() {
 }
 
 void Simulator::Draw() const {
+  ci::gl::drawStringCentered(
+      "Time elapsed: " + std::to_string(time_passed_),
+      glm::vec2((2*kLeftContainerMargin + kContainerWidth) / 2, kTopContainerMargin / 2), ci::Color("black"));
+
   // Draws the container
   vec2 pixel_top_left = vec2(kLeftContainerMargin, kTopContainerMargin);
   vec2 pixel_bottom_right =
