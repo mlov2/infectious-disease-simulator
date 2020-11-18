@@ -71,6 +71,8 @@ Disease::Person Disease::CreatePatientZero() {
 }
 
 void Disease::UpdateParticles() {
+  ResetExposureInFrame();
+
   for (size_t current = 0; current < population_.size(); current++) {
     // Update Status
     population_[current] = UpdatePersonStatus(population_[current], current);
@@ -82,6 +84,12 @@ void Disease::UpdateParticles() {
         population_[current].velocity;
     population_[current].position = (KeepWithinContainer(updated_position, population_[current].radius));
 
+  }
+}
+
+void Disease::ResetExposureInFrame() {
+  for (size_t current = 0; current < population_.size(); current++) {
+    population_[current].has_been_exposed_in_frame = false;
   }
 }
 

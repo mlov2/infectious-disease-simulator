@@ -99,6 +99,11 @@ class Disease {
   Person CreatePatientZero();
 
   /*
+   * Resets each person's has_been_exposed_in_frame status to false.
+   */
+  void ResetExposureInFrame();
+
+  /*
    * Checks for wall collisions with the current particle.
    *
    * @param current The index of the current particle
