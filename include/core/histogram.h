@@ -19,19 +19,28 @@ class Histogram {
   // ================================
   // Constants for drawing histograms
   // ================================
-  const size_t kHistogramLimit = 3;
-  const double kSpacingBetweenHistograms = 50;
+  const double kHistogramGraphDimension = 200;  // length and width of histogram graph
   //const size_t kLabelSpacingFromHistogram = 8;
-  //const size_t kSpacingFromContainer = 125;
+  const size_t kSpacingFromContainer = 125;
 
   // the key is a Status representing the health status
   // the value is a vector representing the people with the specified health status
   map<Status, vector<Disease::Person>> population_sorted_by_status_;
 
   double upper_bound_for_y_;  // i.e. the highest label value for y axis
-  double histogram_graph_dimension_;  // length and width of histogram graph
   double container_height_;
   vec2 container_top_right_corner_;
+
+  /*
+   * Draws the background of the histogram (i.e. the graph).
+   *
+   * @param left_boundary_of_histogram The left boundary of the histogram
+   * @param top_left_corner_y The y value of the top left corner of the histogram
+   * @return A vector holding the vec2 values of the top left and bottom right
+   *     corners of the histogram, in that order
+   */
+  vector<vec2> DrawHistogramBackground(double left_boundary_of_histogram,
+                                       double histogram_top_left_corner_y) const;
 
  public:
   Histogram() = default;
@@ -53,6 +62,11 @@ class Histogram {
    * @param updated_population The updated population
    */
   void UpdatePopulation(const vector<Disease::Person>& updated_population);
+
+  /*
+   * Draws the histogram.
+   */
+  void DrawHistogram() const;
 };
 
 }  // namespace disease

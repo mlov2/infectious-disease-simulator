@@ -11,8 +11,6 @@ Histogram::Histogram(const vector<Disease::Person>& people, double container_hei
 
   container_height_ = container_height;
   container_top_right_corner_ = container_top_right_corner;
-  double total_spacing_between_histograms = (kHistogramLimit - 1) * kSpacingBetweenHistograms;
-  histogram_graph_dimension_ = (container_height - total_spacing_between_histograms) / kHistogramLimit;
 }
 
 const map<Status, vector<Disease::Person>>& Histogram::GetSortedPopulation() const {
@@ -29,6 +27,29 @@ void Histogram::SortPopulation(const vector<Disease::Person>& population) {
 
 void Histogram::UpdatePopulation(const vector<Disease::Person>& updated_population) {
   SortPopulation(updated_population);
+}
+
+void Histogram::DrawHistogram() const {
+  // Draws the background of histogram
+  double left_boundary_of_histogram = container_top_right_corner_.x + kSpacingFromContainer;
+  DrawHistogramBackground(left_boundary_of_histogram, container_top_right_corner_.y);
+}
+
+vector<vec2> Histogram::DrawHistogramBackground(double left_boundary_of_histogram,
+                                                double histogram_top_left_corner_y) const {
+  vec2 pixel_top_left = vec2(left_boundary_of_histogram, histogram_top_left_corner_y);
+  vec2 pixel_bottom_right =
+      pixel_top_left + vec2(kHistogramGraphDimension, kHistogramGraphDimension);
+  ci::Rectf pixel_bounding_box(pixel_top_left, pixel_bottom_right);
+
+  ci::gl::color(ci::Color("blue"));
+  ci::gl::drawSolidRect(pixel_bounding_box);
+
+  vector<vec2> corner_positions;
+  corner_positions.push_back(pixel_top_left);
+  corner_positions.push_back(pixel_bottom_right);
+
+  return corner_positions;
 }
 
 }  // namespace disease
