@@ -6,7 +6,7 @@ namespace visualizer {
 
 using glm::vec2;
 
-Simulator::Simulator() : histogram_(disease_.GetPopulation(), kContainerHeight,
+Simulator::Simulator() : histogram_(disease_.GetPopulation(),
                                    vec2(kLeftContainerMargin, kTopContainerMargin) +
                                    vec2(kContainerWidth, 0)) {
   disease_ = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth, true);

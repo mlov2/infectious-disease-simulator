@@ -5,11 +5,9 @@
 
 namespace disease {
 
-Histogram::Histogram(const vector<Disease::Person>& people, double container_height,
+Histogram::Histogram(const vector<Disease::Person>& people,
                      const vec2& container_top_right_corner) {
   upper_bound_for_y_ = people.size();
-
-  container_height_ = container_height;
   container_top_right_corner_ = container_top_right_corner;
 }
 
@@ -51,5 +49,29 @@ vector<vec2> Histogram::DrawHistogramBackground(double left_boundary_of_histogra
 
   return corner_positions;
 }
+/*
+void Histogram::DrawHistogramBins(vector<vector<Disease::Person>> bins_with_people,
+                                  double left_boundary_of_histogram,
+                                  double histogram_top_left_corner_y) const {
+
+
+
+
+
+  double y_increment = histogram_graph_dimension_ / upper_bound_for_y_;
+  double x_increment = 0;
+  for (const vector<Particle>& bin : bins_with_particles) {
+    vec2 bin_top_left = vec2(left_boundary_of_histogram + x_increment,
+                             histogram_top_left_corner_y + histogram_graph_dimension_ - (bin.size() * y_increment));
+    x_increment += histogram_graph_dimension_ / kNumOfBins;
+    vec2 bin_bottom_right = vec2(left_boundary_of_histogram + x_increment,
+                                 histogram_top_left_corner_y + histogram_graph_dimension_);
+    ci::Rectf bin_box(bin_top_left, bin_bottom_right);
+
+    //std::string color = bin[0].GetColor();
+    ci::gl::color(ci::Color("gray"));
+    ci::gl::drawSolidRect(bin_box);
+  }
+}*/
 
 }  // namespace disease

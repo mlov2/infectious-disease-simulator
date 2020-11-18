@@ -28,7 +28,6 @@ class Histogram {
   map<Status, vector<Disease::Person>> population_sorted_by_status_;
 
   double upper_bound_for_y_;  // i.e. the highest label value for y axis
-  double container_height_;
   vec2 container_top_right_corner_;
 
   /*
@@ -44,7 +43,7 @@ class Histogram {
 
  public:
   Histogram() = default;
-  Histogram(const vector<Disease::Person>& people, double container_height,
+  Histogram(const vector<Disease::Person>& people,
             const vec2& container_top_right_corner);
 
   const map<Status, vector<Disease::Person>>& GetSortedPopulation() const;
