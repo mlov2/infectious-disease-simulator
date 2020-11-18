@@ -10,6 +10,10 @@ using std::map;
 
 namespace disease {
 
+/*
+ * Holds functionality for generating the histograms that
+ * are to be displayed in Cinder app/simulator.
+ */
 class Histogram {
  private:
   // ================================
