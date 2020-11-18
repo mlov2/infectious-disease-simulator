@@ -1133,8 +1133,8 @@ TEST_CASE("Check person status updates") {
         // Particle 2
         REQUIRE(updated_particles[1].position == vec2(55.0, 21.0));
         REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
-        REQUIRE(updated_particles[1].status == disease::Status::kSusceptible);
-        REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
+        REQUIRE(updated_particles[1].status == disease::Status::kRemoved);
+        REQUIRE(updated_particles[1].color == vec3(0.5, 0.5, 0.5));
         REQUIRE(updated_particles[1].continuous_exposure_time == 0);
         REQUIRE(updated_particles[1].time_infected == 0);
       }
@@ -1179,10 +1179,10 @@ TEST_CASE("Check person status updates") {
         // Particle 2
         REQUIRE(updated_particles[1].position == vec2(55.0, 21.0));
         REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
-        REQUIRE(updated_particles[1].status == disease::Status::kSusceptible);
-        REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
+        REQUIRE(updated_particles[1].status == disease::Status::kInfectious);
+        REQUIRE(updated_particles[1].color == vec3(1, 0, 0));
         REQUIRE(updated_particles[1].continuous_exposure_time == 0);
-        REQUIRE(updated_particles[1].time_infected == 0);
+        REQUIRE(updated_particles[1].time_infected == 11);
       }
     }
   }
