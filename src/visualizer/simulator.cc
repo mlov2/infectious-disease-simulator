@@ -6,14 +6,16 @@ namespace visualizer {
 
 using glm::vec2;
 
-Simulator::Simulator() {
+Simulator::Simulator() : histogram_(disease_.GetPopulation(), kContainerHeight,
+                                   vec2(kLeftContainerMargin, kTopContainerMargin) +
+                                   vec2(kContainerWidth, 0)) {
   disease_ = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth, true);
 }
 
 void Simulator::Update() {
   disease_.UpdateParticles();
   particles_info = disease_.GetPopulation();
-  //histogram_.UpdateParticles(particles_info);
+  histogram_.UpdatePopulation(particles_info);
 }
 
 void Simulator::Draw() const {
@@ -39,7 +41,7 @@ void Simulator::Draw() const {
   }
 
   // Draws the histograms
-  //histogram_.DrawHistograms();
+  histogram_.DrawHistogram();
 }
 
 double Simulator::GetTopMargin() {
