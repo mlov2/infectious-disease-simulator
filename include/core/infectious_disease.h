@@ -61,8 +61,8 @@ class Disease {
   // ==================
   size_t kPopulationSize = 200;
   size_t kInfectionRadius = 5;
-  size_t kExposureTimeToBeInfected = 5;
-  size_t kInfectedTimeToBeRemoved = 20;
+  size_t kExposureTimeToBeInfected = 25;
+  size_t kInfectedTimeToBeRemoved = 200;
 
   // ===================
   // Sketchpad variables
