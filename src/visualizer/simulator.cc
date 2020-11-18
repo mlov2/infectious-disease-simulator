@@ -7,12 +7,12 @@ namespace visualizer {
 using glm::vec2;
 
 Simulator::Simulator() {
-  disease = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth, true);
+  disease_ = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth, true);
 }
 
 void Simulator::Update() {
-  disease.UpdateParticles();
-  particles_info = disease.GetPopulation();
+  disease_.UpdateParticles();
+  particles_info = disease_.GetPopulation();
   //histogram_.UpdateParticles(particles_info);
 }
 

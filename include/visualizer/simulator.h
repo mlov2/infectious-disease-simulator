@@ -41,7 +41,7 @@ class Simulator {
   const double kContainerHeight = 580;
   const double kContainerWidth = 550;
 
-  Disease disease;
+  Disease disease_;
   //Histogram histogram_;
   vector<Disease::Person> particles_info;
 };
