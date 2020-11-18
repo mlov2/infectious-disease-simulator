@@ -158,14 +158,14 @@ class Disease {
   Person UpdateExposureTime(const Person& current_person, size_t current_index);
 
 /*
- * Checks if the current person is within the radius of an infected person.
+ * Checks if the current person is within the radius of infected people.
  *
  * @param current_person The current person to check
  * @param current_index The index of the current person in the population vector
  * @return A bool representing if the current person is within the radius
  *     of an infected person
  */
-  bool WithinInfectionRadius(const Person& current_person, size_t current_index) const;
+  bool WithinInfectionRadiusOfOthers(const Person& current_person, size_t current_index) const;
 
 /*
  * Checks if the current person is within the radius of the specified infected person.

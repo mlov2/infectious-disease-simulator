@@ -106,9 +106,9 @@ Disease::Person Disease::UpdateExposureTime(const Disease::Person& current_perso
   // infected by a particle that's been updated already
   if (patient.has_been_exposed_in_frame) {
     patient.continuous_exposure_time++;
-  } else if (WithinInfectionRadius(patient, current_index)) {
+  } else if (WithinInfectionRadiusOfOthers(patient, current_index)) {
     // Check if the current particle will get
-    // infected by a particle that's not updated yet
+    // infected by particles that aren't updated yet
     patient.continuous_exposure_time++;
   } else {
     patient.continuous_exposure_time = 0;
@@ -117,7 +117,7 @@ Disease::Person Disease::UpdateExposureTime(const Disease::Person& current_perso
   return patient;
 }
 
-bool Disease::WithinInfectionRadius(const Disease::Person& current_person, size_t current_index) const {
+bool Disease::WithinInfectionRadiusOfOthers(const Disease::Person& current_person, size_t current_index) const {
   for (size_t other = current_index + 1; other < population_.size(); other++) {
     Disease::Person other_person = population_[other];
 
