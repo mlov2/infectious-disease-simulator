@@ -81,6 +81,66 @@ void Disease::UpdateParticles() {
   }
 }
 
+Disease::Person Disease::UpdatePersonStatus(const Person& current_person, size_t current_index) {
+  Person patient = current_person;
+  if (patient.status == Status::kSusceptible) {
+    // Update the susceptible person's exposure time
+    patient = UpdateExposureTime(current_person, current_index);
+
+    if (patient.continuous_exposure_time == kExposureTimeToBeInfected) {
+      patient.status = Status::kInfectious;
+      patient.continuous_exposure_time = 0;
+    }
+  } else if (patient.status == Status::kInfectious) {
+
+  }
+
+  return patient;
+}
+
+Disease::Person Disease::UpdateExposureTime(const Disease::Person& current_person, size_t current_index) {
+  Disease::Person patient = current_person;
+
+  // Check if the current particle has already been
+  // infected by a particle that's been updated already
+  if (patient.has_been_exposed_in_frame) {
+    patient.continuous_exposure_time++;
+  } else if (WithinInfectionRadius(patient, current_index)) {
+    // Check if the current particle will get
+    // infected by a particle that's not updated yet
+    patient.continuous_exposure_time++;
+  } else {
+    patient.continuous_exposure_time = 0;
+  }
+
+  return patient;
+}
+
+bool Disease::WithinInfectionRadius(const Disease::Person& current_person, size_t current_index) const {
+  for (size_t other = current_index + 1; other < population_.size(); other++) {
+    Disease::Person other_person = population_[other];
+
+    if (other_person.status == Status::kInfectious) {
+      if (WithinOneInfectionRadius(current_person, other_person)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+bool Disease::WithinOneInfectionRadius(const Disease::Person& current_person, const Disease::Person& other_person) const {
+  // Calculate distance between center of particles
+  double position_x_val_difference = current_person.position.x - other_person.position.x;
+  double position_y_val_difference = current_person.position.y - other_person.position.y;
+  double sum_of_squared_differences = (position_x_val_difference * position_x_val_difference) +
+                                      (position_y_val_difference * position_y_val_difference);
+  double distance_between_centers = sqrt(sum_of_squared_differences);
+
+  return (distance_between_centers <= (current_person.radius + other_person.radius + kInfectionRadius));
+}
+
 void Disease::CheckForWallCollisions(size_t current) {
   if (HasCollidedWithWall(population_[current],
                           top_wall_, true) ||
