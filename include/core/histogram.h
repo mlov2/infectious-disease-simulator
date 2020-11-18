@@ -39,7 +39,12 @@ class Histogram {
             double max_number_of_particles, double container_height,
             const vec2& container_top_right_corner);
 
-
+  /*
+   * Sorts all the people according to their health status.
+   *
+   * @param particles The vector of people to sort
+   */
+  void SortPopulation(const vector<Disease::Person>& population);
 };
 
 }  // namespace disease
