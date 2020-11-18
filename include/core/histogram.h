@@ -21,8 +21,8 @@ class Histogram {
   // ================================
   const size_t kHistogramLimit = 3;
   const double kSpacingBetweenHistograms = 50;
-  const size_t kLabelSpacingFromHistogram = 8;
-  const size_t kSpacingFromContainer = 125;
+  //const size_t kLabelSpacingFromHistogram = 8;
+  //const size_t kSpacingFromContainer = 125;
 
   // the key is a Status representing the health status
   // the value is a vector representing the people with the specified health status
