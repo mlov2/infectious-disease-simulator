@@ -74,10 +74,6 @@ class Disease {
   // Person constants
   // ================
   double kRadius = 10;
-  int kMinVelComponent = -1;
-  int kAddToMinVelComponent = 2;
-  double kScaleDenominatorVel = 10.0;
-  int kMaxScaleForVelNumerator = 9;
 
   // ==================
   // Stats as constants
