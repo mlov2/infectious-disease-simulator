@@ -104,6 +104,53 @@ class Disease {
   void ResetExposureInFrame();
 
   /*
+   * Updates the person's status based on the current stats for the person (i.e.
+   * exposure time if currently susceptible or infected time if currently infected).
+   *
+   * @param current_person The current person's status to update
+   * @param current_index The index of the current person in the population vector
+   * @return The person with their status updated
+   */
+  Person UpdatePersonStatus(const Person& current_person, size_t current_index);
+
+  /*
+   * Updates the exposure time for a susceptible person.
+   *
+   * @param current_person The current person's exposure time to update
+   * @param current_index The index of the current person in the population vector
+   * @return The person with their exposure time updated
+   */
+  Person UpdateExposureTime(const Person& current_person, size_t current_index);
+
+  /*
+   * Checks if the current person is within the radius of infected people.
+   *
+   * @param current_person The current person to check
+   * @param current_index The index of the current person in the population vector
+   * @return A bool representing if the current person is within the radius
+   *     of an infected person
+   */
+  bool WithinInfectionRadiusOfOthers(const Person& current_person, size_t current_index) const;
+
+  /*
+   * Makes the current infected person expose the disease to those who are susceptible.
+   *
+   * @param current_person The current person who is infected
+   * @param current_index The index of the current person in the population vector
+   */
+  void ExposeOthers(const Person& current_person, size_t current_index);
+
+  /*
+   * Checks if the current person is within the radius of the specified infected person.
+   *
+   * @param current_person The current person to check
+   * @param other_person The person to check if the current person is within their infection radius
+   * @return A bool representing if the current person is within the radius
+   *     of an infected person
+   */
+  bool WithinOneInfectionRadius(const Person& current_person, const Person& other_person) const;
+
+  /*
    * Checks for wall collisions with the current particle.
    *
    * @param current The index of the current particle
@@ -142,53 +189,6 @@ class Disease {
    * @return A vec2 representing the updated_position within the container bounds
    */
   vec2 KeepWithinContainer(const vec2& updated_position, double current_particle_radius);
-
-  /*
-   * Updates the person's status based on the current stats for the person (i.e.
-   * exposure time if currently susceptible or infected time if currently infected).
-   *
-   * @param current_person The current person's status to update
-   * @param current_index The index of the current person in the population vector
-   * @return The person with their status updated
-   */
-  Person UpdatePersonStatus(const Person& current_person, size_t current_index);
-
-/*
- * Updates the exposure time for a susceptible person.
- *
- * @param current_person The current person's exposure time to update
- * @param current_index The index of the current person in the population vector
- * @return The person with their exposure time updated
- */
-  Person UpdateExposureTime(const Person& current_person, size_t current_index);
-
-/*
- * Checks if the current person is within the radius of infected people.
- *
- * @param current_person The current person to check
- * @param current_index The index of the current person in the population vector
- * @return A bool representing if the current person is within the radius
- *     of an infected person
- */
-  bool WithinInfectionRadiusOfOthers(const Person& current_person, size_t current_index) const;
-
-  /*
-   * Makes the current infected person expose the disease to those who are susceptible.
-   *
-   * @param current_person The current person who is infected
-   * @param current_index The index of the current person in the population vector
-   */
-  void ExposeOthers(const Person& current_person, size_t current_index);
-
-/*
- * Checks if the current person is within the radius of the specified infected person.
- *
- * @param current_person The current person to check
- * @param other_person The person to check if the current person is within their infection radius
- * @return A bool representing if the current person is within the radius
- *     of an infected person
- */
-  bool WithinOneInfectionRadius(const Person& current_person, const Person& other_person) const;
 };
 
 }  // namespace disease
