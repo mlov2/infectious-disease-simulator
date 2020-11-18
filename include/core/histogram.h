@@ -39,6 +39,8 @@ class Histogram {
             double max_number_of_particles, double container_height,
             const vec2& container_top_right_corner);
 
+  const map<Status, vector<Disease::Person>>& GetSortedPopulation() const;
+
   /*
    * Sorts all the people according to their health status.
    *
