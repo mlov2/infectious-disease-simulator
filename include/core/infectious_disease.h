@@ -1,6 +1,7 @@
 #pragma once
 
 #include "cinder/gl/gl.h"
+#include "cinder/Rand.h"
 #include <cmath>
 #include <string>
 #include <vector>

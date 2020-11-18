@@ -36,7 +36,8 @@ Disease::Person Disease::CreatePerson() {
   int y_position = rand() % int(bottom_wall_) + int(top_wall_);
   new_person.position = vec2(x_position, y_position);
 
-  new_person.velocity = GenerateVelocity();
+  //new_person.velocity = GenerateVelocity();
+  new_person.velocity = vec2(ci::randFloat(-1,1), ci::randFloat(-1,1));
   new_person.status = Status::kSusceptible;
   new_person.color = vec3(0,0,1);
   new_person.continuous_exposure_time = 0;
