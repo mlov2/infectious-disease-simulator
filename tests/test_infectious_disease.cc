@@ -1020,7 +1020,7 @@ TEST_CASE("Check person status updates") {
         person.status = disease::Status::kInfectious;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
-        person.time_infected = 199;
+        person.time_infected = 499;
         person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
@@ -1114,7 +1114,7 @@ TEST_CASE("Check person status updates") {
         person.status = disease::Status::kInfectious;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
-        person.time_infected = 199;
+        person.time_infected = 499;
         person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
