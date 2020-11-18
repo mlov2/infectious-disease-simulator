@@ -795,10 +795,10 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       // Particle 2
       REQUIRE(updated_particles[1].position == vec2(35.0, 57.0));
       REQUIRE(updated_particles[1].velocity == vec2(5.0, 7.0));
-      REQUIRE(updated_particles[1].status == disease::Status::kSusceptible);
-      REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
+      REQUIRE(updated_particles[1].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[1].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[1].continuous_exposure_time == 0);
-      REQUIRE(updated_particles[1].time_infected == 0);
+      REQUIRE(updated_particles[1].time_infected == 1);
     }
   }
 }
