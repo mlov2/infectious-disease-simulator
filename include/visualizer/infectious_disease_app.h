@@ -9,7 +9,7 @@ namespace disease {
 
 namespace visualizer {
 
-/**
+/*
  * Displays a simulator to the user.
  */
 class InfectiousDiseaseApp : public ci::app::App {

@@ -10,22 +10,22 @@ namespace disease {
 
 namespace visualizer {
 
-/**
+/*
  * A simulator which will be displayed in the Cinder application.
  */
 class Simulator {
  public:
-  /**
+  /*
    * Creates a simulator.
    */
   Simulator();
 
-  /**
+  /*
    * Updates particles' info.
    */
   void Update();
 
-  /**
+  /*
    * Displays the current state of the sketchpad in the Cinder application.
    */
   void Draw() const;
