@@ -46,6 +46,15 @@ class Histogram {
   vector<vec2> DrawHistogramBackground(double left_boundary_of_histogram,
                                        double histogram_top_left_corner_y) const;
 
+  /*
+   * Draws the bins of the histogram.
+   *
+   * @param left_boundary_of_histogram The left boundary of the histogram
+   * @param top_left_corner_y The y value of the top left corner of the histogram
+   */
+  void DrawHistogramBins(double left_boundary_of_histogram,
+                         double histogram_top_left_corner_y) const;
+
  public:
   Histogram() = default;
   Histogram(const vector<Disease::Person>& people,

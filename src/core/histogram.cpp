@@ -37,6 +37,9 @@ void Histogram::DrawHistogram() const {
   // Draws the background of histogram
   double left_boundary_of_histogram = container_top_right_corner_.x + kSpacingFromContainer;
   DrawHistogramBackground(left_boundary_of_histogram, container_top_right_corner_.y);
+
+  // Draws the bins of histogram
+  DrawHistogramBins(left_boundary_of_histogram, container_top_right_corner_.y);
 }
 
 vector<vec2> Histogram::DrawHistogramBackground(double left_boundary_of_histogram,
@@ -55,29 +58,29 @@ vector<vec2> Histogram::DrawHistogramBackground(double left_boundary_of_histogra
 
   return corner_positions;
 }
-/*
-void Histogram::DrawHistogramBins(vector<vector<Disease::Person>> bins_with_people,
-                                  double left_boundary_of_histogram,
+
+void Histogram::DrawHistogramBins(double left_boundary_of_histogram,
                                   double histogram_top_left_corner_y) const {
+  double x_increment = kHistogramGraphDimension / time_elapsed_since_outbreak_;
+  double y_increment = kHistogramGraphDimension / upper_bound_for_y_;
 
+  double current_left_side_bin_x = left_boundary_of_histogram;
 
+  // Loop through vector; each element represents one frame, which is one bin of the histogram
+  for (const map<Status, vector<Disease::Person>>& info_for_frame : cumulative_info_of_population_) {
+    if (info_for_frame.count(Status::kInfectious) != 0) {
+      vec2 infectious_bin_top_left =
+          vec2(current_left_side_bin_x,histogram_top_left_corner_y + kHistogramGraphDimension -
+                     (info_for_frame.at(Status::kInfectious).size() * y_increment));
+      current_left_side_bin_x += x_increment;
+      vec2 infectious_bin_bottom_right =
+          vec2(current_left_side_bin_x,histogram_top_left_corner_y + kHistogramGraphDimension);
 
-
-
-  double y_increment = histogram_graph_dimension_ / upper_bound_for_y_;
-  double x_increment = 0;
-  for (const vector<Particle>& bin : bins_with_particles) {
-    vec2 bin_top_left = vec2(left_boundary_of_histogram + x_increment,
-                             histogram_top_left_corner_y + histogram_graph_dimension_ - (bin.size() * y_increment));
-    x_increment += histogram_graph_dimension_ / kNumOfBins;
-    vec2 bin_bottom_right = vec2(left_boundary_of_histogram + x_increment,
-                                 histogram_top_left_corner_y + histogram_graph_dimension_);
-    ci::Rectf bin_box(bin_top_left, bin_bottom_right);
-
-    //std::string color = bin[0].GetColor();
-    ci::gl::color(ci::Color("gray"));
-    ci::gl::drawSolidRect(bin_box);
+      ci::Rectf bin_box(infectious_bin_top_left, infectious_bin_bottom_right);
+      ci::gl::color(ci::Color("red"));
+      ci::gl::drawSolidRect(bin_box);
+    }
   }
-}*/
+}
 
 }  // namespace disease
