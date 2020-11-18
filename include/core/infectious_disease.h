@@ -13,14 +13,37 @@ using std::vector;
 
 namespace disease {
 
+/*
+ * Represents the health status of a person.
+ */
 enum class Status {
   kSusceptible,
   kInfectious,
   kRemoved,
 };
 
+/*
+ * Holds info on people in the population and their changes
+ * in health status and movement.
+ */
 class Disease {
  public:
+  /*
+   * Holds the info pertaining to a single person in the population.
+   *
+   * radius: the radius of the particle representing the person
+   * position: the position of the particle representing the person
+   * velocity: the velocity of the particle representing the person
+   * status: the health status of the person
+   * color: the color of the particle representing the person
+   * continuous_exposure_time: the time the person has been exposed to an
+   *     infected person continuously (used when status is susceptible)
+   * time_infected: the total amount of time the person has been infected
+   *     (used when status is infectious)
+   * has_been_exposed_in_frame: represents if the person (if status is
+   *     susceptible) has been exposed to an infected person within the
+   *     current frame
+   */
   struct Person {
       double radius;
       vec2 position;
