@@ -829,7 +829,7 @@ TEST_CASE("Check person status updates") {
         person.velocity = vec2(-5, 6);
         person.status = disease::Status::kSusceptible;
         person.color = vec3(0,0,1);
-        person.continuous_exposure_time = 4;
+        person.continuous_exposure_time = 24;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
@@ -923,7 +923,7 @@ TEST_CASE("Check person status updates") {
         person.velocity = vec2(-5, 6);
         person.status = disease::Status::kSusceptible;
         person.color = vec3(0,0,1);
-        person.continuous_exposure_time = 4;
+        person.continuous_exposure_time = 24;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
@@ -1020,7 +1020,7 @@ TEST_CASE("Check person status updates") {
         person.status = disease::Status::kInfectious;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
-        person.time_infected = 19;
+        person.time_infected = 199;
         person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
@@ -1114,7 +1114,7 @@ TEST_CASE("Check person status updates") {
         person.status = disease::Status::kInfectious;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
-        person.time_infected = 19;
+        person.time_infected = 199;
         person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
