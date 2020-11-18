@@ -32,9 +32,8 @@ Disease::Person Disease::CreatePerson() {
 
   new_person.radius = kRadius;
 
-  int x_position = rand() % int(right_wall_) + int(left_wall_);
-  int y_position = rand() % int(bottom_wall_) + int(top_wall_);
-  new_person.position = vec2(x_position, y_position);
+  new_person.position = vec2(ci::randFloat(left_wall_, right_wall_),
+                             ci::randFloat(top_wall_, bottom_wall_));
 
   new_person.velocity = vec2(ci::randFloat(-1,1), ci::randFloat(-1,1));
   new_person.status = Status::kSusceptible;
