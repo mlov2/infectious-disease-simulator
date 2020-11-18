@@ -35,8 +35,7 @@ class Histogram {
 
  public:
   Histogram() = default;
-  Histogram(const vector<Disease::Person>& people,
-            double max_number_of_people, double container_height,
+  Histogram(const vector<Disease::Person>& people, double container_height,
             const vec2& container_top_right_corner);
 
   const map<Status, vector<Disease::Person>>& GetSortedPopulation() const;

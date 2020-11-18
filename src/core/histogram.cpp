@@ -5,10 +5,9 @@
 
 namespace disease {
 
-Histogram::Histogram(const vector<Disease::Person>& people,
-                     double max_number_of_people, double container_height,
+Histogram::Histogram(const vector<Disease::Person>& people, double container_height,
                      const vec2& container_top_right_corner) {
-  upper_bound_for_y_ = max_number_of_people;
+  upper_bound_for_y_ = people.size();
 
   container_height_ = container_height;
   container_top_right_corner_ = container_top_right_corner;
