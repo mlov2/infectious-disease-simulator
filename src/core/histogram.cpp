@@ -20,4 +20,12 @@ const map<Status, vector<Disease::Person>>& Histogram::GetSortedPopulation() con
   return population_sorted_by_status_;
 }
 
+void Histogram::SortPopulation(const vector<Disease::Person>& population) {
+  population_sorted_by_status_.clear();
+
+  for (const Disease::Person& person : population) {
+    population_sorted_by_status_[person.status].push_back(person);
+  }
+}
+
 }  // namespace disease
