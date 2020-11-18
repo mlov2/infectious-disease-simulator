@@ -55,7 +55,13 @@ class Disease {
   double kScaleDenominatorVel = 10.0;
   int kMaxScaleForVelNumerator = 9;
 
+  // ==================
+  // Stats as constants
+  // ==================
   size_t kPopulationSize = 200;
+  size_t kInfectionRadius = 5;
+  size_t kExposureTimeToBeInfected = 5;
+  size_t kInfectedTimeToBeRemoved = 20;
 
   // ===================
   // Sketchpad variables
