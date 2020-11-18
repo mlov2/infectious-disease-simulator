@@ -7,7 +7,6 @@ namespace disease {
 
 Histogram::Histogram(const vector<Disease::Person>& people,
                      const vec2& container_top_right_corner) {
-  upper_bound_for_y_ = people.size();
   container_top_right_corner_ = container_top_right_corner;
   time_elapsed_since_outbreak_ = 0;
 
@@ -24,6 +23,8 @@ void Histogram::SortPopulation(const vector<Disease::Person>& population) {
   for (const Disease::Person& person : population) {
     population_sorted_by_status_[person.status].push_back(person);
   }
+
+  upper_bound_for_y_ = population.size();
 }
 
 void Histogram::Update(const vector<Disease::Person>& updated_population, size_t time_passed) {
