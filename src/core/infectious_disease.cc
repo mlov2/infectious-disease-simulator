@@ -131,6 +131,16 @@ bool Disease::WithinInfectionRadiusOfOthers(const Disease::Person& current_perso
   return false;
 }
 
+void Disease::ExposeOthers(const Disease::Person& current_person, size_t current_index) {
+  for (size_t other = current_index + 1; other < population_.size(); other++) {
+    if (population_[other].status == Status::kSusceptible) {
+      if (WithinOneInfectionRadius(current_person, population_[other])) {
+        population_[other].has_been_exposed_in_frame = true;
+      }
+    }
+  }
+}
+
 bool Disease::WithinOneInfectionRadius(const Disease::Person& current_person, const Disease::Person& other_person) const {
   // Calculate distance between center of particles
   double position_x_val_difference = current_person.position.x - other_person.position.x;

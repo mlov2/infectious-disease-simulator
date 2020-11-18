@@ -167,6 +167,14 @@ class Disease {
  */
   bool WithinInfectionRadiusOfOthers(const Person& current_person, size_t current_index) const;
 
+  /*
+   * Makes the current infected person expose the disease to those who are susceptible.
+   *
+   * @param current_person The current person who is infected
+   * @param current_index The index of the current person in the population vector
+   */
+  void ExposeOthers(const Person& current_person, size_t current_index);
+
 /*
  * Checks if the current person is within the radius of the specified infected person.
  *
