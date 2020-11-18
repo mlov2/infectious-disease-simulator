@@ -94,6 +94,7 @@ Disease::Person Disease::UpdatePersonStatus(const Person& current_person, size_t
 
     if (patient.continuous_exposure_time == kExposureTimeToBeInfected) {
       patient.status = Status::kInfectious;
+      patient.color = vec3(1, 0, 0);
       patient.continuous_exposure_time = 0;
     }
   } else if (patient.status == Status::kInfectious) {
@@ -102,6 +103,7 @@ Disease::Person Disease::UpdatePersonStatus(const Person& current_person, size_t
     patient.time_infected++;
     if (patient.time_infected == kInfectedTimeToBeRemoved) {
       patient.status = Status::kRemoved;
+      patient.color = vec3(0.5, 0.5, 0.5);
       patient.time_infected = 0;
     }
   }
