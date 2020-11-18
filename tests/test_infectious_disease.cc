@@ -26,6 +26,7 @@ TEST_CASE("Create population", "[create population]") {
     REQUIRE(all_particles[i].color == vec3(0, 0, 1));
     REQUIRE(all_particles[i].continuous_exposure_time == 0);
     REQUIRE(all_particles[i].time_infected == 0);
+    REQUIRE(all_particles[i].has_been_exposed_in_frame == false);
   }
 
   // Patient zero created
@@ -42,6 +43,7 @@ TEST_CASE("Create population", "[create population]") {
   REQUIRE(all_particles[all_particles.size() - 1].color == vec3(1, 0, 0));
   REQUIRE(all_particles[all_particles.size() - 1].continuous_exposure_time == 0);
   REQUIRE(all_particles[all_particles.size() - 1].time_infected == 0);
+  REQUIRE(all_particles[all_particles.size() - 1].has_been_exposed_in_frame == false);
 }
 
 TEST_CASE("Person info updates after 1 frame (no collision)",
@@ -67,6 +69,7 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -92,6 +95,7 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
     all_particles.push_back(person);
 
     // Particle 2
@@ -102,6 +106,7 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.color = vec3(0,0,1);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -136,6 +141,7 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
     all_particles.push_back(person);
 
     // Particle 2
@@ -146,6 +152,7 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.color = vec3(0,0,1);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
     all_particles.push_back(person);
 
     // Particle 3
@@ -156,6 +163,7 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.color = vec3(0,0,1);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -211,6 +219,7 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -237,6 +246,7 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
     all_particles.push_back(person);
 
     // Particle 2
@@ -247,6 +257,7 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     person.color = vec3(0,0,1);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -282,6 +293,7 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
     all_particles.push_back(person);
 
     // Particle 2
@@ -292,6 +304,7 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     person.color = vec3(0,0,1);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
     all_particles.push_back(person);
 
     // Particle 3
@@ -302,6 +315,7 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     person.color = vec3(0,0,1);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -351,6 +365,7 @@ TEST_CASE("Person info updates after collision with wall",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -375,6 +390,7 @@ TEST_CASE("Person info updates after collision with wall",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -399,6 +415,7 @@ TEST_CASE("Person info updates after collision with wall",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -423,6 +440,7 @@ TEST_CASE("Person info updates after collision with wall",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -447,6 +465,7 @@ TEST_CASE("Person info updates after collision with wall",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -474,6 +493,7 @@ TEST_CASE("Person info updates after collision with wall",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       // Particle 2 collides with bottom wall
@@ -484,6 +504,7 @@ TEST_CASE("Person info updates after collision with wall",
       person.color = vec3(0,0,1);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -518,6 +539,7 @@ TEST_CASE("Person info updates after collision with wall",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       // Particle 2 doesn't collide with anything
@@ -528,6 +550,7 @@ TEST_CASE("Person info updates after collision with wall",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -569,6 +592,7 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -593,6 +617,7 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -617,6 +642,7 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -641,6 +667,7 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -665,6 +692,7 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -692,6 +720,7 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       // Particle 2 touches but doesn't collide with bottom wall
@@ -702,6 +731,7 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.color = vec3(0,0,1);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -736,6 +766,7 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       // Particle 2 doesn't collide with anything
@@ -746,6 +777,7 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -788,6 +820,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -798,6 +831,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(0,0,1);
         person.continuous_exposure_time = 4;
         person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -832,6 +866,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -842,6 +877,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(0,0,1);
         person.continuous_exposure_time = 3;
         person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -878,6 +914,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -888,6 +925,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(0,0,1);
         person.continuous_exposure_time = 4;
         person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -922,6 +960,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -932,6 +971,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(0,0,1);
         person.continuous_exposure_time = 2;
         person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -970,6 +1010,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -980,6 +1021,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 19;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -1014,6 +1056,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -1024,6 +1067,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 10;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -1060,6 +1104,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -1070,6 +1115,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 19;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -1104,6 +1150,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -1114,6 +1161,7 @@ TEST_CASE("Check person status updates") {
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 10;
+        person.has_been_exposed_in_frame = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -1151,6 +1199,7 @@ TEST_CASE("Check person status updates") {
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       // Particle 2
@@ -1161,6 +1210,7 @@ TEST_CASE("Check person status updates") {
       person.color = vec3(0.5,0.5,0.5);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -1195,6 +1245,7 @@ TEST_CASE("Check person status updates") {
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       // Particle 2
@@ -1205,6 +1256,7 @@ TEST_CASE("Check person status updates") {
       person.color = vec3(0.5,0.5,0.5);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
