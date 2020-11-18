@@ -26,7 +26,7 @@ class Histogram {
 
   // the key is a Status representing the health status
   // the value is a vector representing the people with the specified health status
-  map<Status, vector<Disease::Person>> population_sorted_by_status;
+  map<Status, vector<Disease::Person>> population_sorted_by_status_;
 
   double upper_bound_for_y_;  // i.e. the highest label value for y axis
   double histogram_graph_dimension_;  // length and width of histogram graph

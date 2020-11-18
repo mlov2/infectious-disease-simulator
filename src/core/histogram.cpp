@@ -16,4 +16,8 @@ Histogram::Histogram(const vector<Disease::Person>& particles,
   histogram_graph_dimension_ = (container_height - total_spacing_between_histograms) / kHistogramLimit;
 }
 
+const map<Status, vector<Disease::Person>>& Histogram::GetSortedPopulation() const {
+  return population_sorted_by_status_;
+}
+
 }  // namespace disease
