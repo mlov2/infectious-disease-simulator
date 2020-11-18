@@ -10,6 +10,8 @@ Histogram::Histogram(const vector<Disease::Person>& people,
   upper_bound_for_y_ = people.size();
   container_top_right_corner_ = container_top_right_corner;
   time_elapsed_since_outbreak_ = 0;
+
+  SortPopulation(people);
 }
 
 const map<Status, vector<Disease::Person>>& Histogram::GetSortedPopulation() const {
