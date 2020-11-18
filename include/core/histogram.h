@@ -22,14 +22,18 @@ class Histogram {
   const double kHistogramGraphDimension = 400;  // length and width of histogram graph
   //const size_t kLabelSpacingFromHistogram = 8;
   const size_t kSpacingFromContainer = 125;
+  //const size_t kUpdatesPerSecond = 50;
+
+  double upper_bound_for_y_;  // i.e. the highest label value for y axis
+  vec2 container_top_right_corner_;
+  size_t time_elapsed_since_outbreak_;
 
   // the key is a Status representing the health status
   // the value is a vector representing the people with the specified health status
   map<Status, vector<Disease::Person>> population_sorted_by_status_;
 
-  double upper_bound_for_y_;  // i.e. the highest label value for y axis
-  vec2 container_top_right_corner_;
-  size_t time_elapsed_since_outbreak_;
+  // Contains info of sorted particles for every frame
+  vector<map<Status, vector<Disease::Person>>> cumulative_info_of_population_;
 
   /*
    * Draws the background of the histogram (i.e. the graph).
