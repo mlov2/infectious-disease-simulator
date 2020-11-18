@@ -80,6 +80,19 @@ void Histogram::DrawHistogramBins(double left_boundary_of_histogram,
       ci::gl::color(ci::Color("red"));
       ci::gl::drawSolidRect(bin_box);
     }
+
+    if (info_for_frame.count(Status::kRemoved) != 0) {
+      vec2 removed_bin_top_left =
+          vec2(current_left_side_bin_x,histogram_top_left_corner_y);
+      current_left_side_bin_x += x_increment;
+      vec2 removed_bin_bottom_right =
+          vec2(current_left_side_bin_x,histogram_top_left_corner_y +
+                                       (info_for_frame.at(Status::kRemoved).size() * y_increment));
+
+      ci::Rectf bin_box(removed_bin_top_left, removed_bin_bottom_right);
+      ci::gl::color(ci::Color("gray"));
+      ci::gl::drawSolidRect(bin_box);
+    }
   }
 }
 
