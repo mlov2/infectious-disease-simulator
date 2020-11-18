@@ -84,6 +84,7 @@ void Disease::UpdateParticles() {
 
 Disease::Person Disease::UpdatePersonStatus(const Person& current_person, size_t current_index) {
   Person patient = current_person;
+
   if (patient.status == Status::kSusceptible) {
     // Update the susceptible person's exposure time
     patient = UpdateExposureTime(current_person, current_index);
@@ -93,7 +94,13 @@ Disease::Person Disease::UpdatePersonStatus(const Person& current_person, size_t
       patient.continuous_exposure_time = 0;
     }
   } else if (patient.status == Status::kInfectious) {
+    ExposeOthers(current_person, current_index);
 
+    patient.time_infected++;
+    if (patient.time_infected == kInfectedTimeToBeRemoved) {
+      patient.status = Status::kRemoved;
+      patient.time_infected = 0;
+    }
   }
 
   return patient;
