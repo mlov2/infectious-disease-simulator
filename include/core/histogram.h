@@ -19,7 +19,7 @@ class Histogram {
   // ================================
   // Constants for drawing histograms
   // ================================
-  const double kHistogramGraphDimension = 400;  // length and width of histogram graph
+  const double kHistogramGraphDimension = 300;  // length and width of histogram graph
   const size_t kLabelSpacingFromHistogram = 10;
   const size_t kSpacingFromContainer = 125;
 
