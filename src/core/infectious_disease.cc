@@ -12,7 +12,7 @@ Disease::Disease(double left_margin, double top_margin,
 
   if (should_create_population) {
     // Add people to population
-    for (size_t i = 0; i < kPopulationSize; i++) {
+    for (size_t i = 0; i < kSusceptiblePopulation; i++) {
       population_.push_back(CreatePerson());
     }
     population_.push_back(CreatePatientZero());
