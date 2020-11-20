@@ -119,6 +119,8 @@ void Histogram::DrawHistogramLabels(double left_boundary_of_histogram,
 
   // Label bounds of axes
   DrawBoundsLabels(left_boundary_of_histogram, histogram_top_left_corner_y);
+
+  DrawStatusStatistics(left_boundary_of_histogram);
 }
 
 void Histogram::DrawAxesLabels(double left_boundary_of_histogram,
@@ -154,6 +156,33 @@ void Histogram::DrawBoundsLabels(double left_boundary_of_histogram,
   ci::gl::drawStringCentered(std::to_string(int(upper_bound_for_y_)),
                              vec2(left_boundary_of_histogram - kLabelSpacingFromHistogram,
                                   histogram_top_left_corner_y), ci::Color("black"));
+}
+
+void Histogram::DrawStatusStatistics(double left_boundary_of_histogram) const {
+  size_t num_susceptible = 0;
+  size_t num_infections = 0;
+  size_t num_removed = 0;
+
+  if (population_sorted_by_status_.count(Status::kSusceptible) != 0) {
+    num_susceptible = population_sorted_by_status_.at(Status::kSusceptible).size();
+  }
+  if (population_sorted_by_status_.count(Status::kInfectious) != 0) {
+    num_infections = population_sorted_by_status_.at(Status::kInfectious).size();
+  }
+  if (population_sorted_by_status_.count(Status::kRemoved) != 0) {
+    num_removed = population_sorted_by_status_.at(Status::kRemoved).size();
+  }
+
+  ci::gl::drawString("Number of People Susceptible: " + std::to_string(num_susceptible),
+                    vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2,
+                         container_top_right_corner_.y), ci::Color("black"));
+  ci::gl::drawString("Number of People Infectious: " + std::to_string(num_infections),
+                     vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2,
+                          container_top_right_corner_.y + kLabelSpacingFromHistogramTimes2), ci::Color("black"));
+  ci::gl::drawString("Number of People Removed: " + std::to_string(num_removed),
+                     vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2,
+                          container_top_right_corner_.y + kLabelSpacingFromHistogramTimes2 + kLabelSpacingFromHistogramTimes2),
+                          ci::Color("black"));
 }
 
 }  // namespace disease

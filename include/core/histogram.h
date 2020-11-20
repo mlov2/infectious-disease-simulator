@@ -21,6 +21,7 @@ class Histogram {
   // ================================
   const double kHistogramGraphDimension = 300;  // length and width of histogram graph
   const size_t kLabelSpacingFromHistogram = 10;
+  const size_t kLabelSpacingFromHistogramTimes2 = 20;
   const size_t kSpacingFromContainer = 125;
 
   double upper_bound_for_y_;  // i.e. the highest label value for y axis
@@ -97,6 +98,13 @@ class Histogram {
    */
   void DrawBoundsLabels(double left_boundary_of_histogram,
                         double histogram_top_left_corner_y) const;
+
+  /*
+   * Draws the status statistics of the population.
+   *
+   * @param left_boundary_of_histogram The left boundary of the histogram
+   */
+  void DrawStatusStatistics(double left_boundary_of_histogram) const;
 
  public:
   Histogram() = default;
