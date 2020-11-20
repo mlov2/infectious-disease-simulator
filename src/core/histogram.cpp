@@ -72,9 +72,8 @@ void Histogram::DrawHistogramBins(double left_boundary_of_histogram,
       vec2 infectious_bin_top_left =
           vec2(current_left_side_bin_x,histogram_top_left_corner_y + kHistogramGraphDimension -
                      (info_for_frame.at(Status::kInfectious).size() * y_increment));
-      current_left_side_bin_x += x_increment;
       vec2 infectious_bin_bottom_right =
-          vec2(current_left_side_bin_x,histogram_top_left_corner_y + kHistogramGraphDimension);
+          vec2(current_left_side_bin_x + x_increment,histogram_top_left_corner_y + kHistogramGraphDimension);
 
       ci::Rectf bin_box(infectious_bin_top_left, infectious_bin_bottom_right);
       ci::gl::color(ci::Color("red"));
@@ -84,15 +83,16 @@ void Histogram::DrawHistogramBins(double left_boundary_of_histogram,
     if (info_for_frame.count(Status::kRemoved) != 0) {
       vec2 removed_bin_top_left =
           vec2(current_left_side_bin_x,histogram_top_left_corner_y);
-      current_left_side_bin_x += x_increment;
       vec2 removed_bin_bottom_right =
-          vec2(current_left_side_bin_x,histogram_top_left_corner_y +
+          vec2(current_left_side_bin_x + x_increment,histogram_top_left_corner_y +
                                        (info_for_frame.at(Status::kRemoved).size() * y_increment));
 
       ci::Rectf bin_box(removed_bin_top_left, removed_bin_bottom_right);
       ci::gl::color(ci::Color("gray"));
       ci::gl::drawSolidRect(bin_box);
     }
+
+    current_left_side_bin_x += x_increment;
   }
 }
 
