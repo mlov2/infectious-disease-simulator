@@ -74,12 +74,29 @@ class Histogram {
   /*
    * Draws the labels of the histogram for the axes and title.
    *
-   * @param people The vector of people for a single bin (all of same status)
    * @param left_boundary_of_histogram The left boundary of the histogram
    * @param top_left_corner_y The y value of the top left corner of the histogram
    */
   void DrawHistogramLabels(double left_boundary_of_histogram,
                            double histogram_top_left_corner_y) const;
+
+  /*
+   * Draws the axes labels of the histogram.
+   *
+   * @param left_boundary_of_histogram The left boundary of the histogram
+   * @param top_left_corner_y The y value of the top left corner of the histogram
+   */
+  void DrawAxesLabels(double left_boundary_of_histogram,
+                      double histogram_top_left_corner_y) const;
+
+  /*
+   * Draws the labels of the axes bounds.
+   *
+   * @param left_boundary_of_histogram The left boundary of the histogram
+   * @param top_left_corner_y The y value of the top left corner of the histogram
+   */
+  void DrawBoundsLabels(double left_boundary_of_histogram,
+                        double histogram_top_left_corner_y) const;
 
  public:
   Histogram() = default;

@@ -115,6 +115,14 @@ void Histogram::DrawHistogramLabels(double left_boundary_of_histogram,
       glm::vec2(x_centered_color_label, y_centered_color_label), ci::Color("black"));
 
   // Label axes
+  DrawAxesLabels(left_boundary_of_histogram, histogram_top_left_corner_y);
+
+  // Label bounds of axes
+  DrawBoundsLabels(left_boundary_of_histogram, histogram_top_left_corner_y);
+}
+
+void Histogram::DrawAxesLabels(double left_boundary_of_histogram,
+                               double histogram_top_left_corner_y) const {
   double x_centered_x_axis_label = (left_boundary_of_histogram + (left_boundary_of_histogram + kHistogramGraphDimension)) /2;
   double y_centered_x_axis_label = histogram_top_left_corner_y + kHistogramGraphDimension + 3 * kLabelSpacingFromHistogram;
   ci::gl::drawStringCentered(
@@ -126,8 +134,10 @@ void Histogram::DrawHistogramLabels(double left_boundary_of_histogram,
   ci::gl::drawStringCentered(
       "Num of people",
       glm::vec2(x_centered_y_axis_label, y_centered_y_axis_label), ci::Color("black"));
+}
 
-  // Label bounds of axes
+void Histogram::DrawBoundsLabels(double left_boundary_of_histogram,
+                                 double histogram_top_left_corner_y) const {
   ci::gl::drawString(std::to_string(int(time_elapsed_since_outbreak_)),
                      vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogram,
                           histogram_top_left_corner_y + kHistogramGraphDimension), ci::Color("black"));
@@ -135,7 +145,7 @@ void Histogram::DrawHistogramLabels(double left_boundary_of_histogram,
   ci::gl::drawString(std::to_string(int(time_elapsed_since_outbreak_ / 2)),
                      vec2(left_boundary_of_histogram + kHistogramGraphDimension / 2,
                           histogram_top_left_corner_y + kHistogramGraphDimension + kLabelSpacingFromHistogram),
-                          ci::Color("black"));
+                     ci::Color("black"));
 
   ci::gl::drawStringCentered("0",
                              vec2(left_boundary_of_histogram - kLabelSpacingFromHistogram,
