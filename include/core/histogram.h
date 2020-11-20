@@ -20,7 +20,7 @@ class Histogram {
   // Constants for drawing histograms
   // ================================
   const double kHistogramGraphDimension = 400;  // length and width of histogram graph
-  //const size_t kLabelSpacingFromHistogram = 8;
+  const size_t kLabelSpacingFromHistogram = 10;
   const size_t kSpacingFromContainer = 125;
 
   double upper_bound_for_y_;  // i.e. the highest label value for y axis
@@ -70,6 +70,16 @@ class Histogram {
   void DrawStatusBin(double bin_top_left_x, double bin_top_left_y,
                      double bin_bottom_right_x, double bin_bottom_right_y,
                      const vec3& color) const;
+
+  /*
+   * Draws the labels of the histogram for the axes and title.
+   *
+   * @param people The vector of people for a single bin (all of same status)
+   * @param left_boundary_of_histogram The left boundary of the histogram
+   * @param top_left_corner_y The y value of the top left corner of the histogram
+   */
+  void DrawHistogramLabels(double left_boundary_of_histogram,
+                           double histogram_top_left_corner_y) const;
 
  public:
   Histogram() = default;

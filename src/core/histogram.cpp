@@ -40,6 +40,9 @@ void Histogram::DrawHistogram() const {
 
   // Draws the bins of histogram
   DrawHistogramBins(left_boundary_of_histogram, container_top_right_corner_.y);
+
+  // Draws the labels of histogram
+  DrawHistogramLabels(left_boundary_of_histogram, container_top_right_corner_.y);
 }
 
 vector<vec2> Histogram::DrawHistogramBackground(double left_boundary_of_histogram,
@@ -100,6 +103,47 @@ void Histogram::DrawStatusBin(double bin_top_left_x, double bin_top_left_y,
   ci::Rectf bin_box(removed_bin_top_left, removed_bin_bottom_right);
   ci::gl::color(ci::Color(color.x, color.y, color.z));
   ci::gl::drawSolidRect(bin_box);
+}
+
+void Histogram::DrawHistogramLabels(double left_boundary_of_histogram,
+                                    double histogram_top_left_corner_y) const {
+  // Label title
+  double x_centered_color_label = (left_boundary_of_histogram + (left_boundary_of_histogram + kHistogramGraphDimension)) /2;
+  double y_centered_color_label = histogram_top_left_corner_y - kLabelSpacingFromHistogram;
+  ci::gl::drawStringCentered(
+      "Population Status Over Time",
+      glm::vec2(x_centered_color_label, y_centered_color_label), ci::Color("black"));
+
+  // Label axes
+  double x_centered_x_axis_label = (left_boundary_of_histogram + (left_boundary_of_histogram + kHistogramGraphDimension)) /2;
+  double y_centered_x_axis_label = histogram_top_left_corner_y + kHistogramGraphDimension + 3 * kLabelSpacingFromHistogram;
+  ci::gl::drawStringCentered(
+      "Time Since Outbreak",
+      glm::vec2(x_centered_x_axis_label, y_centered_x_axis_label), ci::Color("black"));
+
+  double x_centered_y_axis_label = (container_top_right_corner_.x + left_boundary_of_histogram) / 2;
+  double y_centered_y_axis_label = (histogram_top_left_corner_y + (histogram_top_left_corner_y + kHistogramGraphDimension)) / 2;
+  ci::gl::drawStringCentered(
+      "Num of people",
+      glm::vec2(x_centered_y_axis_label, y_centered_y_axis_label), ci::Color("black"));
+
+  // Label bounds of axes
+  ci::gl::drawString(std::to_string(int(time_elapsed_since_outbreak_)),
+                     vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogram,
+                          histogram_top_left_corner_y + kHistogramGraphDimension), ci::Color("black"));
+
+  ci::gl::drawString(std::to_string(int(time_elapsed_since_outbreak_ / 2)),
+                     vec2(left_boundary_of_histogram + kHistogramGraphDimension / 2,
+                          histogram_top_left_corner_y + kHistogramGraphDimension + kLabelSpacingFromHistogram),
+                          ci::Color("black"));
+
+  ci::gl::drawStringCentered("0",
+                             vec2(left_boundary_of_histogram - kLabelSpacingFromHistogram,
+                                  histogram_top_left_corner_y + kHistogramGraphDimension), ci::Color("black"));
+
+  ci::gl::drawStringCentered(std::to_string(int(upper_bound_for_y_)),
+                             vec2(left_boundary_of_histogram - kLabelSpacingFromHistogram,
+                                  histogram_top_left_corner_y), ci::Color("black"));
 }
 
 }  // namespace disease
