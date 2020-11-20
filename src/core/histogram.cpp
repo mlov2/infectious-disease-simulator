@@ -69,31 +69,37 @@ void Histogram::DrawHistogramBins(double left_boundary_of_histogram,
   // Loop through vector; each element represents one frame, which is one bin of the histogram
   for (const map<Status, vector<Disease::Person>>& info_for_frame : cumulative_info_of_population_) {
     if (info_for_frame.count(Status::kInfectious) != 0) {
-      vec2 infectious_bin_top_left =
-          vec2(current_left_side_bin_x,histogram_top_left_corner_y + kHistogramGraphDimension -
-                     (info_for_frame.at(Status::kInfectious).size() * y_increment));
-      vec2 infectious_bin_bottom_right =
-          vec2(current_left_side_bin_x + x_increment,histogram_top_left_corner_y + kHistogramGraphDimension);
-
-      ci::Rectf bin_box(infectious_bin_top_left, infectious_bin_bottom_right);
-      ci::gl::color(ci::Color("red"));
-      ci::gl::drawSolidRect(bin_box);
+      DrawStatusBin(current_left_side_bin_x,
+                    histogram_top_left_corner_y + kHistogramGraphDimension -
+                    (info_for_frame.at(Status::kInfectious).size() * y_increment),
+                    current_left_side_bin_x + x_increment,
+                    histogram_top_left_corner_y + kHistogramGraphDimension,
+                    info_for_frame.at(Status::kInfectious).front().color);
     }
 
     if (info_for_frame.count(Status::kRemoved) != 0) {
-      vec2 removed_bin_top_left =
-          vec2(current_left_side_bin_x,histogram_top_left_corner_y);
-      vec2 removed_bin_bottom_right =
-          vec2(current_left_side_bin_x + x_increment,histogram_top_left_corner_y +
-                                       (info_for_frame.at(Status::kRemoved).size() * y_increment));
-
-      ci::Rectf bin_box(removed_bin_top_left, removed_bin_bottom_right);
-      ci::gl::color(ci::Color("gray"));
-      ci::gl::drawSolidRect(bin_box);
+      DrawStatusBin(current_left_side_bin_x, histogram_top_left_corner_y,
+                    current_left_side_bin_x + x_increment,
+                    histogram_top_left_corner_y +
+                    (info_for_frame.at(Status::kRemoved).size() * y_increment),
+                    info_for_frame.at(Status::kRemoved).front().color);
     }
 
     current_left_side_bin_x += x_increment;
   }
+}
+
+void Histogram::DrawStatusBin(double bin_top_left_x, double bin_top_left_y,
+                               double bin_bottom_right_x, double bin_bottom_right_y,
+                               const vec3& color) const {
+  vec2 removed_bin_top_left =
+      vec2(bin_top_left_x, bin_top_left_y);
+  vec2 removed_bin_bottom_right =
+      vec2(bin_bottom_right_x, bin_bottom_right_y);
+
+  ci::Rectf bin_box(removed_bin_top_left, removed_bin_bottom_right);
+  ci::gl::color(ci::Color(color.x, color.y, color.z));
+  ci::gl::drawSolidRect(bin_box);
 }
 
 }  // namespace disease

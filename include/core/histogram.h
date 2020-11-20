@@ -54,6 +54,23 @@ class Histogram {
   void DrawHistogramBins(double left_boundary_of_histogram,
                          double histogram_top_left_corner_y) const;
 
+  /*
+   * Draws a bin for a specific health status.
+   *
+   * @param bin_top_left_x A double of the x coordinate of the top left corner
+   *     of the bin
+   * @param bin_top_left_y A double of the y coordinate of the top left corner
+   *     of the bin
+   * @param bin_bottom_right_x A double of the x coordinate of the bottom
+   *     right corner of the bin
+   * @param bin_bottom_right_y A double of the y coordinate of the bottom
+   *     right corner of the bin
+   * @param color A vec3 of the color of the health status
+   */
+  void DrawStatusBin(double bin_top_left_x, double bin_top_left_y,
+                     double bin_bottom_right_x, double bin_bottom_right_y,
+                     const vec3& color) const;
+
  public:
   Histogram() = default;
   Histogram(const vector<Disease::Person>& people,
