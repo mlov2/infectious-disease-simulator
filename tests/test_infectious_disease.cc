@@ -804,7 +804,7 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
 }
 
 TEST_CASE("Check person status updates") {
-  Disease disease = Disease(0, 0, 100, 100, false);
+  Disease disease = Disease(0, 0, 100, 100, 25, 500);
   Disease::Person person;
 
   SECTION("Current status is susceptible") {

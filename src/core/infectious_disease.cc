@@ -18,6 +18,18 @@ Disease::Disease(double left_margin, double top_margin,
   }
 }
 
+Disease::Disease(double left_margin, double top_margin,
+                 double container_height, double container_width,
+                 size_t exposure_time, size_t infected_time) {
+  left_wall_ = left_margin;
+  top_wall_ = top_margin;
+  bottom_wall_ = top_wall_ + container_height;
+  right_wall_ = left_wall_ + container_width;
+
+  exposure_time_to_be_infected_ = exposure_time;
+  infected_time_to_be_removed_ = infected_time;
+}
+
 void Disease::SetPopulation(const vector<Disease::Person>& population_to_set_to) {
   population_ = population_to_set_to;
 }

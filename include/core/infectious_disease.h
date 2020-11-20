@@ -59,6 +59,9 @@ class Disease {
   Disease(double left_margin, double top_margin,
           double container_height, double container_width,
           bool should_create_population);
+  Disease(double left_margin, double top_margin,
+          double container_height, double container_width,
+          size_t exposure_time, size_t infected_time);
 
   void SetPopulation(const vector<Person>& population_to_set_to);
   const vector<Person>& GetPopulation();
