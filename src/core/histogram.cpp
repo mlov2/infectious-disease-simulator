@@ -174,15 +174,16 @@ void Histogram::DrawStatusStatistics(double left_boundary_of_histogram) const {
   }
 
   ci::gl::drawString("Number of People Susceptible: " + std::to_string(num_susceptible),
-                    vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2,
-                         container_top_right_corner_.y), ci::Color("black"));
+                    vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2
+                    + kLabelSpacingFromHistogramTimes2, container_top_right_corner_.y + kLabelSpacingFromHistogram), ci::Color("black"));
   ci::gl::drawString("Number of People Infectious: " + std::to_string(num_infections),
-                     vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2,
-                          container_top_right_corner_.y + kLabelSpacingFromHistogramTimes2), ci::Color("black"));
+                     vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2
+                     + kLabelSpacingFromHistogramTimes2,container_top_right_corner_.y + kLabelSpacingFromHistogram
+                     + kLabelSpacingFromHistogramTimes2), ci::Color("black"));
   ci::gl::drawString("Number of People Removed: " + std::to_string(num_removed),
-                     vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2,
-                          container_top_right_corner_.y + kLabelSpacingFromHistogramTimes2 + kLabelSpacingFromHistogramTimes2),
-                          ci::Color("black"));
+                     vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2
+                     + kLabelSpacingFromHistogramTimes2,container_top_right_corner_.y + kLabelSpacingFromHistogram
+                     + kLabelSpacingFromHistogramTimes2 + kLabelSpacingFromHistogramTimes2),ci::Color("black"));
 }
 
 }  // namespace disease
