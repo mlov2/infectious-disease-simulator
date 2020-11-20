@@ -11,11 +11,7 @@ Disease::Disease(double left_margin, double top_margin,
   right_wall_ = left_wall_ + container_width;
 
   if (should_create_population) {
-    // Add people to population
-    for (size_t i = 0; i < kSusceptiblePopulation; i++) {
-      population_.push_back(CreatePerson());
-    }
-    population_.push_back(CreatePatientZero());
+    CreatePopulation();
   }
 }
 
@@ -25,6 +21,14 @@ void Disease::SetPopulation(const vector<Disease::Person>& population_to_set_to)
 
 const vector<Disease::Person>& Disease::GetPopulation() {
   return population_;
+}
+
+void Disease::CreatePopulation() {
+  // Add people to population
+  for (size_t i = 0; i < kSusceptiblePopulation; i++) {
+    population_.push_back(CreatePerson());
+  }
+  population_.push_back(CreatePatientZero());
 }
 
 Disease::Person Disease::CreatePerson() {

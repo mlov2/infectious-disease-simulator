@@ -96,6 +96,8 @@ class Disease {
    */
   vector<Person> population_;
 
+  void CreatePopulation();
+
   /*
    * Creates a susceptible person with their info initialized.
    *
