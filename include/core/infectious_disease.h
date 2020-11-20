@@ -96,6 +96,10 @@ class Disease {
    */
   vector<Person> population_;
 
+  /*
+   * Create a population where all but one is susceptible to the disease (the
+   * single person is patient zero).
+   */
   void CreatePopulation();
 
   /*
