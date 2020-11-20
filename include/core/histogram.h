@@ -42,7 +42,7 @@ class Histogram {
    * @return A vector holding the vec2 values of the top left and bottom right
    *     corners of the histogram, in that order
    */
-  const vector<vec2>& DrawHistogramBackground(double left_boundary_of_histogram,
+  vector<vec2> DrawHistogramBackground(double left_boundary_of_histogram,
                                               double histogram_top_left_corner_y) const;
 
   /*

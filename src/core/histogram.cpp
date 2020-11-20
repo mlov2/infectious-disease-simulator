@@ -42,7 +42,7 @@ void Histogram::DrawHistogram() const {
   DrawHistogramBins(left_boundary_of_histogram, container_top_right_corner_.y);
 }
 
-const vector<vec2>& Histogram::DrawHistogramBackground(double left_boundary_of_histogram,
+vector<vec2> Histogram::DrawHistogramBackground(double left_boundary_of_histogram,
                                                 double histogram_top_left_corner_y) const {
   vec2 pixel_top_left = vec2(left_boundary_of_histogram, histogram_top_left_corner_y);
   vec2 pixel_bottom_right =
