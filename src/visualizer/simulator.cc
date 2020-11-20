@@ -25,7 +25,15 @@ void Simulator::Draw() const {
       "Time elapsed: " + std::to_string(time_passed_),
       glm::vec2((2*kLeftContainerMargin + kContainerWidth) / 2, kTopContainerMargin / 2), ci::Color("black"));
 
-  // Draws the container
+  // Draw the container and particles
+  DrawContainer();
+  DrawParticles();
+
+  // Draw the histograms
+  histogram_.DrawHistogram();
+}
+
+void Simulator::DrawContainer() const {
   vec2 pixel_top_left = vec2(kLeftContainerMargin, kTopContainerMargin);
   vec2 pixel_bottom_right =
       pixel_top_left + vec2(kContainerWidth, kContainerHeight);
@@ -33,11 +41,6 @@ void Simulator::Draw() const {
 
   ci::gl::color(ci::Color("black"));
   ci::gl::drawSolidRect(pixel_bounding_box);
-
-  DrawParticles();
-
-  // Draws the histograms
-  histogram_.DrawHistogram();
 }
 
 void Simulator::DrawParticles() const {

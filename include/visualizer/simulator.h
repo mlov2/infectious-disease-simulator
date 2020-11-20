@@ -48,6 +48,11 @@ class Simulator {
   size_t time_passed_;
 
   /*
+   * Draws the container.
+   */
+  void DrawContainer() const;
+
+  /*
    * Draws the particles.
    */
   void DrawParticles() const;
