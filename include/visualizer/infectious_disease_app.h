@@ -20,7 +20,7 @@ class InfectiousDiseaseApp : public ci::app::App {
   void draw() override;
 
   const double kWindowSizeY = 650;
-  const double kWindowSizeX = 1250;
+  const double kWindowSizeX = 1300;
 
  private:
   Simulator simulator_;
