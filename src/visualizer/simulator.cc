@@ -34,6 +34,13 @@ void Simulator::Draw() const {
   ci::gl::color(ci::Color("black"));
   ci::gl::drawSolidRect(pixel_bounding_box);
 
+  DrawParticles();
+
+  // Draws the histograms
+  histogram_.DrawHistogram();
+}
+
+void Simulator::DrawParticles() const {
   if (!particles_info.empty()) {
     for (Disease::Person particle : particles_info) {
       // Draws the particles
@@ -45,9 +52,6 @@ void Simulator::Draw() const {
       ci::gl::drawSolidCircle(center, particle.radius);
     }
   }
-
-  // Draws the histograms
-  histogram_.DrawHistogram();
 }
 
 double Simulator::GetTopMargin() {

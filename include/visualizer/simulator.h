@@ -46,6 +46,11 @@ class Simulator {
   Histogram histogram_;
   vector<Disease::Person> particles_info;
   size_t time_passed_;
+
+  /*
+   * Draws the particles.
+   */
+  void DrawParticles() const;
 };
 
 }  // namespace visualizer
