@@ -10,6 +10,9 @@ Disease::Disease(double left_margin, double top_margin,
   bottom_wall_ = top_wall_ + container_height;
   right_wall_ = left_wall_ + container_width;
 
+  exposure_time_to_be_infected_ = kExposureTimeToBeInfected;
+  infected_time_to_be_removed_ = kInfectedTimeToBeRemoved;
+
   if (should_create_population) {
     CreatePopulation();
   }
@@ -87,7 +90,7 @@ Disease::Person Disease::UpdatePersonStatus(const Person& current_person, size_t
     // Update the susceptible person's exposure time
     patient = UpdateExposureTime(current_person, current_index);
 
-    if (patient.continuous_exposure_time == kExposureTimeToBeInfected) {
+    if (patient.continuous_exposure_time == exposure_time_to_be_infected_) {
       patient.status = Status::kInfectious;
       patient.color = vec3(1, 0, 0);
       patient.continuous_exposure_time = 0;
@@ -96,7 +99,7 @@ Disease::Person Disease::UpdatePersonStatus(const Person& current_person, size_t
     ExposeOthers(current_person, current_index);
 
     patient.time_infected++;
-    if (patient.time_infected == kInfectedTimeToBeRemoved) {
+    if (patient.time_infected == infected_time_to_be_removed_) {
       patient.status = Status::kRemoved;
       patient.color = vec3(0.5, 0.5, 0.5);
       patient.time_infected = 0;

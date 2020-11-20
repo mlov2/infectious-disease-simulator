@@ -83,6 +83,9 @@ class Disease {
   size_t kExposureTimeToBeInfected = 25;
   size_t kInfectedTimeToBeRemoved = 500;
 
+  size_t exposure_time_to_be_infected_;
+  size_t infected_time_to_be_removed_;
+
   // ===================
   // Sketchpad variables
   // ===================
