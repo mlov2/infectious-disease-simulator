@@ -32,7 +32,9 @@ void Simulator::Draw() const {
   DrawParticles();
 
   // Draw the histograms
-  histogram_.DrawHistogram();
+  if (particles_info.size() != 0) {
+    histogram_.DrawHistogram();
+  }
 }
 
 void Simulator::DrawContainer() const {
