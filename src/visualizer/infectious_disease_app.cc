@@ -19,6 +19,34 @@ void InfectiousDiseaseApp::draw() {
   simulator_.Draw();
 }
 
+void InfectiousDiseaseApp::keyDown(ci::app::KeyEvent event) {
+  switch (event.getCode()) {
+    case ci::app::KeyEvent::KEY_RETURN:
+      // TODO: Start breakout
+      break;
+
+    case ci::app::KeyEvent::KEY_e:
+      // TODO: Change exposure time
+      break;
+
+    case ci::app::KeyEvent::KEY_i:
+      // TODO: Change infected time
+      break;
+
+    case ci::app::KeyEvent::KEY_r:
+      // TODO: Change radius of infection
+      break;
+
+    case ci::app::KeyEvent::KEY_d:
+      // TODO: Change amount of social distance
+      break;
+
+    case ci::app::KeyEvent::KEY_DELETE:
+      // TODO: End breakout and clear container and histogram
+      break;
+  }
+}
+
 }  // namespace visualizer
 
 }  // namespace disease
