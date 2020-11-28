@@ -17,6 +17,10 @@ const map<Status, vector<Disease::Person>>& Histogram::GetSortedPopulation() con
   return population_sorted_by_status_;
 }
 
+double Histogram::GetTimeElapsedSinceOutbreak() const {
+  return time_elapsed_since_outbreak_;
+}
+
 const vector<map<Status, vector<Disease::Person>>>& Histogram::GetCumulativeInfoOfPopulation() const {
   return cumulative_info_of_population_;
 }
