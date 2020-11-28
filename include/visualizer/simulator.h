@@ -31,6 +31,11 @@ class Simulator {
   void Draw() const;
 
   /*
+   * Deletes all the people in the population.
+   */
+  void Clear();
+
+  /*
    * Creates the population.
    */
   void CreatePopulation();

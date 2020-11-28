@@ -59,6 +59,12 @@ void Simulator::DrawParticles() const {
   }
 }
 
+void Simulator::Clear() {
+  time_passed_ = 0;
+  particles_info.clear();
+  disease_.SetPopulation(particles_info);
+}
+
 double Simulator::GetTopMargin() {
   return kTopContainerMargin;
 }
