@@ -44,6 +44,7 @@ void InfectiousDiseaseApp::keyDown(ci::app::KeyEvent event) {
 
     case ci::app::KeyEvent::KEY_DELETE:
       // TODO: End breakout and clear container and histogram
+      simulator_.Clear();
       break;
   }
 }
