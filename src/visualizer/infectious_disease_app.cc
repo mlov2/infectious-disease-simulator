@@ -23,6 +23,7 @@ void InfectiousDiseaseApp::keyDown(ci::app::KeyEvent event) {
   switch (event.getCode()) {
     case ci::app::KeyEvent::KEY_RETURN:
       // TODO: Start breakout
+      simulator_.CreatePopulation();
       break;
 
     case ci::app::KeyEvent::KEY_e:

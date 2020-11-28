@@ -13,9 +13,9 @@ Disease::Disease(double left_margin, double top_margin,
   exposure_time_to_be_infected_ = kExposureTimeToBeInfected;
   infected_time_to_be_removed_ = kInfectedTimeToBeRemoved;
 
-  if (should_create_population) {
+  /*if (should_create_population) {
     CreatePopulation();
-  }
+  }*/
 }
 
 Disease::Disease(double left_margin, double top_margin,
