@@ -6,7 +6,9 @@ using disease::Disease;
 using disease::Status;
 
 TEST_CASE("Create population", "[create population]") {
-  Disease disease = Disease(0, 0, 100, 100, true);
+  Disease disease = Disease(0, 0, 100, 100);
+
+  disease.CreatePopulation();
 
   vector<Disease::Person> all_particles = disease.GetPopulation();
   REQUIRE(all_particles.size() == 201);
@@ -48,7 +50,7 @@ TEST_CASE("Create population", "[create population]") {
 
 TEST_CASE("Person info updates after 1 frame (no collision)",
           "[one frame][no collision]") {
-  Disease disease = Disease(0, 0, 100, 100, false);
+  Disease disease = Disease(0, 0, 100, 100);
   Disease::Person person;
 
   SECTION("No particles") {
@@ -198,7 +200,7 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
 
 TEST_CASE("Person info updates after 2 frames (no collision)",
           "[two frames][no collision]") {
-  Disease disease = Disease(0, 0, 100, 100, false);
+  Disease disease = Disease(0, 0, 100, 100);
   Disease::Person person;
 
   SECTION("No particles") {
@@ -351,7 +353,7 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
 
 TEST_CASE("Person info updates after collision with wall",
           "[one frame][collision][wall]") {
-  Disease disease = Disease(0, 0, 100, 100, false);
+  Disease disease = Disease(0, 0, 100, 100);
   Disease::Person person;
 
   SECTION("One particle") {
@@ -578,7 +580,7 @@ TEST_CASE("Person info updates after collision with wall",
 
 TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
           "[no collision][wall][touching]") {
-  Disease disease = Disease(0, 0, 100, 100, false);
+  Disease disease = Disease(0, 0, 100, 100);
   Disease::Person person;
 
   SECTION("One particle") {
