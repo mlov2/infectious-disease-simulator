@@ -17,6 +17,10 @@ const map<Status, vector<Disease::Person>>& Histogram::GetSortedPopulation() con
   return population_sorted_by_status_;
 }
 
+const vector<map<Status, vector<Disease::Person>>>& Histogram::GetCumulativeInfoOfPopulation() const {
+  return cumulative_info_of_population_;
+}
+
 void Histogram::SortPopulation(const vector<Disease::Person>& population) {
   population_sorted_by_status_.clear();
 
