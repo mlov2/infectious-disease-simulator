@@ -122,6 +122,8 @@ TEST_CASE("Check population get updated") {
     REQUIRE(actual_sorted_people[Status::kSusceptible].size() == 1);
     REQUIRE(actual_sorted_people[Status::kInfectious].size() == 2);
     REQUIRE(actual_sorted_people[Status::kRemoved].size() == 1);
+    REQUIRE(histogram.GetCumulativeInfoOfPopulation().size() == 1);
+    REQUIRE(histogram.GetTimeElapsedSinceOutbreak() == 10);
   }
 
   SECTION("Info gets updated properly when population size and time elapsed is 0") {
@@ -150,5 +152,7 @@ TEST_CASE("Check population get updated") {
     map<Status, vector<Disease::Person>> actual_sorted_people = histogram.GetSortedPopulation();
 
     REQUIRE(actual_sorted_people.size() == 0);
+    REQUIRE(histogram.GetCumulativeInfoOfPopulation().size() == 0);
+    REQUIRE(histogram.GetTimeElapsedSinceOutbreak() == 0);
   }
 }
