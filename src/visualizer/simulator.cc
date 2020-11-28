@@ -65,6 +65,10 @@ const vector<Disease::Person>& Simulator::GetParticlesInfo() {
   return particles_info;
 }
 
+void Simulator::CreatePopulation() {
+  disease_.CreatePopulation();
+}
+
 }  // namespace visualizer
 
 }  // namespace disease

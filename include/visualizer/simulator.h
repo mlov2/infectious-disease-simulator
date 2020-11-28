@@ -30,6 +30,11 @@ class Simulator {
    */
   void Draw() const;
 
+  /*
+   * Creates the population.
+   */
+  void CreatePopulation();
+
   const vector<Disease::Person>& GetParticlesInfo();
 
   double GetTopMargin();
