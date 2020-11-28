@@ -34,11 +34,13 @@ const vector<Disease::Person>& Disease::GetPopulation() {
 }
 
 void Disease::CreatePopulation() {
-  // Add people to population
-  for (size_t i = 0; i < kSusceptiblePopulation; i++) {
-    population_.push_back(CreatePerson());
+  // Add people to population if there isn't anybody in the population
+  if (population_.size() == 0) {
+    for (size_t i = 0; i < kSusceptiblePopulation; i++) {
+      population_.push_back(CreatePerson());
+    }
+    population_.push_back(CreatePatientZero());
   }
-  population_.push_back(CreatePatientZero());
 }
 
 Disease::Person Disease::CreatePerson() {
