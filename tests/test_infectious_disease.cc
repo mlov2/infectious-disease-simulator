@@ -6,46 +6,92 @@ using disease::Disease;
 using disease::Status;
 
 TEST_CASE("Create population", "[create population]") {
-  Disease disease = Disease(0, 0, 100, 100);
+  SECTION("Create population when container is empty") {
+    Disease disease = Disease(0, 0, 100, 100);
 
-  disease.CreatePopulation();
+    disease.CreatePopulation();
 
-  vector<Disease::Person> all_particles = disease.GetPopulation();
-  REQUIRE(all_particles.size() == 201);
+    vector<Disease::Person> all_particles = disease.GetPopulation();
+    REQUIRE(all_particles.size() == 201);
 
-  // Susceptible people created
-  for (size_t i = 0; i < all_particles.size() - 1; i++) {
-    REQUIRE(all_particles[i].radius == 10);
-    REQUIRE(all_particles[i].position.x >= 0);
-    REQUIRE(all_particles[i].position.x <= 100);
-    REQUIRE(all_particles[i].position.y >= 0);
-    REQUIRE(all_particles[i].position.y <= 100);
-    REQUIRE(all_particles[i].velocity.x >= -1);
-    REQUIRE(all_particles[i].velocity.x <= 1);
-    REQUIRE(all_particles[i].velocity.y >= -1);
-    REQUIRE(all_particles[i].velocity.y <= 1);
-    REQUIRE(all_particles[i].status == disease::Status::kSusceptible);
-    REQUIRE(all_particles[i].color == vec3(0, 0, 1));
-    REQUIRE(all_particles[i].continuous_exposure_time == 0);
-    REQUIRE(all_particles[i].time_infected == 0);
-    REQUIRE(all_particles[i].has_been_exposed_in_frame == false);
+    // Susceptible people created
+    for (size_t i = 0; i < all_particles.size() - 1; i++) {
+      REQUIRE(all_particles[i].radius == 10);
+      REQUIRE(all_particles[i].position.x >= 0);
+      REQUIRE(all_particles[i].position.x <= 100);
+      REQUIRE(all_particles[i].position.y >= 0);
+      REQUIRE(all_particles[i].position.y <= 100);
+      REQUIRE(all_particles[i].velocity.x >= -1);
+      REQUIRE(all_particles[i].velocity.x <= 1);
+      REQUIRE(all_particles[i].velocity.y >= -1);
+      REQUIRE(all_particles[i].velocity.y <= 1);
+      REQUIRE(all_particles[i].status == disease::Status::kSusceptible);
+      REQUIRE(all_particles[i].color == vec3(0, 0, 1));
+      REQUIRE(all_particles[i].continuous_exposure_time == 0);
+      REQUIRE(all_particles[i].time_infected == 0);
+      REQUIRE(all_particles[i].has_been_exposed_in_frame == false);
+    }
+
+    // Patient zero created
+    REQUIRE(all_particles[all_particles.size() - 1].radius == 10);
+    REQUIRE(all_particles[all_particles.size() - 1].position.x >= 0);
+    REQUIRE(all_particles[all_particles.size() - 1].position.x <= 100);
+    REQUIRE(all_particles[all_particles.size() - 1].position.y >= 0);
+    REQUIRE(all_particles[all_particles.size() - 1].position.y <= 100);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.x >= -1);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.x <= 1);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.y >= -1);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.y <= 1);
+    REQUIRE(all_particles[all_particles.size() - 1].status == disease::Status::kInfectious);
+    REQUIRE(all_particles[all_particles.size() - 1].color == vec3(1, 0, 0));
+    REQUIRE(all_particles[all_particles.size() - 1].continuous_exposure_time == 0);
+    REQUIRE(all_particles[all_particles.size() - 1].time_infected == 0);
+    REQUIRE(all_particles[all_particles.size() - 1].has_been_exposed_in_frame == false);
   }
 
-  // Patient zero created
-  REQUIRE(all_particles[all_particles.size() - 1].radius == 10);
-  REQUIRE(all_particles[all_particles.size() - 1].position.x >= 0);
-  REQUIRE(all_particles[all_particles.size() - 1].position.x <= 100);
-  REQUIRE(all_particles[all_particles.size() - 1].position.y >= 0);
-  REQUIRE(all_particles[all_particles.size() - 1].position.y <= 100);
-  REQUIRE(all_particles[all_particles.size() - 1].velocity.x >= -1);
-  REQUIRE(all_particles[all_particles.size() - 1].velocity.x <= 1);
-  REQUIRE(all_particles[all_particles.size() - 1].velocity.y >= -1);
-  REQUIRE(all_particles[all_particles.size() - 1].velocity.y <= 1);
-  REQUIRE(all_particles[all_particles.size() - 1].status == disease::Status::kInfectious);
-  REQUIRE(all_particles[all_particles.size() - 1].color == vec3(1, 0, 0));
-  REQUIRE(all_particles[all_particles.size() - 1].continuous_exposure_time == 0);
-  REQUIRE(all_particles[all_particles.size() - 1].time_infected == 0);
-  REQUIRE(all_particles[all_particles.size() - 1].has_been_exposed_in_frame == false);
+  SECTION("Population isn't created more than once") {
+    Disease disease = Disease(0, 0, 100, 100);
+
+    disease.CreatePopulation();
+    disease.CreatePopulation();
+
+    vector<Disease::Person> all_particles = disease.GetPopulation();
+    REQUIRE(all_particles.size() == 201);
+
+    // Susceptible people created
+    for (size_t i = 0; i < all_particles.size() - 1; i++) {
+      REQUIRE(all_particles[i].radius == 10);
+      REQUIRE(all_particles[i].position.x >= 0);
+      REQUIRE(all_particles[i].position.x <= 100);
+      REQUIRE(all_particles[i].position.y >= 0);
+      REQUIRE(all_particles[i].position.y <= 100);
+      REQUIRE(all_particles[i].velocity.x >= -1);
+      REQUIRE(all_particles[i].velocity.x <= 1);
+      REQUIRE(all_particles[i].velocity.y >= -1);
+      REQUIRE(all_particles[i].velocity.y <= 1);
+      REQUIRE(all_particles[i].status == disease::Status::kSusceptible);
+      REQUIRE(all_particles[i].color == vec3(0, 0, 1));
+      REQUIRE(all_particles[i].continuous_exposure_time == 0);
+      REQUIRE(all_particles[i].time_infected == 0);
+      REQUIRE(all_particles[i].has_been_exposed_in_frame == false);
+    }
+
+    // Patient zero created
+    REQUIRE(all_particles[all_particles.size() - 1].radius == 10);
+    REQUIRE(all_particles[all_particles.size() - 1].position.x >= 0);
+    REQUIRE(all_particles[all_particles.size() - 1].position.x <= 100);
+    REQUIRE(all_particles[all_particles.size() - 1].position.y >= 0);
+    REQUIRE(all_particles[all_particles.size() - 1].position.y <= 100);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.x >= -1);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.x <= 1);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.y >= -1);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.y <= 1);
+    REQUIRE(all_particles[all_particles.size() - 1].status == disease::Status::kInfectious);
+    REQUIRE(all_particles[all_particles.size() - 1].color == vec3(1, 0, 0));
+    REQUIRE(all_particles[all_particles.size() - 1].continuous_exposure_time == 0);
+    REQUIRE(all_particles[all_particles.size() - 1].time_infected == 0);
+    REQUIRE(all_particles[all_particles.size() - 1].has_been_exposed_in_frame == false);
+  }
 }
 
 TEST_CASE("Person info updates after 1 frame (no collision)",
