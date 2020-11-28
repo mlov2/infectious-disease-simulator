@@ -29,6 +29,12 @@ void Histogram::SortPopulation(const vector<Disease::Person>& population) {
 
 void Histogram::Update(const vector<Disease::Person>& updated_population, size_t time_passed) {
   SortPopulation(updated_population);
+
+  if (population_sorted_by_status_.size() == 0) {
+    time_elapsed_since_outbreak_ = time_passed;
+    cumulative_info_of_population_.clear();
+  }
+
   if (population_sorted_by_status_[Status::kInfectious].size() != 0) {
     time_elapsed_since_outbreak_ = time_passed;
     cumulative_info_of_population_.push_back(population_sorted_by_status_);
