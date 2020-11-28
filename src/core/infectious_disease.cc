@@ -3,8 +3,7 @@
 namespace disease {
 
 Disease::Disease(double left_margin, double top_margin,
-                 double container_height, double container_width,
-                 bool should_create_population) {
+                 double container_height, double container_width) {
   left_wall_ = left_margin;
   top_wall_ = top_margin;
   bottom_wall_ = top_wall_ + container_height;
@@ -12,10 +11,6 @@ Disease::Disease(double left_margin, double top_margin,
 
   exposure_time_to_be_infected_ = kExposureTimeToBeInfected;
   infected_time_to_be_removed_ = kInfectedTimeToBeRemoved;
-
-  /*if (should_create_population) {
-    CreatePopulation();
-  }*/
 }
 
 Disease::Disease(double left_margin, double top_margin,

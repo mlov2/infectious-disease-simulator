@@ -57,8 +57,7 @@ class Disease {
 
   Disease() = default;
   Disease(double left_margin, double top_margin,
-          double container_height, double container_width,
-          bool should_create_population);
+          double container_height, double container_width);
   Disease(double left_margin, double top_margin,
           double container_height, double container_width,
           size_t exposure_time, size_t infected_time);
