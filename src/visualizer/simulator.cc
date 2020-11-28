@@ -16,7 +16,9 @@ Simulator::Simulator() : histogram_(disease_.GetPopulation(),
 void Simulator::Update() {
   disease_.UpdateParticles();
   particles_info = disease_.GetPopulation();
-  time_passed_++;
+  if (particles_info.size() != 0) {
+    time_passed_++;
+  }
   histogram_.Update(particles_info, time_passed_);
 }
 
