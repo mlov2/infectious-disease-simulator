@@ -911,8 +911,8 @@ TEST_CASE("Check person status updates") {
         person.radius = 10;
         person.position = vec2(15, 15);
         person.velocity = vec2(5, 5);
-        person.status = disease::Status::kSymptomatic;
-        person.color = vec3(1,0,0);
+        person.status = disease::Status::kAsymptomatic;
+        person.color = vec3(1,1,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
@@ -936,8 +936,8 @@ TEST_CASE("Check person status updates") {
         // Particle 1
         REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
         REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-        REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
-        REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+        REQUIRE(updated_particles[0].status == disease::Status::kAsymptomatic);
+        REQUIRE(updated_particles[0].color == vec3(1, 1, 0));
         REQUIRE(updated_particles[0].continuous_exposure_time == 0);
         REQUIRE(updated_particles[0].time_infected == 1);
 
