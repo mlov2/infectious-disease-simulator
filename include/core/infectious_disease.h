@@ -161,9 +161,10 @@ class Disease {
    * Determines whether the susceptible person becomes an infected person who is now
    * symptomatic or asymptomatic.
    *
+   * @param current_person The current person to determine the infectious status for
    * @return The person with the chosen infection status
    */
-  Person DetermineInfectionStatus() const;
+  Person DetermineInfectionStatus(const Person& current_person) const;
 
   /*
    * Makes the current infected person expose the disease to those who are susceptible.
