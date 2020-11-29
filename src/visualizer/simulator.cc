@@ -9,6 +9,11 @@ using glm::vec2;
 Simulator::Simulator() : histogram_(disease_.GetPopulation(),
                                    vec2(kLeftContainerMargin, kTopContainerMargin) +
                                    vec2(kContainerWidth, 0)) {
+  quarantine_box_top_left_x_ = kLeftContainerMargin + kContainerWidth + kSpacesFromContainer;
+  quarantine_box_top_left_y_ = histogram_.GetBottomMostBoundaryOfHistogram() + kSpacesFromContainer;
+  quarantine_box_bottom_right_x_ = quarantine_box_top_left_x_ + kQuarantineBoxWidth;
+  quarantine_box_bottom_right_y_ = kTopContainerMargin + kContainerHeight;
+
   disease_ = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth);
   time_passed_ = 0;
 }
