@@ -915,7 +915,8 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
 }
 
 TEST_CASE("Check person status updates") {
-  Disease disease = Disease(0, 0, 100, 100, 25, 500, false, true);
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                            25, 500, false, true);
   Disease::Person person;
 
   SECTION("Current status is susceptible") {
@@ -971,7 +972,8 @@ TEST_CASE("Check person status updates") {
       }
 
       SECTION("Exposure time is at (max - 1) -> Status changes to asymptomatic") {
-        Disease disease1 = Disease(0, 0, 100, 100, 25, 500, false, false);
+        Disease disease1 = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                                   25, 500, false, false);
         vector<Disease::Person> all_particles;
 
         // Particle 1
