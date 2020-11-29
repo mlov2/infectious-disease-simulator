@@ -52,6 +52,14 @@ class Simulator {
   const double kContainerWidth = 550;
   //const size_t kUpdatesPerSecond = 50;
 
+  // Quarantine box info
+  const double kSpacesFromContainer = 20;
+  const double kQuarantineBoxWidth = 675;
+  double quarantine_box_top_left_x_;
+  double quarantine_box_top_left_y_;
+  double quarantine_box_bottom_right_x_;
+  double quarantine_box_bottom_right_y_;
+
   Disease disease_;
   Histogram histogram_;
   vector<Disease::Person> particles_info;
