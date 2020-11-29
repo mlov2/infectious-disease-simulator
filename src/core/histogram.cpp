@@ -187,30 +187,42 @@ void Histogram::DrawBoundsLabels(double left_boundary_of_histogram,
 
 void Histogram::DrawStatusStatistics(double left_boundary_of_histogram) const {
   size_t num_susceptible = 0;
-  size_t num_infections = 0;
+  size_t num_symptomatic = 0;
+  size_t num_asymptomatic = 0;
   size_t num_removed = 0;
 
   if (population_sorted_by_status_.count(Status::kSusceptible) != 0) {
     num_susceptible = population_sorted_by_status_.at(Status::kSusceptible).size();
   }
   if (population_sorted_by_status_.count(Status::kSymptomatic) != 0) {
-    num_infections = population_sorted_by_status_.at(Status::kSymptomatic).size();
+    num_symptomatic = population_sorted_by_status_.at(Status::kSymptomatic).size();
+  }
+  if (population_sorted_by_status_.count(Status::kAsymptomatic) != 0) {
+    num_asymptomatic = population_sorted_by_status_.at(Status::kAsymptomatic).size();
   }
   if (population_sorted_by_status_.count(Status::kRemoved) != 0) {
     num_removed = population_sorted_by_status_.at(Status::kRemoved).size();
   }
 
+  size_t label_spacing_y = container_top_right_corner_.y + kLabelSpacingFromHistogram;
   ci::gl::drawString("Number of People Susceptible: " + std::to_string(num_susceptible),
                     vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2
-                    + kLabelSpacingFromHistogramTimes2, container_top_right_corner_.y + kLabelSpacingFromHistogram), ci::Color("black"));
-  ci::gl::drawString("Number of People Infectious: " + std::to_string(num_infections),
+                    + kLabelSpacingFromHistogramTimes2, label_spacing_y), ci::Color("blue"));
+
+  label_spacing_y += kLabelSpacingFromHistogramTimes2;
+  ci::gl::drawString("Number of People Symptomatic: " + std::to_string(num_symptomatic),
                      vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2
-                     + kLabelSpacingFromHistogramTimes2,container_top_right_corner_.y + kLabelSpacingFromHistogram
-                     + kLabelSpacingFromHistogramTimes2), ci::Color("black"));
+                     + kLabelSpacingFromHistogramTimes2, label_spacing_y), ci::Color("red"));
+
+  label_spacing_y += kLabelSpacingFromHistogramTimes2;
+  ci::gl::drawString("Number of People Asymptomatic: " + std::to_string(num_asymptomatic),
+                     vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2
+                          + kLabelSpacingFromHistogramTimes2, label_spacing_y), ci::Color("black"));
+
+  label_spacing_y += kLabelSpacingFromHistogramTimes2;
   ci::gl::drawString("Number of People Removed: " + std::to_string(num_removed),
                      vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2
-                     + kLabelSpacingFromHistogramTimes2,container_top_right_corner_.y + kLabelSpacingFromHistogram
-                     + kLabelSpacingFromHistogramTimes2 + kLabelSpacingFromHistogramTimes2),ci::Color("black"));
+                     + kLabelSpacingFromHistogramTimes2, label_spacing_y),ci::Color("gray"));
 }
 
 }  // namespace disease
