@@ -10,6 +10,12 @@ Histogram::Histogram(const vector<Disease::Person>& people,
   container_top_right_corner_ = container_top_right_corner;
   time_elapsed_since_outbreak_ = 0;
 
+  bottom_most_boundary_of_histogram_ = container_top_right_corner.y + kHistogramGraphDimension +
+                                       kLabelSpacingFromHistogramTimes2 + kLabelSpacingFromHistogram;
+  x_coordinate_of_status_stat_labels_ = container_top_right_corner_.x +
+      kSpacingFromContainer + kHistogramGraphDimension +
+      kLabelSpacingFromHistogramTimes2 + kLabelSpacingFromHistogramTimes2;
+
   SortPopulation(people);
 }
 
@@ -23,6 +29,19 @@ double Histogram::GetTimeElapsedSinceOutbreak() const {
 
 const vector<map<Status, vector<Disease::Person>>>& Histogram::GetCumulativeInfoOfPopulation() const {
   return cumulative_info_of_population_;
+}
+
+size_t Histogram::GetBottomMostBoundaryOfHistogram() const {
+  return bottom_most_boundary_of_histogram_;
+}
+
+size_t Histogram::GetXCoordinateOfStatusStatLabels() const {
+  return x_coordinate_of_status_stat_labels_;
+}
+
+size_t Histogram::GetYCoordinateOfLastStatusStatLabel() const {
+  return container_top_right_corner_.y + kLabelSpacingFromHistogram +
+      (kNumOfStatuses - 1) * kLabelSpacingFromHistogramTimes2;
 }
 
 void Histogram::SortPopulation(const vector<Disease::Person>& population) {
