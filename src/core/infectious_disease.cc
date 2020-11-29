@@ -262,6 +262,22 @@ bool Disease::IsMovingTowardsWall(const Disease::Person& current_particle,
   return false;
 }
 
+bool Disease::ShouldBeQuarantined(const Disease::Person& current_person) const {
+  return (current_person.status == Status::kSymptomatic &&
+      current_person.time_infected == kTimeToBeDetectedForQuarantine &&
+      !current_person.is_quarantined);
+}
+
+Disease::Person Disease::QuarantinePerson(const Disease::Person& current_person) {
+  Person infected_person = current_person;
+
+  infected_person.position = vec2(ci::randFloat(quarantine_left_wall_, quarantine_right_wall_),
+                             ci::randFloat(quarantine_top_wall_, quarantine_bottom_wall_));
+  infected_person.is_quarantined = true;
+
+  return infected_person;
+}
+
 vec2 Disease::KeepWithinContainer(const vec2& updated_position, double current_particle_radius) {
   vec2 updated_position_within_container = updated_position;
   if (updated_position.x + current_particle_radius > right_wall_) {

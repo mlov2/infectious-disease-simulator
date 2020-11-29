@@ -232,6 +232,22 @@ class Disease {
   bool IsMovingTowardsWall(const Person& current_particle, const vec2& wall_position) const;
 
   /*
+   * Determines if the current person should be quarantined based on their statistics.
+   *
+   * @param current_person The current person to check
+   * @return A bool representing if the current person should be quarantined
+   */
+  bool ShouldBeQuarantined(const Person& current_person) const;
+
+  /*
+   * Moves the current person to the quarantine box.
+   *
+   * @param current_person The current person to put in quarantine
+   * @return A Person representing the current person with updated info
+   */
+  Person QuarantinePerson(const Person& current_person);
+
+  /*
    * Adjusts the updated position so that the particle will still be within the
    * container walls when the position is updated.
    *
