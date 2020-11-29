@@ -30,7 +30,7 @@ TEST_CASE("Check people get sorted according to health status") {
     REQUIRE(actual_sorted_people[Status::kSusceptible].size() == 3);
   }
 
-  SECTION("Two status types (susceptible and infectious)") {
+  SECTION("Two status types (susceptible and symptomatic)") {
     vector<Disease::Person> all_particles;
 
     for (size_t i = 0; i < 3; i++) {
@@ -52,7 +52,7 @@ TEST_CASE("Check people get sorted according to health status") {
     REQUIRE(actual_sorted_people[Status::kSymptomatic].size() == 1);
   }
 
-  SECTION("Two status types (susceptible and infectious), unordered") {
+  SECTION("Two status types (susceptible and symptomatic), unordered") {
     vector<Disease::Person> all_particles;
 
     person.status = Status::kSymptomatic;
@@ -76,6 +76,33 @@ TEST_CASE("Check people get sorted according to health status") {
     REQUIRE(histogram.GetSortedPopulation().size() == 2);
     REQUIRE(actual_sorted_people[Status::kSusceptible].size() == 3);
     REQUIRE(actual_sorted_people[Status::kSymptomatic].size() == 2);
+  }
+
+  SECTION("Three status types (susceptible, symptomatic, asymptomatic)") {
+    vector<Disease::Person> all_particles;
+
+    person.status = Status::kSymptomatic;
+    person.color = vec3(1,0,0);
+    all_particles.push_back(person);
+
+    for (size_t i = 0; i < 3; i++) {
+      person.status = Status::kSusceptible;
+      person.color = vec3(0,0,1);
+      all_particles.push_back(person);
+    }
+
+    person.status = Status::kAsymptomatic;
+    person.color = vec3(1,1,0);
+    all_particles.push_back(person);
+
+    histogram.SortPopulation(all_particles);
+
+    map<Status, vector<Disease::Person>> actual_sorted_people = histogram.GetSortedPopulation();
+
+    REQUIRE(histogram.GetSortedPopulation().size() == 3);
+    REQUIRE(actual_sorted_people[Status::kSusceptible].size() == 3);
+    REQUIRE(actual_sorted_people[Status::kSymptomatic].size() == 1);
+    REQUIRE(actual_sorted_people[Status::kAsymptomatic].size() == 1);
   }
 }
 
