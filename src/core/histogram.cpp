@@ -95,6 +95,18 @@ void Histogram::DrawHistogramBins(double left_boundary_of_histogram,
                     info_for_frame.at(Status::kSymptomatic).front().color);
     }
 
+    if (info_for_frame.count(Status::kAsymptomatic) != 0) {
+      double bin_top_left_y = histogram_top_left_corner_y + kHistogramGraphDimension -
+                              (info_for_frame.at(Status::kSymptomatic).size() * y_increment) -
+                              (info_for_frame.at(Status::kAsymptomatic).size() * y_increment);
+      double bin_bottom_right_y = histogram_top_left_corner_y + kHistogramGraphDimension -
+                                  (info_for_frame.at(Status::kSymptomatic).size() * y_increment);
+
+      DrawStatusBin(current_left_side_bin_x,bin_top_left_y,
+                    current_left_side_bin_x + x_increment, bin_bottom_right_y,
+                    info_for_frame.at(Status::kAsymptomatic).front().color);
+    }
+
     if (info_for_frame.count(Status::kRemoved) != 0) {
       DrawStatusBin(current_left_side_bin_x, histogram_top_left_corner_y,
                     current_left_side_bin_x + x_increment,
