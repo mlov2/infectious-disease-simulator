@@ -205,8 +205,13 @@ class Disease {
    * Checks for wall collisions with the current particle.
    *
    * @param current The index of the current particle
+   * @param left_bound The left bound of the container
+   * @param top_bound The top bound of the container
+   * @param right_bound The right bound of the container
+   * @param bottom_bound The bottom bound of the container
    */
-  void CheckForWallCollisions(size_t current);
+  void CheckForWallCollisions(size_t current, double left_bound, double top_bound,
+                              double right_bound, double bottom_bound);
 
   /*
    * Checks if the current particle has collided with a specific wall.

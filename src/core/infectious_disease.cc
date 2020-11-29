@@ -91,7 +91,12 @@ void Disease::UpdateParticles() {
     population_[current] = UpdatePersonStatus(population_[current], current);
 
     // Check for wall collisions
-    CheckForWallCollisions(current);
+    if (population_[current].is_quarantined) {
+      CheckForWallCollisions(current, quarantine_left_wall_, quarantine_top_wall_,
+                             quarantine_right_wall_, quarantine_bottom_wall_);
+    } else {
+      CheckForWallCollisions(current, left_wall_, top_wall_, right_wall_, bottom_wall_);
+    }
 
     vec2 updated_position = population_[current].position +
         population_[current].velocity;
@@ -209,20 +214,21 @@ bool Disease::WithinOneInfectionRadius(const Disease::Person& current_person, co
   return (distance_between_centers <= (current_person.radius + other_person.radius + kInfectionRadius));
 }
 
-void Disease::CheckForWallCollisions(size_t current) {
+void Disease::CheckForWallCollisions(size_t current, double left_bound, double top_bound,
+                                     double right_bound, double bottom_bound) {
   if (HasCollidedWithWall(population_[current],
-                          top_wall_, true) ||
+                          top_bound, true) ||
       HasCollidedWithWall(population_[current],
-                          bottom_wall_, true)) {
+                          bottom_bound, true)) {
     vec2 new_velocity = vec2(population_[current].velocity.x,
                              -population_[current].velocity.y);
     population_[current].velocity = new_velocity;
   }
 
   if (HasCollidedWithWall(population_[current],
-                          left_wall_, false) ||
+                          left_bound, false) ||
       HasCollidedWithWall(population_[current],
-                          right_wall_, false)) {
+                          right_bound, false)) {
     vec2 new_velocity = vec2(-population_[current].velocity.x,
                              population_[current].velocity.y);
     population_[current].velocity = new_velocity;
