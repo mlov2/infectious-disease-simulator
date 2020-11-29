@@ -96,6 +96,7 @@ class Disease {
   size_t kInfectionRadius = 5;
   size_t kExposureTimeToBeInfected = 25;
   size_t kInfectedTimeToBeRemoved = 500;
+  size_t kTimeToBeDetectedForQuarantine = 70;
   double kProbabilityOfBeingAsymptomatic = 0.2;
   double kProbabilityOfBeingSymptomatic = 0.8;
 
