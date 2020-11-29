@@ -18,8 +18,8 @@ namespace disease {
  */
 enum class Status {
   kSusceptible,
-  kSymptomatic,
-  kAsymptomatic,
+  kSymptomatic,  // person is infectious with this status
+  kAsymptomatic,  // person is infectious with this status
   kRemoved,
 };
 

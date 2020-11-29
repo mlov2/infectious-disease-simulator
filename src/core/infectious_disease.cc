@@ -82,7 +82,8 @@ void Disease::UpdateParticles() {
 
     vec2 updated_position = population_[current].position +
         population_[current].velocity;
-    population_[current].position = (KeepWithinContainer(updated_position, population_[current].radius));
+    population_[current].position =
+        KeepWithinContainer(updated_position, population_[current].radius);
   }
 }
 
@@ -136,7 +137,8 @@ Disease::Person Disease::UpdateExposureTime(const Disease::Person& current_perso
   return patient;
 }
 
-bool Disease::WithinInfectionRadiusOfOthers(const Disease::Person& current_person, size_t current_index) const {
+bool Disease::WithinInfectionRadiusOfOthers(const Disease::Person& current_person,
+                                            size_t current_index) const {
   for (size_t other = current_index + 1; other < population_.size(); other++) {
     Disease::Person other_person = population_[other];
 
