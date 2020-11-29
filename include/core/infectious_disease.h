@@ -58,7 +58,9 @@ class Disease {
 
   Disease() = default;
   Disease(double left_margin, double top_margin,
-          double container_height, double container_width);
+          double container_height, double container_width,
+          double quarantine_top_left_x, double quarantine_top_left_y,
+          double quarantine_bottom_right_x, double quarantine_bottom_right_y);
   Disease(double left_margin, double top_margin,
           double container_height, double container_width,
           size_t exposure_time, size_t infected_time,
@@ -101,12 +103,20 @@ class Disease {
   bool is_symptomatic_;
 
   // ===================
-  // Sketchpad variables
+  // Container variables
   // ===================
   double left_wall_;
   double top_wall_;
   double bottom_wall_;
   double right_wall_;
+
+  // ========================
+  // Quarantine box variables
+  // ========================
+  double quarantine_left_wall_;
+  double quarantine_top_wall_;
+  double quarantine_bottom_wall_;
+  double quarantine_right_wall_;
 
   /*
    * Holds all the particles, each representing a person.
