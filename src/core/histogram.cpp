@@ -166,7 +166,7 @@ void Histogram::DrawHistogramLabels(double left_boundary_of_histogram,
   // Label bounds of axes
   DrawBoundsLabels(left_boundary_of_histogram, histogram_top_left_corner_y);
 
-  DrawStatusStatistics(left_boundary_of_histogram);
+  DrawStatusStatistics();
 }
 
 void Histogram::DrawAxesLabels(double left_boundary_of_histogram,
@@ -205,7 +205,7 @@ void Histogram::DrawBoundsLabels(double left_boundary_of_histogram,
                                   histogram_top_left_corner_y), ci::Color("black"));
 }
 
-void Histogram::DrawStatusStatistics(double left_boundary_of_histogram) const {
+void Histogram::DrawStatusStatistics() const {
   size_t num_susceptible = 0;
   size_t num_symptomatic = 0;
   size_t num_asymptomatic = 0;

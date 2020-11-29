@@ -107,10 +107,8 @@ class Histogram {
 
   /*
    * Draws the status statistics of the population.
-   *
-   * @param left_boundary_of_histogram The left boundary of the histogram
    */
-  void DrawStatusStatistics(double left_boundary_of_histogram) const;
+  void DrawStatusStatistics() const;
 
  public:
   Histogram() = default;
