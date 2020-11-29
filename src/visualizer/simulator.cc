@@ -34,15 +34,17 @@ void Simulator::Draw() const {
       "Time elapsed: " + std::to_string(time_passed_),
       glm::vec2((2*kLeftContainerMargin + kContainerWidth) / 2, kTopContainerMargin / 2), ci::Color("black"));
 
-  // Draw the container and particles
+  // Draw the container
   DrawContainer();
-  DrawParticles();
 
   // Draw the histograms
   if (particles_info.size() != 0) {
     histogram_.DrawHistogram();
     DrawQuarantineBox();
   }
+
+  // Draw the particles
+  DrawParticles();
 }
 
 void Simulator::DrawContainer() const {
