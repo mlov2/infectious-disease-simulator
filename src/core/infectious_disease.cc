@@ -294,7 +294,7 @@ bool Disease::IsMovingTowardsWall(const Disease::Person& current_particle,
 
 bool Disease::ShouldBeQuarantined(const Disease::Person& current_person) const {
   return (current_person.status == Status::kSymptomatic &&
-      current_person.time_infected == kTimeToBeDetectedForQuarantine &&
+      current_person.time_infected >= kTimeToBeDetectedForQuarantine &&
       !current_person.is_quarantined);
 }
 
