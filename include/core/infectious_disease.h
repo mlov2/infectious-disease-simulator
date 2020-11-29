@@ -64,6 +64,7 @@ class Disease {
           const vec2& quarantine_top_left, const vec2& quarantine_bottom_right);
   Disease(double left_margin, double top_margin,
           double container_height, double container_width,
+          const vec2& quarantine_top_left, const vec2& quarantine_bottom_right,
           size_t exposure_time, size_t infected_time,
           bool is_infection_determination_random, bool is_symptomatic);  // used for testing
 
