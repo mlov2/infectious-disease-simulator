@@ -108,49 +108,100 @@ TEST_CASE("Check people get sorted according to health status") {
 
 TEST_CASE("Check population get updated") {
   SECTION("Info gets updated properly when population size and time elapsed isn't 0") {
-    Histogram histogram;
-    Disease::Person person;
+    SECTION("Population has an infectious person") {
+      Histogram histogram;
+      Disease::Person person;
 
-    vector<Disease::Person> existing_people;
+      vector<Disease::Person> existing_people;
 
-    for (size_t i = 0; i < 3; i++) {
+      for (size_t i = 0; i < 3; i++) {
+        person.status = Status::kSusceptible;
+        person.color = vec3(0,0,1);
+        existing_people.push_back(person);
+      }
+
+      person.status = Status::kSymptomatic;
+      person.color = vec3(1,0,0);
+      existing_people.push_back(person);
+
+      histogram.SortPopulation(existing_people);
+
+      vector<Disease::Person> updated_people;
+
+      person.status = Status::kSusceptible;
+      person.color = vec3(0,0,1);
+      updated_people.push_back(person);
+
+      for (size_t i = 0; i < 2; i++) {
+        person.status = Status::kSymptomatic;
+        person.color = vec3(1,0,0);
+        updated_people.push_back(person);
+      }
+
+      person.status = Status::kRemoved;
+      person.color = vec3(0.5,0.5,0.5);
+      updated_people.push_back(person);
+
+      histogram.Update(updated_people, 10);
+
+      map<Status, vector<Disease::Person>> actual_sorted_people = histogram.GetSortedPopulation();
+
+      REQUIRE(actual_sorted_people.size() == 3);
+      REQUIRE(actual_sorted_people[Status::kSusceptible].size() == 1);
+      REQUIRE(actual_sorted_people[Status::kSymptomatic].size() == 2);
+      REQUIRE(actual_sorted_people[Status::kRemoved].size() == 1);
+      REQUIRE(histogram.GetCumulativeInfoOfPopulation().size() == 1);
+      REQUIRE(histogram.GetTimeElapsedSinceOutbreak() == 10);
+    }
+
+    SECTION("Population doesn't have an infectious person") {
+      Histogram histogram;
+      Disease::Person person;
+
+      vector<Disease::Person> existing_people;
+
       person.status = Status::kSusceptible;
       person.color = vec3(0,0,1);
       existing_people.push_back(person);
-    }
 
-    person.status = Status::kSymptomatic;
-    person.color = vec3(1,0,0);
-    existing_people.push_back(person);
+      for (size_t i = 0; i < 3; i++) {
+        person.status = Status::kRemoved;
+        person.color = vec3(0.5,0.5,0.5);
+        existing_people.push_back(person);
+      }
 
-    histogram.SortPopulation(existing_people);
+      histogram.SortPopulation(existing_people);
 
-    vector<Disease::Person> updated_people;
+      map<Status, vector<Disease::Person>> sorted_people = histogram.GetSortedPopulation();
 
-    person.status = Status::kSusceptible;
-    person.color = vec3(0,0,1);
-    updated_people.push_back(person);
+      REQUIRE(sorted_people.size() == 2);
+      REQUIRE(sorted_people[Status::kSusceptible].size() == 1);
+      REQUIRE(sorted_people[Status::kRemoved].size() == 3);
+      REQUIRE(histogram.GetCumulativeInfoOfPopulation().size() == 0);
+      REQUIRE(histogram.GetTimeElapsedSinceOutbreak() == Approx(0.0).margin(0.01));
 
-    for (size_t i = 0; i < 2; i++) {
-      person.status = Status::kSymptomatic;
-      person.color = vec3(1,0,0);
+      vector<Disease::Person> updated_people;
+
+      person.status = Status::kSusceptible;
+      person.color = vec3(0,0,1);
       updated_people.push_back(person);
+
+      for (size_t i = 0; i < 3; i++) {
+        person.status = Status::kRemoved;
+        person.color = vec3(0.5,0.5,0.5);
+        updated_people.push_back(person);
+      }
+
+      histogram.Update(updated_people, 10);
+
+      map<Status, vector<Disease::Person>> actual_sorted_people = histogram.GetSortedPopulation();
+
+      REQUIRE(actual_sorted_people.size() == 4);
+      REQUIRE(actual_sorted_people[Status::kSusceptible].size() == 1);
+      REQUIRE(actual_sorted_people[Status::kRemoved].size() == 3);
+      REQUIRE(histogram.GetCumulativeInfoOfPopulation().size() == 0);
+      REQUIRE(histogram.GetTimeElapsedSinceOutbreak() == Approx(0.0).margin(0.01));
     }
-
-    person.status = Status::kRemoved;
-    person.color = vec3(0.5,0.5,0.5);
-    updated_people.push_back(person);
-
-    histogram.Update(updated_people, 10);
-
-    map<Status, vector<Disease::Person>> actual_sorted_people = histogram.GetSortedPopulation();
-
-    REQUIRE(actual_sorted_people.size() == 3);
-    REQUIRE(actual_sorted_people[Status::kSusceptible].size() == 1);
-    REQUIRE(actual_sorted_people[Status::kSymptomatic].size() == 2);
-    REQUIRE(actual_sorted_people[Status::kRemoved].size() == 1);
-    REQUIRE(histogram.GetCumulativeInfoOfPopulation().size() == 1);
-    REQUIRE(histogram.GetTimeElapsedSinceOutbreak() == 10);
   }
 
   SECTION("Info gets updated properly when population size and time elapsed is 0") {
