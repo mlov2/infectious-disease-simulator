@@ -91,6 +91,7 @@ class Disease {
   size_t kInfectionRadius = 5;
   size_t kExposureTimeToBeInfected = 25;
   size_t kInfectedTimeToBeRemoved = 500;
+  double kProbabilityOfBeingAsymptomatic = 0.2;
 
   size_t exposure_time_to_be_infected_;
   size_t infected_time_to_be_removed_;
@@ -155,6 +156,14 @@ class Disease {
    *     of an infected person
    */
   bool WithinInfectionRadiusOfOthers(const Person& current_person, size_t current_index) const;
+
+  /*
+   * Determines whether the susceptible person becomes an infected person who is now
+   * symptomatic or asymptomatic.
+   *
+   * @return The person with the chosen infection status
+   */
+  Person DetermineInfectionStatus() const;
 
   /*
    * Makes the current infected person expose the disease to those who are susceptible.
