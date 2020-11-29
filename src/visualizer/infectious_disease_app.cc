@@ -5,7 +5,7 @@ namespace disease {
 namespace visualizer {
 
 InfectiousDiseaseApp::InfectiousDiseaseApp() {
-  ci::app::setWindowSize((int) kWindowSizeX, (int) kWindowSizeY);
+  ci::app::setWindowSize(int(kWindowSizeX), int(kWindowSizeY));
 }
 
 void InfectiousDiseaseApp::update() {
