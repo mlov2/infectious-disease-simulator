@@ -161,6 +161,13 @@ Disease::Person Disease::DetermineInfectionStatus(const Person& current_person) 
   Person patient = current_person;
 
   double value_to_determine_infection_status = ci::randFloat(0,1);
+  if (!is_infection_determination_random_) {
+    if (is_symptomatic_) {
+      value_to_determine_infection_status = kProbabilityOfBeingSymptomatic;
+    } else {
+      value_to_determine_infection_status = kProbabilityOfBeingAsymptomatic;
+    }
+  }
 
   if (value_to_determine_infection_status <= kProbabilityOfBeingAsymptomatic) {
     patient.status = Status::kAsymptomatic;
