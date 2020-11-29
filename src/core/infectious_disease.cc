@@ -98,16 +98,34 @@ void Disease::UpdateParticles() {
       CheckForWallCollisions(current, left_wall_, top_wall_, right_wall_, bottom_wall_);
     }
 
-    vec2 updated_position = population_[current].position +
-        population_[current].velocity;
-    population_[current].position =
-        KeepWithinContainer(updated_position, population_[current].radius);
+    // Check if the person should be quarantined
+    if (ShouldBeQuarantined(population_[current])) {
+      population_[current] = QuarantinePerson(population_[current]);
+    } else {
+      // Update position
+      UpdatePosition(current);
+    }
   }
 }
 
 void Disease::ResetExposureInFrame() {
   for (size_t current = 0; current < population_.size(); current++) {
     population_[current].has_been_exposed_in_frame = false;
+  }
+}
+
+void Disease::UpdatePosition(size_t current_index) {
+  vec2 updated_position = population_[current_index].position +
+                          population_[current_index].velocity;
+  if (population_[current_index].is_quarantined) {
+    population_[current_index].position =
+        KeepWithinContainer(updated_position, population_[current_index].radius,
+                            quarantine_left_wall_, quarantine_top_wall_,
+                            quarantine_right_wall_, quarantine_bottom_wall_);
+  } else {
+    population_[current_index].position =
+        KeepWithinContainer(updated_position, population_[current_index].radius,
+                            left_wall_, top_wall_, right_wall_, bottom_wall_);
   }
 }
 
@@ -285,18 +303,20 @@ Disease::Person Disease::QuarantinePerson(const Disease::Person& current_person)
   return infected_person;
 }
 
-vec2 Disease::KeepWithinContainer(const vec2& updated_position, double current_particle_radius) {
+vec2 Disease::KeepWithinContainer(const vec2& updated_position, double current_particle_radius,
+                                  double left_bound, double top_bound,
+                                  double right_bound, double bottom_bound) {
   vec2 updated_position_within_container = updated_position;
-  if (updated_position.x + current_particle_radius > right_wall_) {
-    updated_position_within_container.x = right_wall_ - current_particle_radius;
-  } else if (updated_position.x - current_particle_radius < left_wall_) {
-    updated_position_within_container.x = left_wall_ + current_particle_radius;
+  if (updated_position.x + current_particle_radius > right_bound) {
+    updated_position_within_container.x = right_bound - current_particle_radius;
+  } else if (updated_position.x - current_particle_radius < left_bound) {
+    updated_position_within_container.x = left_bound + current_particle_radius;
   }
 
-  if (updated_position.y + current_particle_radius > bottom_wall_) {
-    updated_position_within_container.y = bottom_wall_ - current_particle_radius;
-  } else if (updated_position.y - current_particle_radius < top_wall_) {
-    updated_position_within_container.y = top_wall_ + current_particle_radius;
+  if (updated_position.y + current_particle_radius > bottom_bound) {
+    updated_position_within_container.y = bottom_bound - current_particle_radius;
+  } else if (updated_position.y - current_particle_radius < top_bound) {
+    updated_position_within_container.y = top_bound + current_particle_radius;
   }
 
   return updated_position_within_container;

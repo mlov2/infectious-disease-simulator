@@ -146,6 +146,13 @@ class Disease {
   void ResetExposureInFrame();
 
   /*
+   * Updates the current person's position.
+   *
+   * @param current_index The index of the current person in the population vector
+   */
+  void UpdatePosition(size_t current_index);
+
+  /*
    * Updates the person's status based on the current stats for the person (i.e.
    * exposure time if currently susceptible or infected time if currently infected).
    *
@@ -258,9 +265,15 @@ class Disease {
    *
    * @param updated_position A vec2 of the current particle's updated position
    * @param current_particle_radius A double of the current particle's radius
+   * @param left_bound The left bound of the container
+   * @param top_bound The top bound of the container
+   * @param right_bound The right bound of the container
+   * @param bottom_bound The bottom bound of the container
    * @return A vec2 representing the updated_position within the container bounds
    */
-  vec2 KeepWithinContainer(const vec2& updated_position, double current_particle_radius);
+  vec2 KeepWithinContainer(const vec2& updated_position, double current_particle_radius,
+                           double left_bound, double top_bound,
+                           double right_bound, double bottom_bound);
 };
 
 }  // namespace disease
