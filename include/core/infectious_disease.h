@@ -61,8 +61,7 @@ class Disease {
   Disease() = default;
   Disease(double left_margin, double top_margin,
           double container_height, double container_width,
-          double quarantine_top_left_x, double quarantine_top_left_y,
-          double quarantine_bottom_right_x, double quarantine_bottom_right_y);
+          const vec2& quarantine_top_left, const vec2& quarantine_bottom_right);
   Disease(double left_margin, double top_margin,
           double container_height, double container_width,
           size_t exposure_time, size_t infected_time,

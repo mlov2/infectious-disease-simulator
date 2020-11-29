@@ -15,8 +15,8 @@ Simulator::Simulator() : histogram_(disease_.GetPopulation(),
   quarantine_box_bottom_right_y_ = kTopContainerMargin + kContainerHeight;
 
   disease_ = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth,
-                     quarantine_box_top_left_x_, quarantine_box_top_left_y_,
-                     quarantine_box_bottom_right_x_, quarantine_box_bottom_right_y_);
+                     vec2(quarantine_box_top_left_x_, quarantine_box_top_left_y_),
+                     vec2(quarantine_box_bottom_right_x_, quarantine_box_bottom_right_y_));
   time_passed_ = 0;
 }
 

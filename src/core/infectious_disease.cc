@@ -4,17 +4,16 @@ namespace disease {
 
 Disease::Disease(double left_margin, double top_margin,
                  double container_height, double container_width,
-                 double quarantine_top_left_x, double quarantine_top_left_y,
-                 double quarantine_bottom_right_x, double quarantine_bottom_right_y) {
+                 const vec2& quarantine_top_left, const vec2& quarantine_bottom_right) {
   left_wall_ = left_margin;
   top_wall_ = top_margin;
   bottom_wall_ = top_wall_ + container_height;
   right_wall_ = left_wall_ + container_width;
 
-  quarantine_left_wall_ = quarantine_top_left_x;
-  quarantine_top_wall_ = quarantine_top_left_y;
-  quarantine_right_wall_ = quarantine_bottom_right_x;
-  quarantine_bottom_wall_ = quarantine_bottom_right_y;
+  quarantine_left_wall_ = quarantine_top_left.x;
+  quarantine_top_wall_ = quarantine_top_left.y;
+  quarantine_right_wall_ = quarantine_bottom_right.x;
+  quarantine_bottom_wall_ = quarantine_bottom_right.y;
 
   exposure_time_to_be_infected_ = kExposureTimeToBeInfected;
   infected_time_to_be_removed_ = kInfectedTimeToBeRemoved;
