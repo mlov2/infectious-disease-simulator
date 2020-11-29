@@ -74,6 +74,11 @@ class Simulator {
    * Draws the particles.
    */
   void DrawParticles() const;
+
+  /*
+   * Draws the quarantine box.
+   */
+  void DrawQuarantineBox() const;
 };
 
 }  // namespace visualizer
