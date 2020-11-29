@@ -61,7 +61,8 @@ class Disease {
           double container_height, double container_width);
   Disease(double left_margin, double top_margin,
           double container_height, double container_width,
-          size_t exposure_time, size_t infected_time);
+          size_t exposure_time, size_t infected_time,
+          bool is_infection_determination_random, bool is_symptomatic);  // used for testing
 
   void SetPopulation(const vector<Person>& population_to_set_to);
   const vector<Person>& GetPopulation();
@@ -92,9 +93,12 @@ class Disease {
   size_t kExposureTimeToBeInfected = 25;
   size_t kInfectedTimeToBeRemoved = 500;
   double kProbabilityOfBeingAsymptomatic = 0.2;
+  double kProbabilityOfBeingSymptomatic = 0.8;
 
   size_t exposure_time_to_be_infected_;
   size_t infected_time_to_be_removed_;
+  bool is_infection_determination_random_;
+  bool is_symptomatic_;
 
   // ===================
   // Sketchpad variables
