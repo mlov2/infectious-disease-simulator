@@ -39,7 +39,7 @@ TEST_CASE("Check people get sorted according to health status") {
       all_particles.push_back(person);
     }
 
-    person.status = Status::kInfectious;
+    person.status = Status::kSymptomatic;
     person.color = vec3(1,0,0);
     all_particles.push_back(person);
 
@@ -49,13 +49,13 @@ TEST_CASE("Check people get sorted according to health status") {
 
     REQUIRE(histogram.GetSortedPopulation().size() == 2);
     REQUIRE(actual_sorted_people[Status::kSusceptible].size() == 3);
-    REQUIRE(actual_sorted_people[Status::kInfectious].size() == 1);
+    REQUIRE(actual_sorted_people[Status::kSymptomatic].size() == 1);
   }
 
   SECTION("Two status types (susceptible and infectious), unordered") {
     vector<Disease::Person> all_particles;
 
-    person.status = Status::kInfectious;
+    person.status = Status::kSymptomatic;
     person.color = vec3(1,0,0);
     all_particles.push_back(person);
 
@@ -65,7 +65,7 @@ TEST_CASE("Check people get sorted according to health status") {
       all_particles.push_back(person);
     }
 
-    person.status = Status::kInfectious;
+    person.status = Status::kSymptomatic;
     person.color = vec3(1,0,0);
     all_particles.push_back(person);
 
@@ -75,7 +75,7 @@ TEST_CASE("Check people get sorted according to health status") {
 
     REQUIRE(histogram.GetSortedPopulation().size() == 2);
     REQUIRE(actual_sorted_people[Status::kSusceptible].size() == 3);
-    REQUIRE(actual_sorted_people[Status::kInfectious].size() == 2);
+    REQUIRE(actual_sorted_people[Status::kSymptomatic].size() == 2);
   }
 }
 
@@ -92,7 +92,7 @@ TEST_CASE("Check population get updated") {
       existing_people.push_back(person);
     }
 
-    person.status = Status::kInfectious;
+    person.status = Status::kSymptomatic;
     person.color = vec3(1,0,0);
     existing_people.push_back(person);
 
@@ -105,7 +105,7 @@ TEST_CASE("Check population get updated") {
     updated_people.push_back(person);
 
     for (size_t i = 0; i < 2; i++) {
-      person.status = Status::kInfectious;
+      person.status = Status::kSymptomatic;
       person.color = vec3(1,0,0);
       updated_people.push_back(person);
     }
@@ -120,7 +120,7 @@ TEST_CASE("Check population get updated") {
 
     REQUIRE(actual_sorted_people.size() == 3);
     REQUIRE(actual_sorted_people[Status::kSusceptible].size() == 1);
-    REQUIRE(actual_sorted_people[Status::kInfectious].size() == 2);
+    REQUIRE(actual_sorted_people[Status::kSymptomatic].size() == 2);
     REQUIRE(actual_sorted_people[Status::kRemoved].size() == 1);
     REQUIRE(histogram.GetCumulativeInfoOfPopulation().size() == 1);
     REQUIRE(histogram.GetTimeElapsedSinceOutbreak() == 10);
@@ -138,7 +138,7 @@ TEST_CASE("Check population get updated") {
       existing_people.push_back(person);
     }
 
-    person.status = Status::kInfectious;
+    person.status = Status::kSymptomatic;
     person.color = vec3(1,0,0);
     existing_people.push_back(person);
 

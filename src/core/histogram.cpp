@@ -41,7 +41,7 @@ void Histogram::Update(const vector<Disease::Person>& updated_population, size_t
   if (population_sorted_by_status_.size() == 0) {
     time_elapsed_since_outbreak_ = time_passed;
     cumulative_info_of_population_.clear();
-  } else if (population_sorted_by_status_[Status::kInfectious].size() != 0) {
+  } else if (population_sorted_by_status_[Status::kSymptomatic].size() != 0) {
     time_elapsed_since_outbreak_ = time_passed;
     cumulative_info_of_population_.push_back(population_sorted_by_status_);
   }
@@ -85,13 +85,13 @@ void Histogram::DrawHistogramBins(double left_boundary_of_histogram,
 
   // Loop through vector; each element represents one frame, which is one bin of the histogram
   for (const map<Status, vector<Disease::Person>>& info_for_frame : cumulative_info_of_population_) {
-    if (info_for_frame.count(Status::kInfectious) != 0) {
+    if (info_for_frame.count(Status::kSymptomatic) != 0) {
       DrawStatusBin(current_left_side_bin_x,
                     histogram_top_left_corner_y + kHistogramGraphDimension -
-                    (info_for_frame.at(Status::kInfectious).size() * y_increment),
+                    (info_for_frame.at(Status::kSymptomatic).size() * y_increment),
                     current_left_side_bin_x + x_increment,
                     histogram_top_left_corner_y + kHistogramGraphDimension,
-                    info_for_frame.at(Status::kInfectious).front().color);
+                    info_for_frame.at(Status::kSymptomatic).front().color);
     }
 
     if (info_for_frame.count(Status::kRemoved) != 0) {
@@ -180,8 +180,8 @@ void Histogram::DrawStatusStatistics(double left_boundary_of_histogram) const {
   if (population_sorted_by_status_.count(Status::kSusceptible) != 0) {
     num_susceptible = population_sorted_by_status_.at(Status::kSusceptible).size();
   }
-  if (population_sorted_by_status_.count(Status::kInfectious) != 0) {
-    num_infections = population_sorted_by_status_.at(Status::kInfectious).size();
+  if (population_sorted_by_status_.count(Status::kSymptomatic) != 0) {
+    num_infections = population_sorted_by_status_.at(Status::kSymptomatic).size();
   }
   if (population_sorted_by_status_.count(Status::kRemoved) != 0) {
     num_removed = population_sorted_by_status_.at(Status::kRemoved).size();

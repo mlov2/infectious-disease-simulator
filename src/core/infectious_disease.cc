@@ -64,7 +64,7 @@ Disease::Person Disease::CreatePerson() {
 Disease::Person Disease::CreatePatientZero() {
   Disease::Person infected_person = CreatePerson();
 
-  infected_person.status = Status::kInfectious;
+  infected_person.status = Status::kSymptomatic;
   infected_person.color = vec3(1,0,0);
 
   return infected_person;
@@ -100,11 +100,11 @@ Disease::Person Disease::UpdatePersonStatus(const Person& current_person, size_t
     patient = UpdateExposureTime(current_person, current_index);
 
     if (patient.continuous_exposure_time == exposure_time_to_be_infected_) {
-      patient.status = Status::kInfectious;
+      patient.status = Status::kSymptomatic;
       patient.color = vec3(1, 0, 0);
       patient.continuous_exposure_time = 0;
     }
-  } else if (patient.status == Status::kInfectious) {
+  } else if (patient.status == Status::kSymptomatic) {
     ExposeOthers(current_person, current_index);
 
     patient.time_infected++;
@@ -140,7 +140,7 @@ bool Disease::WithinInfectionRadiusOfOthers(const Disease::Person& current_perso
   for (size_t other = current_index + 1; other < population_.size(); other++) {
     Disease::Person other_person = population_[other];
 
-    if (other_person.status == Status::kInfectious) {
+    if (other_person.status == Status::kSymptomatic) {
       if (WithinOneInfectionRadius(current_person, other_person)) {
         return true;
       }
