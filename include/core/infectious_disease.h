@@ -44,6 +44,7 @@ class Disease {
    * has_been_exposed_in_frame: represents if the person (if status is
    *     susceptible) has been exposed to an infected person within the
    *     current frame
+   * is_quarantined: represents if the person is in quarantine
    */
   struct Person {
       double radius;
@@ -54,6 +55,7 @@ class Disease {
       size_t continuous_exposure_time;
       size_t time_infected;
       bool has_been_exposed_in_frame;
+      bool is_quarantined;
   };
 
   Disease() = default;
