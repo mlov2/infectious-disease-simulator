@@ -69,6 +69,7 @@ Disease::Person Disease::CreatePerson() {
   new_person.continuous_exposure_time = 0;
   new_person.time_infected = 0;
   new_person.has_been_exposed_in_frame = false;
+  new_person.is_quarantined = false;
 
   return new_person;
 }
