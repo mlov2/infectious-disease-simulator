@@ -75,13 +75,15 @@ void Simulator::DrawParticles() const {
 }
 
 void Simulator::DrawQuarantineBox() const {
-  if (!particles_info.empty()) {
-    vec2 pixel_top_left = vec2(quarantine_box_top_left_x_, quarantine_box_top_left_y_);
-    vec2 pixel_bottom_right = vec2(quarantine_box_bottom_right_x_, quarantine_box_bottom_right_y_);
-    ci::Rectf pixel_bounding_box(pixel_top_left, pixel_bottom_right);
+  if (disease_.GetShouldQuarantineValue()) {
+    if (!particles_info.empty()) {
+      vec2 pixel_top_left = vec2(quarantine_box_top_left_x_, quarantine_box_top_left_y_);
+      vec2 pixel_bottom_right = vec2(quarantine_box_bottom_right_x_, quarantine_box_bottom_right_y_);
+      ci::Rectf pixel_bounding_box(pixel_top_left, pixel_bottom_right);
 
-    ci::gl::color(ci::Color("black"));
-    ci::gl::drawSolidRect(pixel_bounding_box);
+      ci::gl::color(ci::Color("black"));
+      ci::gl::drawSolidRect(pixel_bounding_box);
+    }
   }
 }
 
