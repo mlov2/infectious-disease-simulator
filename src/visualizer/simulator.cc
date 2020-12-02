@@ -82,6 +82,10 @@ void Simulator::DrawQuarantineBox() const {
   }
 }
 
+void Simulator::CreatePopulation() {
+  disease_.CreatePopulation();
+}
+
 void Simulator::Clear() {
   time_passed_ = 0;
   particles_info.clear();
@@ -94,10 +98,6 @@ double Simulator::GetTopMargin() {
 
 const vector<Disease::Person>& Simulator::GetParticlesInfo() {
   return particles_info;
-}
-
-void Simulator::CreatePopulation() {
-  disease_.CreatePopulation();
 }
 
 }  // namespace visualizer
