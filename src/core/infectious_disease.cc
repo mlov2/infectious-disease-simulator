@@ -15,6 +15,7 @@ Disease::Disease(double left_margin, double top_margin,
   quarantine_right_wall_ = quarantine_bottom_right.x;
   quarantine_bottom_wall_ = quarantine_bottom_right.y;
 
+  should_quarantine_ = true;
   exposure_time_to_be_infected_ = kExposureTimeToBeInfected;
   infected_time_to_be_removed_ = kInfectedTimeToBeRemoved;
   is_infection_determination_random_ = true;
@@ -36,6 +37,7 @@ Disease::Disease(double left_margin, double top_margin,
   quarantine_right_wall_ = quarantine_bottom_right.x;
   quarantine_bottom_wall_ = quarantine_bottom_right.y;
 
+  should_quarantine_ = true;
   exposure_time_to_be_infected_ = exposure_time;
   infected_time_to_be_removed_ = infected_time;
   is_infection_determination_random_ = is_infection_determination_random;
@@ -46,8 +48,47 @@ void Disease::SetPopulation(const vector<Disease::Person>& population_to_set_to)
   population_ = population_to_set_to;
 }
 
+void Disease::SetShouldQuarantine(bool should_quarantine) {
+  should_quarantine_ = should_quarantine;
+}
+void Disease::SetExposureTime(size_t exposure_time) {
+  exposure_time_to_be_infected_ = exposure_time;
+}
+
+void Disease::SetInfectedTime(size_t infected_time) {
+  infected_time_to_be_removed_ = infected_time;
+}
+
+void Disease::SetAmountOfSocialDistance(size_t amount_of_social_distance) {
+  amount_of_social_distance_ = amount_of_social_distance;
+}
+
+void Disease::SetRadiusOfInfection(size_t radius_of_infection) {
+  radius_of_infection_ = radius_of_infection;
+}
+
 const vector<Disease::Person>& Disease::GetPopulation() {
   return population_;
+}
+
+bool Disease::GetShouldQuarantineValue() const {
+  return should_quarantine_;
+}
+
+size_t Disease::GetExposureTime() const {
+  return exposure_time_to_be_infected_;
+}
+
+size_t Disease::GetInfectedTime() const {
+  return infected_time_to_be_removed_;
+}
+
+size_t Disease::GetAmountOfSocialDistance() const {
+  return amount_of_social_distance_;
+}
+
+size_t Disease::GetRadiusOfInfection() const {
+  return radius_of_infection_;
 }
 
 void Disease::CreatePopulation() {
