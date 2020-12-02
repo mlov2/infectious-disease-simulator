@@ -61,6 +61,7 @@ class Simulator {
   double quarantine_box_bottom_right_y_;
 
   const double kInitialYLocForFeatureStats = 100;
+  const double kInitialYLocForGeneralInstructionsMultiplier = 3;
 
   Disease disease_;
   Histogram histogram_;
@@ -81,6 +82,11 @@ class Simulator {
    * Draws the quarantine box.
    */
   void DrawQuarantineBox() const;
+
+  /*
+   * Draws the instructions on how to change the value of features.
+   */
+  void DrawFeatureChangeInstructions() const;
 
   /*
    * Draws the feature stat labels to display to user.

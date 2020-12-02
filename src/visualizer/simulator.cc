@@ -46,6 +46,7 @@ void Simulator::Draw() const {
   // Draw the particles
   DrawParticles();
 
+  DrawFeatureChangeInstructions();
   DrawFeatureLabels();
 }
 
@@ -81,6 +82,49 @@ void Simulator::DrawQuarantineBox() const {
 
     ci::gl::color(ci::Color("black"));
     ci::gl::drawSolidRect(pixel_bounding_box);
+  }
+}
+
+void Simulator::DrawFeatureChangeInstructions() const {
+  if (particles_info.empty()) {
+    double x_location = kLeftContainerMargin + kContainerWidth + kSpacesFromContainer;
+    double y_location = histogram_.GetYCoordinateOfLastStatusStatLabel() + kInitialYLocForFeatureStats;
+
+    double general_instructions_y_location = y_location - kInitialYLocForGeneralInstructionsMultiplier *
+        kSpacesFromContainer;
+    ci::gl::drawString(
+        "You are currently changing: ",  // TODO: add a to_string that will show what's being changed
+        glm::vec2(x_location, general_instructions_y_location), ci::Color("black"));
+
+    general_instructions_y_location += kSpacesFromContainer;
+    ci::gl::drawString(
+        "To change the value, press the arrow up or arrow down key",
+        glm::vec2(x_location, general_instructions_y_location), ci::Color("black"));
+
+
+    ci::gl::drawString(
+        "To change if population should quarantine when infected, press 'q'",
+        glm::vec2(x_location, y_location), ci::Color("black"));
+
+    y_location += kSpacesFromContainer;
+    ci::gl::drawString(
+        "To change the exposure time, press 'e'",
+        glm::vec2(x_location, y_location), ci::Color("black"));
+
+    y_location += kSpacesFromContainer;
+    ci::gl::drawString(
+        "To change the infected time, press 'i'",
+        glm::vec2(x_location, y_location), ci::Color("black"));
+
+    y_location += kSpacesFromContainer;
+    ci::gl::drawString(
+        "To change the amount of social distance, press 'd'",
+        glm::vec2(x_location, y_location), ci::Color("black"));
+
+    y_location += kSpacesFromContainer;
+    ci::gl::drawString(
+        "To change the radius of infection, press 'r'",
+        glm::vec2(x_location, y_location), ci::Color("black"));
   }
 }
 
