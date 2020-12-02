@@ -140,28 +140,32 @@ void Simulator::DrawFeatureLabels() const {
       "FEATURE STATS",
       glm::vec2(x_location, y_location - kSpacesFromContainer), ci::Color("black"));
 
+  std::string quarantine = "No";
+  if (disease_.GetShouldQuarantineValue()) {
+    quarantine = "Yes";
+  }
   ci::gl::drawString(
-      "Should quarantine?",  // TODO: Add to_string that shows value
+      "Should quarantine? " + quarantine,
       glm::vec2(x_location, y_location), ci::Color("black"));
 
   y_location += kSpacesFromContainer;
   ci::gl::drawString(
-      "Exposure time: ",  // TODO: Add to_string that shows value
+      "Exposure time: " + std::to_string(disease_.GetExposureTime()),
       glm::vec2(x_location, y_location), ci::Color("black"));
 
   y_location += kSpacesFromContainer;
   ci::gl::drawString(
-      "Infected time: ",  // TODO: Add to_string that shows value
+      "Infected time: " + std::to_string(disease_.GetInfectedTime()),
       glm::vec2(x_location, y_location), ci::Color("black"));
 
   y_location += kSpacesFromContainer;
   ci::gl::drawString(
-      "Amount of social distance: ",  // TODO: Add to_string that shows value
+      "Amount of social distance: " + std::to_string(disease_.GetAmountOfSocialDistance()),
       glm::vec2(x_location, y_location), ci::Color("black"));
 
   y_location += kSpacesFromContainer;
   ci::gl::drawString(
-      "Radius of infection: ",  // TODO: Add to_string that shows value
+      "Radius of infection: " + std::to_string(disease_.GetRadiusOfInfection()),
       glm::vec2(x_location, y_location), ci::Color("black"));
 }
 
