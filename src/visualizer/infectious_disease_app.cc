@@ -46,11 +46,11 @@ void InfectiousDiseaseApp::keyDown(ci::app::KeyEvent event) {
       break;
 
     case ci::app::KeyEvent::KEY_UP:
-      // TODO: Increment value
+      simulator_.ChangeFeatureValue(true);
       break;
 
     case ci::app::KeyEvent::KEY_DOWN:
-      // TODO: Decrement value
+      simulator_.ChangeFeatureValue(false);
       break;
 
     case ci::app::KeyEvent::KEY_DELETE:
