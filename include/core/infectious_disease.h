@@ -69,7 +69,17 @@ class Disease {
           bool is_infection_determination_random, bool is_symptomatic);  // used for testing
 
   void SetPopulation(const vector<Person>& population_to_set_to);
+  void SetShouldQuarantine(bool should_quarantine);
+  void SetExposureTime(size_t exposure_time);
+  void SetInfectedTime(size_t infected_time);
+  void SetAmountOfSocialDistance(size_t amount_of_social_distance);
+  void SetRadiusOfInfection(size_t radius_of_infection);
   const vector<Person>& GetPopulation();
+  bool GetShouldQuarantineValue() const;
+  size_t GetExposureTime() const;
+  size_t GetInfectedTime() const;
+  size_t GetAmountOfSocialDistance() const;
+  size_t GetRadiusOfInfection() const;
 
   /*
    * Create a population where all but one is susceptible to the disease (the
@@ -100,8 +110,12 @@ class Disease {
   double kProbabilityOfBeingAsymptomatic = 0.2;
   double kProbabilityOfBeingSymptomatic = 0.8;
 
+  bool should_quarantine_;
   size_t exposure_time_to_be_infected_;
   size_t infected_time_to_be_removed_;
+  size_t amount_of_social_distance_;  // TODO: in week 3, initialize in constructors
+  size_t radius_of_infection_;  // TODO: in week 3, initialize in constructors
+
   bool is_infection_determination_random_;
   bool is_symptomatic_;
 
