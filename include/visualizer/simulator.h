@@ -55,8 +55,10 @@ class Simulator {
 
   /*
    * Changes the value of the feature that is currently being changed.
+   *
+   * @param is_key_up A bool representing if the up key was pressed
    */
-  void ChangeFeatureValue();  // TODO: Write tests for this function
+  void ChangeFeatureValue(bool is_key_up);  // TODO: Write tests for this function
 
   const vector<Disease::Person>& GetParticlesInfo();
 

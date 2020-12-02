@@ -170,7 +170,7 @@ void Simulator::ChangeFeature(FeatureChangeKey feature_to_change) {
   feature_currently_being_changed_ = feature_to_change;
 }
 
-void Simulator::ChangeFeatureValue() {
+void Simulator::ChangeFeatureValue(bool is_key_up) {
   if (particles_info.empty()) {
     switch (int(feature_currently_being_changed_)) {
       case 1:  // kQuarantine
