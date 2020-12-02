@@ -138,15 +138,19 @@ void Disease::UpdateParticles() {
 
     // Check for wall collisions
     if (population_[current].is_quarantined) {
-      CheckForWallCollisions(current, quarantine_left_wall_, quarantine_top_wall_,
-                             quarantine_right_wall_, quarantine_bottom_wall_);
+      if (should_quarantine_) {
+        CheckForWallCollisions(current, quarantine_left_wall_, quarantine_top_wall_,
+                               quarantine_right_wall_, quarantine_bottom_wall_);
+      }
     } else {
       CheckForWallCollisions(current, left_wall_, top_wall_, right_wall_, bottom_wall_);
     }
 
     // Check if the person should be quarantined
     if (ShouldBeQuarantined(population_[current])) {
-      population_[current] = QuarantinePerson(population_[current]);
+      if (should_quarantine_) {
+        population_[current] = QuarantinePerson(population_[current]);
+      }
     } else {
       // Update position
       UpdatePosition(current);
@@ -163,11 +167,14 @@ void Disease::ResetExposureInFrame() {
 void Disease::UpdatePosition(size_t current_index) {
   vec2 updated_position = population_[current_index].position +
                           population_[current_index].velocity;
+
   if (population_[current_index].is_quarantined) {
-    population_[current_index].position =
-        KeepWithinContainer(updated_position, population_[current_index].radius,
-                            quarantine_left_wall_, quarantine_top_wall_,
-                            quarantine_right_wall_, quarantine_bottom_wall_);
+    if (should_quarantine_) {
+      population_[current_index].position =
+          KeepWithinContainer(updated_position, population_[current_index].radius,
+                              quarantine_left_wall_, quarantine_top_wall_,
+                              quarantine_right_wall_, quarantine_bottom_wall_);
+    }
   } else {
     population_[current_index].position =
         KeepWithinContainer(updated_position, population_[current_index].radius,
@@ -336,7 +343,7 @@ bool Disease::IsMovingTowardsWall(const Disease::Person& current_particle,
 bool Disease::ShouldBeQuarantined(const Disease::Person& current_person) const {
   return (current_person.status == Status::kSymptomatic &&
       current_person.time_infected >= kTimeToBeDetectedForQuarantine &&
-      !current_person.is_quarantined);
+      !current_person.is_quarantined && should_quarantine_);
 }
 
 Disease::Person Disease::QuarantinePerson(const Disease::Person& current_person) {
