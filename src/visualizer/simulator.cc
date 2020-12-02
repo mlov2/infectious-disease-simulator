@@ -18,6 +18,7 @@ Simulator::Simulator() : histogram_(disease_.GetPopulation(),
                      vec2(quarantine_box_top_left_x_, quarantine_box_top_left_y_),
                      vec2(quarantine_box_bottom_right_x_, quarantine_box_bottom_right_y_));
   time_passed_ = 0;
+  feature_currently_being_changed_ = FeatureChangeKey::kQuarantine;
 }
 
 void Simulator::Update() {
