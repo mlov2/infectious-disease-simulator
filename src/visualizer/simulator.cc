@@ -180,20 +180,44 @@ void Simulator::ChangeFeature(FeatureChangeKey feature_to_change) {
 void Simulator::ChangeFeatureValue(bool is_key_up) {
   if (particles_info.empty()) {
     switch (int(feature_currently_being_changed_)) {
-      case 1:  // kQuarantine
-        // TODO: User getters and setters from Disease class to change the value
+      case 0:  // kQuarantine
+        if (disease_.GetShouldQuarantineValue()) {
+          disease_.SetShouldQuarantine(false);
+        } else {
+          disease_.SetShouldQuarantine(true);
+        }
         break;
 
-      case 2:  // kExposureTime
+      case 1:  // kExposureTime
+        if (is_key_up) {
+          disease_.SetExposureTime(disease_.GetExposureTime() + kIncrementOrDecrementBy);
+        } else {
+          disease_.SetExposureTime(disease_.GetExposureTime() - kIncrementOrDecrementBy);
+        }
         break;
 
-      case 3:  // kInfectedTime
+      case 2:  // kInfectedTime
+        if (is_key_up) {
+          disease_.SetInfectedTime(disease_.GetInfectedTime() + kIncrementOrDecrementBy);
+        } else {
+          disease_.SetInfectedTime(disease_.GetInfectedTime() - kIncrementOrDecrementBy);
+        }
         break;
 
-      case 4:  // kSocialDistance
+      case 3:  // kSocialDistance
+        if (is_key_up) {
+          disease_.SetAmountOfSocialDistance(disease_.GetAmountOfSocialDistance() + kIncrementOrDecrementBy);
+        } else {
+          disease_.SetAmountOfSocialDistance(disease_.GetAmountOfSocialDistance() - kIncrementOrDecrementBy);
+        }
         break;
 
-      case 5:  // kInfectionRadius
+      case 4:  // kInfectionRadius
+        if (is_key_up) {
+          disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() + kIncrementOrDecrementBy);
+        } else {
+          disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() - kIncrementOrDecrementBy);
+        }
         break;
     }
   }
