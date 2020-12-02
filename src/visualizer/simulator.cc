@@ -90,6 +90,7 @@ void Simulator::DrawFeatureChangeInstructions() const {
     double x_location = kLeftContainerMargin + kContainerWidth + kSpacesFromContainer;
     double y_location = histogram_.GetYCoordinateOfLastStatusStatLabel() + kInitialYLocForFeatureStats;
 
+    // General instructions
     double general_instructions_y_location = y_location - kInitialYLocForGeneralInstructionsMultiplier *
         kSpacesFromContainer;
     ci::gl::drawString(
@@ -101,7 +102,7 @@ void Simulator::DrawFeatureChangeInstructions() const {
         "To change the value, press the arrow up or arrow down key",
         glm::vec2(x_location, general_instructions_y_location), ci::Color("black"));
 
-
+    // Specific instructions
     ci::gl::drawString(
         "To change if population should quarantine when infected, press 'q'",
         glm::vec2(x_location, y_location), ci::Color("black"));
