@@ -9,11 +9,11 @@ using disease::Disease;
 namespace disease {
 
 enum class FeatureChangeKey {
-  kQuarantine,       // 1
-  kExposureTime,     // 2
-  kInfectedTime,     // 3
-  kSocialDistance,   // 4
-  kInfectionRadius,  // 5
+  kQuarantine,       // 0
+  kExposureTime,     // 1
+  kInfectedTime,     // 2
+  kSocialDistance,   // 3
+  kInfectionRadius,  // 4
 };
 
 namespace visualizer {
@@ -88,6 +88,7 @@ class Simulator {
   vector<Disease::Person> particles_info;
   size_t time_passed_;
   FeatureChangeKey feature_currently_being_changed_;
+  const size_t kIncrementOrDecrementBy = 5;
 
   /*
    * Draws the container.
