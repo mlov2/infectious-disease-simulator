@@ -22,28 +22,27 @@ void InfectiousDiseaseApp::draw() {
 void InfectiousDiseaseApp::keyDown(ci::app::KeyEvent event) {
   switch (event.getCode()) {
     case ci::app::KeyEvent::KEY_RETURN:
-      // TODO: Start breakout
       simulator_.CreatePopulation();
       break;
 
     case ci::app::KeyEvent::KEY_q:
-      // TODO: Change quarantine value
+      simulator_.ChangeFeature(FeatureChangeKey::kQuarantine);
       break;
 
     case ci::app::KeyEvent::KEY_e:
-      // TODO: Change exposure time
+      simulator_.ChangeFeature(FeatureChangeKey::kExposureTime);
       break;
 
     case ci::app::KeyEvent::KEY_i:
-      // TODO: Change infected time
+      simulator_.ChangeFeature(FeatureChangeKey::kInfectedTime);
       break;
 
     case ci::app::KeyEvent::KEY_r:
-      // TODO: Change radius of infection
+      simulator_.ChangeFeature(FeatureChangeKey::kInfectionRadius);
       break;
 
     case ci::app::KeyEvent::KEY_d:
-      // TODO: Change amount of social distance
+      simulator_.ChangeFeature(FeatureChangeKey::kSocialDistance);
       break;
 
     case ci::app::KeyEvent::KEY_UP:
@@ -55,7 +54,7 @@ void InfectiousDiseaseApp::keyDown(ci::app::KeyEvent event) {
       break;
 
     case ci::app::KeyEvent::KEY_DELETE:
-      // TODO: End breakout and clear container and histogram
+      // End breakout and clear container and histogram
       simulator_.Clear();
       break;
   }
