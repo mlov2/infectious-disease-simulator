@@ -26,6 +26,10 @@ void InfectiousDiseaseApp::keyDown(ci::app::KeyEvent event) {
       simulator_.CreatePopulation();
       break;
 
+    case ci::app::KeyEvent::KEY_q:
+      // TODO: Change quarantine value
+      break;
+
     case ci::app::KeyEvent::KEY_e:
       // TODO: Change exposure time
       break;
@@ -40,6 +44,14 @@ void InfectiousDiseaseApp::keyDown(ci::app::KeyEvent event) {
 
     case ci::app::KeyEvent::KEY_d:
       // TODO: Change amount of social distance
+      break;
+
+    case ci::app::KeyEvent::KEY_UP:
+      // TODO: Increment value
+      break;
+
+    case ci::app::KeyEvent::KEY_DOWN:
+      // TODO: Decrement value
       break;
 
     case ci::app::KeyEvent::KEY_DELETE:
