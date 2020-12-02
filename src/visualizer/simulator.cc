@@ -171,22 +171,24 @@ void Simulator::ChangeFeature(FeatureChangeKey feature_to_change) {
 }
 
 void Simulator::ChangeFeatureValue() {
-  switch (int(feature_currently_being_changed_)) {
-    case 1:  // kQuarantine
-      // TODO: User getters and setters from Disease class to change the value
-      break;
+  if (particles_info.empty()) {
+    switch (int(feature_currently_being_changed_)) {
+      case 1:  // kQuarantine
+        // TODO: User getters and setters from Disease class to change the value
+        break;
 
-    case 2:  // kExposureTime
-      break;
+      case 2:  // kExposureTime
+        break;
 
-    case 3:  // kInfectedTime
-      break;
+      case 3:  // kInfectedTime
+        break;
 
-    case 4:  // kSocialDistance
-      break;
+      case 4:  // kSocialDistance
+        break;
 
-    case 5:  // kInfectionRadius
-      break;
+      case 5:  // kInfectionRadius
+        break;
+    }
   }
 }
 
