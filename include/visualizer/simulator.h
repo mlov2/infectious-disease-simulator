@@ -120,6 +120,8 @@ class Simulator {
    * - radius of infection
    */
   void DrawFeatureLabels() const;
+
+  std::string GetFeatureBeingChanged() const;
 };
 
 }  // namespace visualizer

@@ -97,7 +97,7 @@ void Simulator::DrawFeatureChangeInstructions() const {
     double general_instructions_y_location = y_location - kInitialYLocForGeneralInstructionsMultiplier *
         kSpacesFromContainer;
     ci::gl::drawString(
-        "You are currently changing: ",  // TODO: add a to_string that will show what's being changed
+        "You are currently changing: " + GetFeatureBeingChanged(),
         glm::vec2(x_location, general_instructions_y_location), ci::Color("black"));
 
     general_instructions_y_location += kSpacesFromContainer;
@@ -227,6 +227,34 @@ void Simulator::Clear() {
   time_passed_ = 0;
   particles_info.clear();
   disease_.SetPopulation(particles_info);
+}
+
+std::string Simulator::GetFeatureBeingChanged() const {
+  std::string feature_being_changed;
+
+  switch (int(feature_currently_being_changed_)) {
+    case 0:
+      feature_being_changed = "'Should Quarantine'";
+      break;
+
+    case 1:
+      feature_being_changed = "'Exposed Time'";
+      break;
+
+    case 2:
+      feature_being_changed = "'Infected Time'";
+      break;
+
+    case 3:
+      feature_being_changed = "'Amount of Social Distance'";
+      break;
+
+    case 4:
+      feature_being_changed = "'Radius of Infection'";
+      break;
+  }
+
+  return feature_being_changed;
 }
 
 double Simulator::GetTopMargin() {
