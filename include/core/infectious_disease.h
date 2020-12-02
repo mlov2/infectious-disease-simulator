@@ -113,8 +113,8 @@ class Disease {
   bool should_quarantine_;
   size_t exposure_time_to_be_infected_;
   size_t infected_time_to_be_removed_;
-  size_t amount_of_social_distance_;  // TODO: in week 3, initialize in constructors
-  size_t radius_of_infection_;  // TODO: in week 3, initialize in constructors
+  size_t amount_of_social_distance_;
+  size_t radius_of_infection_;
 
   bool is_infection_determination_random_;
   bool is_symptomatic_;

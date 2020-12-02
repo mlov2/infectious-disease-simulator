@@ -18,6 +18,8 @@ Disease::Disease(double left_margin, double top_margin,
   should_quarantine_ = true;
   exposure_time_to_be_infected_ = kExposureTimeToBeInfected;
   infected_time_to_be_removed_ = kInfectedTimeToBeRemoved;
+  amount_of_social_distance_ = 0;
+  radius_of_infection_ = kInfectionRadius;
   is_infection_determination_random_ = true;
   is_symptomatic_ = true;
 }
@@ -40,6 +42,8 @@ Disease::Disease(double left_margin, double top_margin,
   should_quarantine_ = true;
   exposure_time_to_be_infected_ = exposure_time;
   infected_time_to_be_removed_ = infected_time;
+  amount_of_social_distance_ = 0;
+  radius_of_infection_ = kInfectionRadius;
   is_infection_determination_random_ = is_infection_determination_random;
   is_symptomatic_ = is_symptomatic;
 }
