@@ -8,6 +8,14 @@ using disease::Disease;
 
 namespace disease {
 
+enum class FeatureChangeKey {
+  kQuarantine,       // 1
+  kExposureTime,     // 2
+  kInfectedTime,     // 3
+  kSocialDistance,   // 4
+  kInfectionRadius,  // 5
+};
+
 namespace visualizer {
 
 /*
@@ -40,6 +48,16 @@ class Simulator {
    */
   void CreatePopulation();
 
+  /*
+   * Changes the specified feature.
+   */
+  void ChangeFeature(FeatureChangeKey feature_to_change);
+
+  /*
+   * Changes the value of the feature that is currently being changed.
+   */
+  void ChangeFeatureValue();  // TODO: Write tests for this function
+
   const vector<Disease::Person>& GetParticlesInfo();
 
   double GetTopMargin();
@@ -67,6 +85,7 @@ class Simulator {
   Histogram histogram_;
   vector<Disease::Person> particles_info;
   size_t time_passed_;
+  FeatureChangeKey feature_currently_being_changed_;
 
   /*
    * Draws the container.
