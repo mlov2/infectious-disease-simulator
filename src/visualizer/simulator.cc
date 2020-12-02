@@ -45,6 +45,8 @@ void Simulator::Draw() const {
 
   // Draw the particles
   DrawParticles();
+
+  DrawFeatureLabels();
 }
 
 void Simulator::DrawContainer() const {
@@ -80,6 +82,38 @@ void Simulator::DrawQuarantineBox() const {
     ci::gl::color(ci::Color("black"));
     ci::gl::drawSolidRect(pixel_bounding_box);
   }
+}
+
+void Simulator::DrawFeatureLabels() const {
+  double y_location = histogram_.GetYCoordinateOfLastStatusStatLabel() + kInitialYLocForFeatureStats;
+  ci::gl::drawString(
+      "Should quarantine?",
+      glm::vec2(histogram_.GetXCoordinateOfStatusStatLabels(),
+      y_location), ci::Color("black"));
+
+  y_location += kSpacesFromContainer;
+  ci::gl::drawString(
+      "Exposure time: ",
+      glm::vec2(histogram_.GetXCoordinateOfStatusStatLabels(),
+      y_location), ci::Color("black"));
+
+  y_location += kSpacesFromContainer;
+  ci::gl::drawString(
+      "Infected time: ",
+      glm::vec2(histogram_.GetXCoordinateOfStatusStatLabels(),
+      y_location), ci::Color("black"));
+
+  y_location += kSpacesFromContainer;
+  ci::gl::drawString(
+      "Amount of social distance: ",
+      glm::vec2(histogram_.GetXCoordinateOfStatusStatLabels(),
+      y_location), ci::Color("black"));
+
+  y_location += kSpacesFromContainer;
+  ci::gl::drawString(
+      "Radius of infection: ",
+      glm::vec2(histogram_.GetXCoordinateOfStatusStatLabels(),
+      y_location), ci::Color("black"));
 }
 
 void Simulator::CreatePopulation() {

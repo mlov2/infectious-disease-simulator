@@ -60,6 +60,8 @@ class Simulator {
   double quarantine_box_bottom_right_x_;
   double quarantine_box_bottom_right_y_;
 
+  const double kInitialYLocForFeatureStats = 100;
+
   Disease disease_;
   Histogram histogram_;
   vector<Disease::Person> particles_info;
@@ -79,6 +81,17 @@ class Simulator {
    * Draws the quarantine box.
    */
   void DrawQuarantineBox() const;
+
+  /*
+   * Draws the feature stat labels to display to user.
+   *
+   * - quarantine
+   * - exposed time
+   * - infected time
+   * - amount of social distance
+   * - radius of infection
+   */
+  void DrawFeatureLabels() const;
 };
 
 }  // namespace visualizer
