@@ -129,35 +129,36 @@ void Simulator::DrawFeatureChangeInstructions() const {
 }
 
 void Simulator::DrawFeatureLabels() const {
+  double x_location = histogram_.GetXCoordinateOfStatusStatLabels();
   double y_location = histogram_.GetYCoordinateOfLastStatusStatLabel() + kInitialYLocForFeatureStats;
+
   ci::gl::drawString(
-      "Should quarantine?",
-      glm::vec2(histogram_.GetXCoordinateOfStatusStatLabels(),
-      y_location), ci::Color("black"));
+      "FEATURE STATS",
+      glm::vec2(x_location, y_location - kSpacesFromContainer), ci::Color("black"));
+
+  ci::gl::drawString(
+      "Should quarantine?",  // TODO: Add to_string that shows value
+      glm::vec2(x_location, y_location), ci::Color("black"));
 
   y_location += kSpacesFromContainer;
   ci::gl::drawString(
-      "Exposure time: ",
-      glm::vec2(histogram_.GetXCoordinateOfStatusStatLabels(),
-      y_location), ci::Color("black"));
+      "Exposure time: ",  // TODO: Add to_string that shows value
+      glm::vec2(x_location, y_location), ci::Color("black"));
 
   y_location += kSpacesFromContainer;
   ci::gl::drawString(
-      "Infected time: ",
-      glm::vec2(histogram_.GetXCoordinateOfStatusStatLabels(),
-      y_location), ci::Color("black"));
+      "Infected time: ",  // TODO: Add to_string that shows value
+      glm::vec2(x_location, y_location), ci::Color("black"));
 
   y_location += kSpacesFromContainer;
   ci::gl::drawString(
-      "Amount of social distance: ",
-      glm::vec2(histogram_.GetXCoordinateOfStatusStatLabels(),
-      y_location), ci::Color("black"));
+      "Amount of social distance: ",  // TODO: Add to_string that shows value
+      glm::vec2(x_location, y_location), ci::Color("black"));
 
   y_location += kSpacesFromContainer;
   ci::gl::drawString(
-      "Radius of infection: ",
-      glm::vec2(histogram_.GetXCoordinateOfStatusStatLabels(),
-      y_location), ci::Color("black"));
+      "Radius of infection: ",  // TODO: Add to_string that shows value
+      glm::vec2(x_location, y_location), ci::Color("black"));
 }
 
 void Simulator::CreatePopulation() {
