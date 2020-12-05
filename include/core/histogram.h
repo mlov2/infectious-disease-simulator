@@ -16,6 +16,8 @@ namespace disease {
  */
 class Histogram {
  private:
+  const size_t kNumOfStatuses = 4;
+
   // ================================
   // Constants for drawing histograms
   // ================================
@@ -27,6 +29,10 @@ class Histogram {
   double upper_bound_for_y_;  // i.e. the highest label value for y axis
   vec2 container_top_right_corner_;
   double time_elapsed_since_outbreak_;
+
+  // Info regarding placement of histogram stuff
+  size_t bottom_most_boundary_of_histogram_;
+  size_t x_coordinate_of_status_stat_labels_;
 
   // the key is a Status representing the health status
   // the value is a vector representing the people with the specified health status
@@ -101,10 +107,8 @@ class Histogram {
 
   /*
    * Draws the status statistics of the population.
-   *
-   * @param left_boundary_of_histogram The left boundary of the histogram
    */
-  void DrawStatusStatistics(double left_boundary_of_histogram) const;
+  void DrawStatusStatistics() const;
 
  public:
   Histogram() = default;
@@ -112,6 +116,11 @@ class Histogram {
             const vec2& container_top_right_corner);
 
   const map<Status, vector<Disease::Person>>& GetSortedPopulation() const;
+  const vector<map<Status, vector<Disease::Person>>>& GetCumulativeInfoOfPopulation() const;
+  double GetTimeElapsedSinceOutbreak() const;
+  size_t GetBottomMostBoundaryOfHistogram() const;  // i.e. y coordinate below the x axis label
+  size_t GetXCoordinateOfStatusStatLabels() const;
+  size_t GetYCoordinateOfLastStatusStatLabel() const;
 
   /*
    * Sorts all the people according to their health status.

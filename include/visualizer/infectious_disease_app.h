@@ -18,6 +18,7 @@ class InfectiousDiseaseApp : public ci::app::App {
 
   void update() override;
   void draw() override;
+  void keyDown(ci::app::KeyEvent event) override;
 
   const double kWindowSizeY = 650;
   const double kWindowSizeX = 1300;

@@ -6,49 +6,101 @@ using disease::Disease;
 using disease::Status;
 
 TEST_CASE("Create population", "[create population]") {
-  Disease disease = Disease(0, 0, 100, 100, true);
+  SECTION("Create population when container is empty") {
+    Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100));
 
-  vector<Disease::Person> all_particles = disease.GetPopulation();
-  REQUIRE(all_particles.size() == 201);
+    disease.CreatePopulation();
 
-  // Susceptible people created
-  for (size_t i = 0; i < all_particles.size() - 1; i++) {
-    REQUIRE(all_particles[i].radius == 10);
-    REQUIRE(all_particles[i].position.x >= 0);
-    REQUIRE(all_particles[i].position.x <= 100);
-    REQUIRE(all_particles[i].position.y >= 0);
-    REQUIRE(all_particles[i].position.y <= 100);
-    REQUIRE(all_particles[i].velocity.x >= -1);
-    REQUIRE(all_particles[i].velocity.x <= 1);
-    REQUIRE(all_particles[i].velocity.y >= -1);
-    REQUIRE(all_particles[i].velocity.y <= 1);
-    REQUIRE(all_particles[i].status == disease::Status::kSusceptible);
-    REQUIRE(all_particles[i].color == vec3(0, 0, 1));
-    REQUIRE(all_particles[i].continuous_exposure_time == 0);
-    REQUIRE(all_particles[i].time_infected == 0);
-    REQUIRE(all_particles[i].has_been_exposed_in_frame == false);
+    vector<Disease::Person> all_particles = disease.GetPopulation();
+    REQUIRE(all_particles.size() == 201);
+
+    // Susceptible people created
+    for (size_t i = 0; i < all_particles.size() - 1; i++) {
+      REQUIRE(all_particles[i].radius == 10);
+      REQUIRE(all_particles[i].position.x >= 0);
+      REQUIRE(all_particles[i].position.x <= 100);
+      REQUIRE(all_particles[i].position.y >= 0);
+      REQUIRE(all_particles[i].position.y <= 100);
+      REQUIRE(all_particles[i].velocity.x >= -1);
+      REQUIRE(all_particles[i].velocity.x <= 1);
+      REQUIRE(all_particles[i].velocity.y >= -1);
+      REQUIRE(all_particles[i].velocity.y <= 1);
+      REQUIRE(all_particles[i].status == disease::Status::kSusceptible);
+      REQUIRE(all_particles[i].color == vec3(0, 0, 1));
+      REQUIRE(all_particles[i].continuous_exposure_time == 0);
+      REQUIRE(all_particles[i].time_infected == 0);
+      REQUIRE(all_particles[i].has_been_exposed_in_frame == false);
+      REQUIRE(all_particles[i].is_quarantined == false);
+    }
+
+    // Patient zero created
+    REQUIRE(all_particles[all_particles.size() - 1].radius == 10);
+    REQUIRE(all_particles[all_particles.size() - 1].position.x >= 0);
+    REQUIRE(all_particles[all_particles.size() - 1].position.x <= 100);
+    REQUIRE(all_particles[all_particles.size() - 1].position.y >= 0);
+    REQUIRE(all_particles[all_particles.size() - 1].position.y <= 100);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.x >= -1);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.x <= 1);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.y >= -1);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.y <= 1);
+    REQUIRE(all_particles[all_particles.size() - 1].status == disease::Status::kSymptomatic);
+    REQUIRE(all_particles[all_particles.size() - 1].color == vec3(1, 0, 0));
+    REQUIRE(all_particles[all_particles.size() - 1].continuous_exposure_time == 0);
+    REQUIRE(all_particles[all_particles.size() - 1].time_infected == 0);
+    REQUIRE(all_particles[all_particles.size() - 1].has_been_exposed_in_frame == false);
+    REQUIRE(all_particles[all_particles.size() - 1].is_quarantined == false);
   }
 
-  // Patient zero created
-  REQUIRE(all_particles[all_particles.size() - 1].radius == 10);
-  REQUIRE(all_particles[all_particles.size() - 1].position.x >= 0);
-  REQUIRE(all_particles[all_particles.size() - 1].position.x <= 100);
-  REQUIRE(all_particles[all_particles.size() - 1].position.y >= 0);
-  REQUIRE(all_particles[all_particles.size() - 1].position.y <= 100);
-  REQUIRE(all_particles[all_particles.size() - 1].velocity.x >= -1);
-  REQUIRE(all_particles[all_particles.size() - 1].velocity.x <= 1);
-  REQUIRE(all_particles[all_particles.size() - 1].velocity.y >= -1);
-  REQUIRE(all_particles[all_particles.size() - 1].velocity.y <= 1);
-  REQUIRE(all_particles[all_particles.size() - 1].status == disease::Status::kInfectious);
-  REQUIRE(all_particles[all_particles.size() - 1].color == vec3(1, 0, 0));
-  REQUIRE(all_particles[all_particles.size() - 1].continuous_exposure_time == 0);
-  REQUIRE(all_particles[all_particles.size() - 1].time_infected == 0);
-  REQUIRE(all_particles[all_particles.size() - 1].has_been_exposed_in_frame == false);
+  SECTION("Population isn't created more than once") {
+    Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100));
+
+    disease.CreatePopulation();
+    disease.CreatePopulation();
+
+    vector<Disease::Person> all_particles = disease.GetPopulation();
+    REQUIRE(all_particles.size() == 201);
+
+    // Susceptible people created
+    for (size_t i = 0; i < all_particles.size() - 1; i++) {
+      REQUIRE(all_particles[i].radius == 10);
+      REQUIRE(all_particles[i].position.x >= 0);
+      REQUIRE(all_particles[i].position.x <= 100);
+      REQUIRE(all_particles[i].position.y >= 0);
+      REQUIRE(all_particles[i].position.y <= 100);
+      REQUIRE(all_particles[i].velocity.x >= -1);
+      REQUIRE(all_particles[i].velocity.x <= 1);
+      REQUIRE(all_particles[i].velocity.y >= -1);
+      REQUIRE(all_particles[i].velocity.y <= 1);
+      REQUIRE(all_particles[i].status == disease::Status::kSusceptible);
+      REQUIRE(all_particles[i].color == vec3(0, 0, 1));
+      REQUIRE(all_particles[i].continuous_exposure_time == 0);
+      REQUIRE(all_particles[i].time_infected == 0);
+      REQUIRE(all_particles[i].has_been_exposed_in_frame == false);
+      REQUIRE(all_particles[i].is_quarantined == false);
+    }
+
+    // Patient zero created
+    REQUIRE(all_particles[all_particles.size() - 1].radius == 10);
+    REQUIRE(all_particles[all_particles.size() - 1].position.x >= 0);
+    REQUIRE(all_particles[all_particles.size() - 1].position.x <= 100);
+    REQUIRE(all_particles[all_particles.size() - 1].position.y >= 0);
+    REQUIRE(all_particles[all_particles.size() - 1].position.y <= 100);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.x >= -1);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.x <= 1);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.y >= -1);
+    REQUIRE(all_particles[all_particles.size() - 1].velocity.y <= 1);
+    REQUIRE(all_particles[all_particles.size() - 1].status == disease::Status::kSymptomatic);
+    REQUIRE(all_particles[all_particles.size() - 1].color == vec3(1, 0, 0));
+    REQUIRE(all_particles[all_particles.size() - 1].continuous_exposure_time == 0);
+    REQUIRE(all_particles[all_particles.size() - 1].time_infected == 0);
+    REQUIRE(all_particles[all_particles.size() - 1].has_been_exposed_in_frame == false);
+    REQUIRE(all_particles[all_particles.size() - 1].is_quarantined == false);
+  }
 }
 
 TEST_CASE("Person info updates after 1 frame (no collision)",
           "[one frame][no collision]") {
-  Disease disease = Disease(0, 0, 100, 100, false);
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100));
   Disease::Person person;
 
   SECTION("No particles") {
@@ -65,11 +117,12 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.radius = 10;
     person.position = vec2(15, 15);
     person.velocity = vec2(5, 5);
-    person.status = disease::Status::kInfectious;
+    person.status = disease::Status::kSymptomatic;
     person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -78,10 +131,11 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
 
     REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
     REQUIRE(updated_particles[0].velocity == vec2(5, 5));
-    REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+    REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
     REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
     REQUIRE(updated_particles[0].continuous_exposure_time == 0);
     REQUIRE(updated_particles[0].time_infected == 1);
+    REQUIRE(updated_particles[0].is_quarantined == false);
   }
 
   SECTION("Two particles") {
@@ -91,11 +145,12 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.radius = 10;
     person.position = vec2(15, 15);
     person.velocity = vec2(5, 5);
-    person.status = disease::Status::kInfectious;
+    person.status = disease::Status::kSymptomatic;
     person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
     all_particles.push_back(person);
 
     // Particle 2
@@ -107,6 +162,7 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -116,10 +172,11 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     // Particle 1
     REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
     REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-    REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+    REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
     REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
     REQUIRE(updated_particles[0].continuous_exposure_time == 0);
     REQUIRE(updated_particles[0].time_infected == 1);
+    REQUIRE(updated_particles[0].is_quarantined == false);
 
     // Particle 2
     REQUIRE(updated_particles[1].position == vec2(50.0, 36.0));
@@ -128,6 +185,7 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
     REQUIRE(updated_particles[1].continuous_exposure_time == 0);
     REQUIRE(updated_particles[1].time_infected == 0);
+    REQUIRE(updated_particles[1].is_quarantined == false);
   }
 
   SECTION("Three particles") {
@@ -137,11 +195,12 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.radius = 10;
     person.position = vec2(15, 15);
     person.velocity = vec2(5, 5);
-    person.status = disease::Status::kInfectious;
+    person.status = disease::Status::kSymptomatic;
     person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
     all_particles.push_back(person);
 
     // Particle 2
@@ -153,6 +212,7 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
     all_particles.push_back(person);
 
     // Particle 3
@@ -164,6 +224,7 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -173,10 +234,11 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     // Particle 1
     REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
     REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-    REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+    REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
     REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
     REQUIRE(updated_particles[0].continuous_exposure_time == 0);
     REQUIRE(updated_particles[0].time_infected == 1);
+    REQUIRE(updated_particles[0].is_quarantined == false);
 
     // Particle 2
     REQUIRE(updated_particles[1].position == vec2(50.0, 36.0));
@@ -185,6 +247,7 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
     REQUIRE(updated_particles[1].continuous_exposure_time == 0);
     REQUIRE(updated_particles[1].time_infected == 0);
+    REQUIRE(updated_particles[1].is_quarantined == false);
 
     // Particle 3
     REQUIRE(updated_particles[2].position == vec2(62.3, 83.4));
@@ -193,12 +256,13 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
     REQUIRE(updated_particles[2].color == vec3(0, 0, 1));
     REQUIRE(updated_particles[2].continuous_exposure_time == 0);
     REQUIRE(updated_particles[2].time_infected == 0);
+    REQUIRE(updated_particles[2].is_quarantined == false);
   }
 }
 
 TEST_CASE("Person info updates after 2 frames (no collision)",
           "[two frames][no collision]") {
-  Disease disease = Disease(0, 0, 100, 100, false);
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100));
   Disease::Person person;
 
   SECTION("No particles") {
@@ -215,11 +279,12 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     person.radius = 10;
     person.position = vec2(15, 15);
     person.velocity = vec2(5, 5);
-    person.status = disease::Status::kInfectious;
+    person.status = disease::Status::kSymptomatic;
     person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -229,10 +294,11 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
 
     REQUIRE(updated_particles[0].position == vec2(25.0, 25.0));
     REQUIRE(updated_particles[0].velocity == vec2(5, 5));
-    REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+    REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
     REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
     REQUIRE(updated_particles[0].continuous_exposure_time == 0);
     REQUIRE(updated_particles[0].time_infected == 2);
+    REQUIRE(updated_particles[0].is_quarantined == false);
   }
 
   SECTION("Two particles") {
@@ -242,11 +308,12 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     person.radius = 10;
     person.position = vec2(15, 15);
     person.velocity = vec2(5, 5);
-    person.status = disease::Status::kInfectious;
+    person.status = disease::Status::kSymptomatic;
     person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
     all_particles.push_back(person);
 
     // Particle 2
@@ -258,6 +325,7 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -268,10 +336,11 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     // Particle 1
     REQUIRE(updated_particles[0].position == vec2(25.0, 25.0));
     REQUIRE(updated_particles[0].velocity == vec2(5, 5));
-    REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+    REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
     REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
     REQUIRE(updated_particles[0].continuous_exposure_time == 0);
     REQUIRE(updated_particles[0].time_infected == 2);
+    REQUIRE(updated_particles[0].is_quarantined == false);
 
     // Particle 2
     REQUIRE(updated_particles[1].position == vec2(45.0, 42.0));
@@ -280,6 +349,7 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
     REQUIRE(updated_particles[1].continuous_exposure_time == 0);
     REQUIRE(updated_particles[1].time_infected == 0);
+    REQUIRE(updated_particles[1].is_quarantined == false);
   }
 
   SECTION("Three particles") {
@@ -289,11 +359,12 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     person.radius = 10;
     person.position = vec2(15, 15);
     person.velocity = vec2(5, 5);
-    person.status = disease::Status::kInfectious;
+    person.status = disease::Status::kSymptomatic;
     person.color = vec3(1,0,0);
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
     all_particles.push_back(person);
 
     // Particle 2
@@ -305,6 +376,7 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
     all_particles.push_back(person);
 
     // Particle 3
@@ -316,6 +388,7 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     person.continuous_exposure_time = 0;
     person.time_infected = 0;
     person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -326,10 +399,11 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     // Particle 1
     REQUIRE(updated_particles[0].position == vec2(25.0, 25.0));
     REQUIRE(updated_particles[0].velocity == vec2(5, 5));
-    REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+    REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
     REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
     REQUIRE(updated_particles[0].continuous_exposure_time == 0);
     REQUIRE(updated_particles[0].time_infected == 2);
+    REQUIRE(updated_particles[0].is_quarantined == false);
 
     // Particle 2
     REQUIRE(updated_particles[1].position == vec2(45.0, 42.0));
@@ -338,6 +412,7 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
     REQUIRE(updated_particles[1].continuous_exposure_time == 0);
     REQUIRE(updated_particles[1].time_infected == 0);
+    REQUIRE(updated_particles[1].is_quarantined == false);
 
     // Particle 3
     REQUIRE(updated_particles[2].position == vec2(54.6, 86.8));
@@ -346,12 +421,13 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
     REQUIRE(updated_particles[2].color == vec3(0, 0, 1));
     REQUIRE(updated_particles[2].continuous_exposure_time == 0);
     REQUIRE(updated_particles[2].time_infected == 0);
+    REQUIRE(updated_particles[2].is_quarantined == false);
   }
 }
 
 TEST_CASE("Person info updates after collision with wall",
           "[one frame][collision][wall]") {
-  Disease disease = Disease(0, 0, 100, 100, false);
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100));
   Disease::Person person;
 
   SECTION("One particle") {
@@ -361,11 +437,12 @@ TEST_CASE("Person info updates after collision with wall",
       person.radius = 10;
       person.position = vec2(90, 30);
       person.velocity = vec2(5, 7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -374,10 +451,11 @@ TEST_CASE("Person info updates after collision with wall",
 
       REQUIRE(updated_particles[0].position == vec2(85.0, 37.0));
       REQUIRE(updated_particles[0].velocity == vec2(-5.0, 7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
     }
 
     SECTION("One particle collides with bottom wall") {
@@ -386,11 +464,12 @@ TEST_CASE("Person info updates after collision with wall",
       person.radius = 10;
       person.position = vec2(30, 90);
       person.velocity = vec2(5, 7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -399,10 +478,11 @@ TEST_CASE("Person info updates after collision with wall",
 
       REQUIRE(updated_particles[0].position == vec2(35.0, 83.0));
       REQUIRE(updated_particles[0].velocity == vec2(5.0, -7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
     }
 
     SECTION("One particle collides with left wall") {
@@ -411,11 +491,12 @@ TEST_CASE("Person info updates after collision with wall",
       person.radius = 10;
       person.position = vec2(10, 30);
       person.velocity = vec2(-5, -7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -424,7 +505,7 @@ TEST_CASE("Person info updates after collision with wall",
 
       REQUIRE(updated_particles[0].position == vec2(15.0, 23.0));
       REQUIRE(updated_particles[0].velocity == vec2(5.0, -7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
@@ -436,11 +517,12 @@ TEST_CASE("Person info updates after collision with wall",
       person.radius = 10;
       person.position = vec2(30, 10);
       person.velocity = vec2(5, -7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -449,10 +531,11 @@ TEST_CASE("Person info updates after collision with wall",
 
       REQUIRE(updated_particles[0].position == vec2(35.0, 17.0));
       REQUIRE(updated_particles[0].velocity == vec2(5.0, 7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
     }
 
     SECTION("One particle collides with two walls at once") {
@@ -461,11 +544,12 @@ TEST_CASE("Person info updates after collision with wall",
       person.radius = 10;
       person.position = vec2(90, 90);
       person.velocity = vec2(5, 7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -474,10 +558,11 @@ TEST_CASE("Person info updates after collision with wall",
 
       REQUIRE(updated_particles[0].position == vec2(85.0, 83.0));
       REQUIRE(updated_particles[0].velocity == vec2(-5.0, -7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
     }
   }
 
@@ -489,11 +574,12 @@ TEST_CASE("Person info updates after collision with wall",
       person.radius = 10;
       person.position = vec2(30, 10);
       person.velocity = vec2(5, -7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       // Particle 2 collides with bottom wall
@@ -505,6 +591,7 @@ TEST_CASE("Person info updates after collision with wall",
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -514,10 +601,11 @@ TEST_CASE("Person info updates after collision with wall",
       // Particle 1
       REQUIRE(updated_particles[0].position == vec2(35.0, 17.0));
       REQUIRE(updated_particles[0].velocity == vec2(5.0, 7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
 
       // Particle 2
       REQUIRE(updated_particles[1].position == vec2(35.0, 83.0));
@@ -526,6 +614,7 @@ TEST_CASE("Person info updates after collision with wall",
       REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
       REQUIRE(updated_particles[1].continuous_exposure_time == 0);
       REQUIRE(updated_particles[1].time_infected == 0);
+      REQUIRE(updated_particles[1].is_quarantined == false);
     }
 
     SECTION("One of two particles collide with a wall in a frame") {
@@ -535,22 +624,24 @@ TEST_CASE("Person info updates after collision with wall",
       person.radius = 10;
       person.position = vec2(30, 10);
       person.velocity = vec2(5, -7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       // Particle 2 doesn't collide with anything
       person.radius = 10;
       person.position = vec2(30, 50);
       person.velocity = vec2(5, 7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -560,25 +651,27 @@ TEST_CASE("Person info updates after collision with wall",
       // Particle 1
       REQUIRE(updated_particles[0].position == vec2(35.0, 17.0));
       REQUIRE(updated_particles[0].velocity == vec2(5.0, 7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
 
       // Particle 2
       REQUIRE(updated_particles[1].position == vec2(35.0, 57.0));
       REQUIRE(updated_particles[1].velocity == vec2(5.0, 7.0));
-      REQUIRE(updated_particles[1].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[1].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[1].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[1].continuous_exposure_time == 0);
       REQUIRE(updated_particles[1].time_infected == 1);
+      REQUIRE(updated_particles[1].is_quarantined == false);
     }
   }
 }
 
 TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
           "[no collision][wall][touching]") {
-  Disease disease = Disease(0, 0, 100, 100, false);
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100));
   Disease::Person person;
 
   SECTION("One particle") {
@@ -588,11 +681,12 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.radius = 10;
       person.position = vec2(90, 30);
       person.velocity = vec2(-5, 7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -601,10 +695,11 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
 
       REQUIRE(updated_particles[0].position == vec2(85.0, 37.0));
       REQUIRE(updated_particles[0].velocity == vec2(-5.0, 7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
     }
 
     SECTION("One particle touches but doesn't collide with bottom wall") {
@@ -613,11 +708,12 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.radius = 10;
       person.position = vec2(30, 90);
       person.velocity = vec2(5, -7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -626,10 +722,11 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
 
       REQUIRE(updated_particles[0].position == vec2(35.0, 83.0));
       REQUIRE(updated_particles[0].velocity == vec2(5.0, -7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
     }
 
     SECTION("One particle touches but doesn't collide with left wall") {
@@ -638,11 +735,12 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.radius = 10;
       person.position = vec2(10, 30);
       person.velocity = vec2(5, -7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -651,10 +749,11 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
 
       REQUIRE(updated_particles[0].position == vec2(15.0, 23.0));
       REQUIRE(updated_particles[0].velocity == vec2(5.0, -7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
     }
 
     SECTION("One particle touches but doesn't collide with top wall") {
@@ -663,11 +762,12 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.radius = 10;
       person.position = vec2(30, 10);
       person.velocity = vec2(5, 7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -676,10 +776,11 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
 
       REQUIRE(updated_particles[0].position == vec2(35.0, 17.0));
       REQUIRE(updated_particles[0].velocity == vec2(5.0, 7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
     }
 
     SECTION("One particle touches but doesn't collide with two walls at once") {
@@ -688,11 +789,12 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.radius = 10;
       person.position = vec2(90, 90);
       person.velocity = vec2(-5, -7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -701,10 +803,11 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
 
       REQUIRE(updated_particles[0].position == vec2(85.0, 83.0));
       REQUIRE(updated_particles[0].velocity == vec2(-5.0, -7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
     }
   }
 
@@ -716,11 +819,12 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.radius = 10;
       person.position = vec2(30, 10);
       person.velocity = vec2(5, 7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       // Particle 2 touches but doesn't collide with bottom wall
@@ -732,6 +836,7 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -741,10 +846,11 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       // Particle 1
       REQUIRE(updated_particles[0].position == vec2(35.0, 17.0));
       REQUIRE(updated_particles[0].velocity == vec2(5.0, 7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
 
       // Particle 2
       REQUIRE(updated_particles[1].position == vec2(35.0, 83.0));
@@ -753,6 +859,7 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
       REQUIRE(updated_particles[1].continuous_exposure_time == 0);
       REQUIRE(updated_particles[1].time_infected == 0);
+      REQUIRE(updated_particles[1].is_quarantined == false);
     }
 
     SECTION("One of two particles touches but doesn't collide with a wall in a frame") {
@@ -762,22 +869,24 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       person.radius = 10;
       person.position = vec2(30, 10);
       person.velocity = vec2(5, 7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       // Particle 2 doesn't collide with anything
       person.radius = 10;
       person.position = vec2(30, 50);
       person.velocity = vec2(5, 7);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -787,40 +896,44 @@ TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
       // Particle 1
       REQUIRE(updated_particles[0].position == vec2(35.0, 17.0));
       REQUIRE(updated_particles[0].velocity == vec2(5.0, 7.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
 
       // Particle 2
       REQUIRE(updated_particles[1].position == vec2(35.0, 57.0));
       REQUIRE(updated_particles[1].velocity == vec2(5.0, 7.0));
-      REQUIRE(updated_particles[1].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[1].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[1].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[1].continuous_exposure_time == 0);
       REQUIRE(updated_particles[1].time_infected == 1);
+      REQUIRE(updated_particles[1].is_quarantined == false);
     }
   }
 }
 
 TEST_CASE("Check person status updates") {
-  Disease disease = Disease(0, 0, 100, 100, 25, 500);
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                            25, 500, false, true);
   Disease::Person person;
 
   SECTION("Current status is susceptible") {
     SECTION("Person exposed") {
-      SECTION("Exposure time is at (max - 1) -> Status changes to infectious") {
+      SECTION("Exposure time is at (max - 1) -> Status changes to symptomatic") {
         vector<Disease::Person> all_particles;
 
         // Particle 1
         person.radius = 10;
         person.position = vec2(15, 15);
         person.velocity = vec2(5, 5);
-        person.status = disease::Status::kInfectious;
+        person.status = disease::Status::kSymptomatic;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -832,6 +945,7 @@ TEST_CASE("Check person status updates") {
         person.continuous_exposure_time = 24;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -841,18 +955,72 @@ TEST_CASE("Check person status updates") {
         // Particle 1
         REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
         REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-        REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+        REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
         REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
         REQUIRE(updated_particles[0].continuous_exposure_time == 0);
         REQUIRE(updated_particles[0].time_infected == 1);
+        REQUIRE(updated_particles[0].is_quarantined == false);
 
         // Particle 2
         REQUIRE(updated_particles[1].position == vec2(10.0, 26.0));
         REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
-        REQUIRE(updated_particles[1].status == disease::Status::kInfectious);
+        REQUIRE(updated_particles[1].status == disease::Status::kSymptomatic);
         REQUIRE(updated_particles[1].color == vec3(1, 0, 0));
         REQUIRE(updated_particles[1].continuous_exposure_time == 0);
         REQUIRE(updated_particles[1].time_infected == 0);
+        REQUIRE(updated_particles[1].is_quarantined == false);
+      }
+
+      SECTION("Exposure time is at (max - 1) -> Status changes to asymptomatic") {
+        Disease disease1 = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                                   25, 500, false, false);
+        vector<Disease::Person> all_particles;
+
+        // Particle 1
+        person.radius = 10;
+        person.position = vec2(15, 15);
+        person.velocity = vec2(5, 5);
+        person.status = disease::Status::kAsymptomatic;
+        person.color = vec3(1,1,0);
+        person.continuous_exposure_time = 0;
+        person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
+        all_particles.push_back(person);
+
+        // Particle 2
+        person.radius = 10;
+        person.position = vec2(15, 20);
+        person.velocity = vec2(-5, 6);
+        person.status = disease::Status::kSusceptible;
+        person.color = vec3(0,0,1);
+        person.continuous_exposure_time = 24;
+        person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
+        all_particles.push_back(person);
+
+        disease1.SetPopulation(all_particles);
+        disease1.UpdateParticles();
+        vector<Disease::Person> updated_particles = disease1.GetPopulation();
+
+        // Particle 1
+        REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
+        REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
+        REQUIRE(updated_particles[0].status == disease::Status::kAsymptomatic);
+        REQUIRE(updated_particles[0].color == vec3(1, 1, 0));
+        REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[0].time_infected == 1);
+        REQUIRE(updated_particles[0].is_quarantined == false);
+
+        // Particle 2
+        REQUIRE(updated_particles[1].position == vec2(10.0, 26.0));
+        REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
+        REQUIRE(updated_particles[1].status == disease::Status::kAsymptomatic);
+        REQUIRE(updated_particles[1].color == vec3(1, 1, 0));
+        REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[1].time_infected == 0);
+        REQUIRE(updated_particles[1].is_quarantined == false);
       }
 
       SECTION("Exposure time is not at (max - 1)") {
@@ -862,11 +1030,12 @@ TEST_CASE("Check person status updates") {
         person.radius = 10;
         person.position = vec2(15, 15);
         person.velocity = vec2(5, 5);
-        person.status = disease::Status::kInfectious;
+        person.status = disease::Status::kSymptomatic;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -878,6 +1047,7 @@ TEST_CASE("Check person status updates") {
         person.continuous_exposure_time = 3;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -887,10 +1057,11 @@ TEST_CASE("Check person status updates") {
         // Particle 1
         REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
         REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-        REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+        REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
         REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
         REQUIRE(updated_particles[0].continuous_exposure_time == 0);
         REQUIRE(updated_particles[0].time_infected == 1);
+        REQUIRE(updated_particles[0].is_quarantined == false);
 
         // Particle 2
         REQUIRE(updated_particles[1].position == vec2(10.0, 26.0));
@@ -899,6 +1070,7 @@ TEST_CASE("Check person status updates") {
         REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
         REQUIRE(updated_particles[1].continuous_exposure_time == 4);
         REQUIRE(updated_particles[1].time_infected == 0);
+        REQUIRE(updated_particles[1].is_quarantined == false);
       }
     }
 
@@ -910,11 +1082,12 @@ TEST_CASE("Check person status updates") {
         person.radius = 10;
         person.position = vec2(15, 15);
         person.velocity = vec2(5, 5);
-        person.status = disease::Status::kInfectious;
+        person.status = disease::Status::kSymptomatic;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -926,6 +1099,7 @@ TEST_CASE("Check person status updates") {
         person.continuous_exposure_time = 24;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -935,10 +1109,11 @@ TEST_CASE("Check person status updates") {
         // Particle 1
         REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
         REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-        REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+        REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
         REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
         REQUIRE(updated_particles[0].continuous_exposure_time == 0);
         REQUIRE(updated_particles[0].time_infected == 1);
+        REQUIRE(updated_particles[0].is_quarantined == false);
 
         // Particle 2
         REQUIRE(updated_particles[1].position == vec2(55.0, 21.0));
@@ -947,6 +1122,7 @@ TEST_CASE("Check person status updates") {
         REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
         REQUIRE(updated_particles[1].continuous_exposure_time == 0);
         REQUIRE(updated_particles[1].time_infected == 0);
+        REQUIRE(updated_particles[1].is_quarantined == false);
       }
 
       SECTION("Exposure time is not at (max - 1)") {
@@ -956,11 +1132,12 @@ TEST_CASE("Check person status updates") {
         person.radius = 10;
         person.position = vec2(15, 15);
         person.velocity = vec2(5, 5);
-        person.status = disease::Status::kInfectious;
+        person.status = disease::Status::kSymptomatic;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -972,6 +1149,7 @@ TEST_CASE("Check person status updates") {
         person.continuous_exposure_time = 2;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -981,10 +1159,11 @@ TEST_CASE("Check person status updates") {
         // Particle 1
         REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
         REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-        REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+        REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
         REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
         REQUIRE(updated_particles[0].continuous_exposure_time == 0);
         REQUIRE(updated_particles[0].time_infected == 1);
+        REQUIRE(updated_particles[0].is_quarantined == false);
 
         // Particle 2
         REQUIRE(updated_particles[1].position == vec2(55.0, 21.0));
@@ -993,11 +1172,12 @@ TEST_CASE("Check person status updates") {
         REQUIRE(updated_particles[1].color == vec3(0, 0, 1));
         REQUIRE(updated_particles[1].continuous_exposure_time == 0);
         REQUIRE(updated_particles[1].time_infected == 0);
+        REQUIRE(updated_particles[1].is_quarantined == false);
       }
     }
   }
 
-  SECTION("Current status is infectious") {
+  SECTION("Current status is symptomatic") {
     SECTION("Person exposed") {
       SECTION("Time infected is at (max - 1) -> Status changes to removed") {
         vector<Disease::Person> all_particles;
@@ -1006,22 +1186,24 @@ TEST_CASE("Check person status updates") {
         person.radius = 10;
         person.position = vec2(15, 15);
         person.velocity = vec2(5, 5);
-        person.status = disease::Status::kInfectious;
+        person.status = disease::Status::kSymptomatic;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         // Particle 2
         person.radius = 10;
         person.position = vec2(15, 20);
         person.velocity = vec2(-5, 6);
-        person.status = disease::Status::kInfectious;
+        person.status = disease::Status::kSymptomatic;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 499;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -1031,10 +1213,11 @@ TEST_CASE("Check person status updates") {
         // Particle 1
         REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
         REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-        REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+        REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
         REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
         REQUIRE(updated_particles[0].continuous_exposure_time == 0);
         REQUIRE(updated_particles[0].time_infected == 1);
+        REQUIRE(updated_particles[0].is_quarantined == false);
 
         // Particle 2
         REQUIRE(updated_particles[1].position == vec2(10.0, 26.0));
@@ -1043,6 +1226,7 @@ TEST_CASE("Check person status updates") {
         REQUIRE(updated_particles[1].color == vec3(0.5, 0.5, 0.5));
         REQUIRE(updated_particles[1].continuous_exposure_time == 0);
         REQUIRE(updated_particles[1].time_infected == 0);
+        REQUIRE(updated_particles[1].is_quarantined == false);
       }
 
       SECTION("Time infected is not at (max - 1)") {
@@ -1052,22 +1236,24 @@ TEST_CASE("Check person status updates") {
         person.radius = 10;
         person.position = vec2(15, 15);
         person.velocity = vec2(5, 5);
-        person.status = disease::Status::kInfectious;
+        person.status = disease::Status::kSymptomatic;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         // Particle 2
         person.radius = 10;
         person.position = vec2(15, 20);
         person.velocity = vec2(-5, 6);
-        person.status = disease::Status::kInfectious;
+        person.status = disease::Status::kSymptomatic;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 10;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -1077,18 +1263,20 @@ TEST_CASE("Check person status updates") {
         // Particle 1
         REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
         REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-        REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+        REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
         REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
         REQUIRE(updated_particles[0].continuous_exposure_time == 0);
         REQUIRE(updated_particles[0].time_infected == 1);
+        REQUIRE(updated_particles[0].is_quarantined == false);
 
         // Particle 2
         REQUIRE(updated_particles[1].position == vec2(10.0, 26.0));
         REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
-        REQUIRE(updated_particles[1].status == disease::Status::kInfectious);
+        REQUIRE(updated_particles[1].status == disease::Status::kSymptomatic);
         REQUIRE(updated_particles[1].color == vec3(1, 0, 0));
         REQUIRE(updated_particles[1].continuous_exposure_time == 0);
         REQUIRE(updated_particles[1].time_infected == 11);
+        REQUIRE(updated_particles[1].is_quarantined == false);
       }
     }
 
@@ -1100,22 +1288,24 @@ TEST_CASE("Check person status updates") {
         person.radius = 10;
         person.position = vec2(15, 15);
         person.velocity = vec2(5, 5);
-        person.status = disease::Status::kInfectious;
+        person.status = disease::Status::kSymptomatic;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         // Particle 2
         person.radius = 10;
         person.position = vec2(60, 15);
         person.velocity = vec2(-5, 6);
-        person.status = disease::Status::kInfectious;
+        person.status = disease::Status::kSymptomatic;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 499;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -1125,10 +1315,11 @@ TEST_CASE("Check person status updates") {
         // Particle 1
         REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
         REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-        REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+        REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
         REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
         REQUIRE(updated_particles[0].continuous_exposure_time == 0);
         REQUIRE(updated_particles[0].time_infected == 1);
+        REQUIRE(updated_particles[0].is_quarantined == false);
 
         // Particle 2
         REQUIRE(updated_particles[1].position == vec2(55.0, 21.0));
@@ -1137,6 +1328,7 @@ TEST_CASE("Check person status updates") {
         REQUIRE(updated_particles[1].color == vec3(0.5, 0.5, 0.5));
         REQUIRE(updated_particles[1].continuous_exposure_time == 0);
         REQUIRE(updated_particles[1].time_infected == 0);
+        REQUIRE(updated_particles[1].is_quarantined == false);
       }
 
       SECTION("Time infected is not at (max - 1)") {
@@ -1146,22 +1338,24 @@ TEST_CASE("Check person status updates") {
         person.radius = 10;
         person.position = vec2(15, 15);
         person.velocity = vec2(5, 5);
-        person.status = disease::Status::kInfectious;
+        person.status = disease::Status::kSymptomatic;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 0;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         // Particle 2
         person.radius = 10;
         person.position = vec2(60, 15);
         person.velocity = vec2(-5, 6);
-        person.status = disease::Status::kInfectious;
+        person.status = disease::Status::kSymptomatic;
         person.color = vec3(1,0,0);
         person.continuous_exposure_time = 0;
         person.time_infected = 10;
         person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -1171,18 +1365,226 @@ TEST_CASE("Check person status updates") {
         // Particle 1
         REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
         REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-        REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+        REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
         REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
         REQUIRE(updated_particles[0].continuous_exposure_time == 0);
         REQUIRE(updated_particles[0].time_infected == 1);
+        REQUIRE(updated_particles[0].is_quarantined == false);
 
         // Particle 2
         REQUIRE(updated_particles[1].position == vec2(55.0, 21.0));
         REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
-        REQUIRE(updated_particles[1].status == disease::Status::kInfectious);
+        REQUIRE(updated_particles[1].status == disease::Status::kSymptomatic);
         REQUIRE(updated_particles[1].color == vec3(1, 0, 0));
         REQUIRE(updated_particles[1].continuous_exposure_time == 0);
         REQUIRE(updated_particles[1].time_infected == 11);
+        REQUIRE(updated_particles[1].is_quarantined == false);
+      }
+    }
+  }
+
+  SECTION("Current status is asymptomatic") {
+    SECTION("Person exposed") {
+      SECTION("Time infected is at (max - 1) -> Status changes to removed") {
+        vector<Disease::Person> all_particles;
+
+        // Particle 1
+        person.radius = 10;
+        person.position = vec2(15, 15);
+        person.velocity = vec2(5, 5);
+        person.status = disease::Status::kAsymptomatic;
+        person.color = vec3(1,1,0);
+        person.continuous_exposure_time = 0;
+        person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
+        all_particles.push_back(person);
+
+        // Particle 2
+        person.radius = 10;
+        person.position = vec2(15, 20);
+        person.velocity = vec2(-5, 6);
+        person.status = disease::Status::kAsymptomatic;
+        person.color = vec3(1,1,0);
+        person.continuous_exposure_time = 0;
+        person.time_infected = 499;
+        person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
+        all_particles.push_back(person);
+
+        disease.SetPopulation(all_particles);
+        disease.UpdateParticles();
+        vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+        // Particle 1
+        REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
+        REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
+        REQUIRE(updated_particles[0].status == disease::Status::kAsymptomatic);
+        REQUIRE(updated_particles[0].color == vec3(1, 1, 0));
+        REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[0].time_infected == 1);
+        REQUIRE(updated_particles[0].is_quarantined == false);
+
+        // Particle 2
+        REQUIRE(updated_particles[1].position == vec2(10.0, 26.0));
+        REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
+        REQUIRE(updated_particles[1].status == disease::Status::kRemoved);
+        REQUIRE(updated_particles[1].color == vec3(0.5, 0.5, 0.5));
+        REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[1].time_infected == 0);
+        REQUIRE(updated_particles[1].is_quarantined == false);
+      }
+
+      SECTION("Time infected is not at (max - 1)") {
+        vector<Disease::Person> all_particles;
+
+        // Particle 1
+        person.radius = 10;
+        person.position = vec2(15, 15);
+        person.velocity = vec2(5, 5);
+        person.status = disease::Status::kAsymptomatic;
+        person.color = vec3(1,1,0);
+        person.continuous_exposure_time = 0;
+        person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
+        all_particles.push_back(person);
+
+        // Particle 2
+        person.radius = 10;
+        person.position = vec2(15, 20);
+        person.velocity = vec2(-5, 6);
+        person.status = disease::Status::kAsymptomatic;
+        person.color = vec3(1,1,0);
+        person.continuous_exposure_time = 0;
+        person.time_infected = 10;
+        person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
+        all_particles.push_back(person);
+
+        disease.SetPopulation(all_particles);
+        disease.UpdateParticles();
+        vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+        // Particle 1
+        REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
+        REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
+        REQUIRE(updated_particles[0].status == disease::Status::kAsymptomatic);
+        REQUIRE(updated_particles[0].color == vec3(1, 1, 0));
+        REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[0].time_infected == 1);
+        REQUIRE(updated_particles[0].is_quarantined == false);
+
+        // Particle 2
+        REQUIRE(updated_particles[1].position == vec2(10.0, 26.0));
+        REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
+        REQUIRE(updated_particles[1].status == disease::Status::kAsymptomatic);
+        REQUIRE(updated_particles[1].color == vec3(1, 1, 0));
+        REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[1].time_infected == 11);
+        REQUIRE(updated_particles[1].is_quarantined == false);
+      }
+    }
+
+    SECTION("Person not exposed") {
+      SECTION("Time infected is at (max - 1)") {
+        vector<Disease::Person> all_particles;
+
+        // Particle 1
+        person.radius = 10;
+        person.position = vec2(15, 15);
+        person.velocity = vec2(5, 5);
+        person.status = disease::Status::kAsymptomatic;
+        person.color = vec3(1,1,0);
+        person.continuous_exposure_time = 0;
+        person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
+        all_particles.push_back(person);
+
+        // Particle 2
+        person.radius = 10;
+        person.position = vec2(60, 15);
+        person.velocity = vec2(-5, 6);
+        person.status = disease::Status::kAsymptomatic;
+        person.color = vec3(1,1,0);
+        person.continuous_exposure_time = 0;
+        person.time_infected = 499;
+        person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
+        all_particles.push_back(person);
+
+        disease.SetPopulation(all_particles);
+        disease.UpdateParticles();
+        vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+        // Particle 1
+        REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
+        REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
+        REQUIRE(updated_particles[0].status == disease::Status::kAsymptomatic);
+        REQUIRE(updated_particles[0].color == vec3(1, 1, 0));
+        REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[0].time_infected == 1);
+        REQUIRE(updated_particles[0].is_quarantined == false);
+
+        // Particle 2
+        REQUIRE(updated_particles[1].position == vec2(55.0, 21.0));
+        REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
+        REQUIRE(updated_particles[1].status == disease::Status::kRemoved);
+        REQUIRE(updated_particles[1].color == vec3(0.5, 0.5, 0.5));
+        REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[1].time_infected == 0);
+        REQUIRE(updated_particles[1].is_quarantined == false);
+      }
+
+      SECTION("Time infected is not at (max - 1)") {
+        vector<Disease::Person> all_particles;
+
+        // Particle 1
+        person.radius = 10;
+        person.position = vec2(15, 15);
+        person.velocity = vec2(5, 5);
+        person.status = disease::Status::kAsymptomatic;
+        person.color = vec3(1,1,0);
+        person.continuous_exposure_time = 0;
+        person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
+        all_particles.push_back(person);
+
+        // Particle 2
+        person.radius = 10;
+        person.position = vec2(60, 15);
+        person.velocity = vec2(-5, 6);
+        person.status = disease::Status::kAsymptomatic;
+        person.color = vec3(1,1,0);
+        person.continuous_exposure_time = 0;
+        person.time_infected = 10;
+        person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
+        all_particles.push_back(person);
+
+        disease.SetPopulation(all_particles);
+        disease.UpdateParticles();
+        vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+        // Particle 1
+        REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
+        REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
+        REQUIRE(updated_particles[0].status == disease::Status::kAsymptomatic);
+        REQUIRE(updated_particles[0].color == vec3(1, 1, 0));
+        REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[0].time_infected == 1);
+        REQUIRE(updated_particles[0].is_quarantined == false);
+
+        // Particle 2
+        REQUIRE(updated_particles[1].position == vec2(55.0, 21.0));
+        REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
+        REQUIRE(updated_particles[1].status == disease::Status::kAsymptomatic);
+        REQUIRE(updated_particles[1].color == vec3(1, 1, 0));
+        REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[1].time_infected == 11);
+        REQUIRE(updated_particles[1].is_quarantined == false);
       }
     }
   }
@@ -1195,11 +1597,12 @@ TEST_CASE("Check person status updates") {
       person.radius = 10;
       person.position = vec2(15, 15);
       person.velocity = vec2(5, 5);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       // Particle 2
@@ -1211,6 +1614,7 @@ TEST_CASE("Check person status updates") {
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -1220,10 +1624,11 @@ TEST_CASE("Check person status updates") {
       // Particle 1
       REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
       REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
 
       // Particle 2
       REQUIRE(updated_particles[1].position == vec2(10.0, 26.0));
@@ -1232,6 +1637,7 @@ TEST_CASE("Check person status updates") {
       REQUIRE(updated_particles[1].color == vec3(0.5, 0.5, 0.5));
       REQUIRE(updated_particles[1].continuous_exposure_time == 0);
       REQUIRE(updated_particles[1].time_infected == 0);
+      REQUIRE(updated_particles[1].is_quarantined == false);
     }
 
     SECTION("Person not exposed") {
@@ -1241,11 +1647,12 @@ TEST_CASE("Check person status updates") {
       person.radius = 10;
       person.position = vec2(15, 15);
       person.velocity = vec2(5, 5);
-      person.status = disease::Status::kInfectious;
+      person.status = disease::Status::kSymptomatic;
       person.color = vec3(1,0,0);
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       // Particle 2
@@ -1257,6 +1664,7 @@ TEST_CASE("Check person status updates") {
       person.continuous_exposure_time = 0;
       person.time_infected = 0;
       person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -1266,10 +1674,11 @@ TEST_CASE("Check person status updates") {
       // Particle 1
       REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
       REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
-      REQUIRE(updated_particles[0].status == disease::Status::kInfectious);
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
       REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
       REQUIRE(updated_particles[0].continuous_exposure_time == 0);
       REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
 
       // Particle 2
       REQUIRE(updated_particles[1].position == vec2(55.0, 21.0));
@@ -1278,6 +1687,119 @@ TEST_CASE("Check person status updates") {
       REQUIRE(updated_particles[1].color == vec3(0.5, 0.5, 0.5));
       REQUIRE(updated_particles[1].continuous_exposure_time == 0);
       REQUIRE(updated_particles[1].time_infected == 0);
+      REQUIRE(updated_particles[1].is_quarantined == false);
     }
+  }
+}
+
+TEST_CASE("Check infected people get quarantined") {
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                            25, 500, false, true);
+  Disease::Person person;
+
+  SECTION("Infection time is exactly the time needed to be put into quarantine") {
+    vector<Disease::Person> all_particles;
+
+    // Particle 1
+    person.radius = 10;
+    person.position = vec2(15, 15);
+    person.velocity = vec2(5, 5);
+    person.status = disease::Status::kSymptomatic;
+    person.color = vec3(1,0,0);
+    person.continuous_exposure_time = 0;
+    person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
+    all_particles.push_back(person);
+
+    // Particle 2
+    person.radius = 10;
+    person.position = vec2(60, 15);
+    person.velocity = vec2(-5, 6);
+    person.status = disease::Status::kSymptomatic;
+    person.color = vec3(1,0,0);
+    person.continuous_exposure_time = 0;
+    person.time_infected = 69;
+    person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
+    all_particles.push_back(person);
+
+    disease.SetPopulation(all_particles);
+    disease.UpdateParticles();
+    vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+    // Particle 1
+    REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
+    REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
+    REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
+    REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+    REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+    REQUIRE(updated_particles[0].time_infected == 1);
+    REQUIRE(updated_particles[0].is_quarantined == false);
+
+    // Particle 2
+    REQUIRE(updated_particles[1].position.x >= 150);
+    REQUIRE(updated_particles[1].position.x <= 250);
+    REQUIRE(updated_particles[1].position.y >= 0);
+    REQUIRE(updated_particles[1].position.y <= 100);
+    REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
+    REQUIRE(updated_particles[1].status == disease::Status::kSymptomatic);
+    REQUIRE(updated_particles[1].color == vec3(1, 0, 0));
+    REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+    REQUIRE(updated_particles[1].time_infected == 70);
+    REQUIRE(updated_particles[1].is_quarantined == true);
+  }
+
+  SECTION("Infection time is over the time needed to be put into quarantine") {
+    vector<Disease::Person> all_particles;
+
+    // Particle 1
+    person.radius = 10;
+    person.position = vec2(15, 15);
+    person.velocity = vec2(5, 5);
+    person.status = disease::Status::kSymptomatic;
+    person.color = vec3(1,0,0);
+    person.continuous_exposure_time = 0;
+    person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
+    all_particles.push_back(person);
+
+    // Particle 2
+    person.radius = 10;
+    person.position = vec2(60, 15);
+    person.velocity = vec2(-5, 6);
+    person.status = disease::Status::kSymptomatic;
+    person.color = vec3(1,0,0);
+    person.continuous_exposure_time = 0;
+    person.time_infected = 489;
+    person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
+    all_particles.push_back(person);
+
+    disease.SetPopulation(all_particles);
+    disease.UpdateParticles();
+    vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+    // Particle 1
+    REQUIRE(updated_particles[0].position == vec2(20.0, 20.0));
+    REQUIRE(updated_particles[0].velocity == vec2(5.0, 5.0));
+    REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
+    REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+    REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+    REQUIRE(updated_particles[0].time_infected == 1);
+    REQUIRE(updated_particles[0].is_quarantined == false);
+
+    // Particle 2
+    REQUIRE(updated_particles[1].position.x >= 150);
+    REQUIRE(updated_particles[1].position.x <= 250);
+    REQUIRE(updated_particles[1].position.y >= 0);
+    REQUIRE(updated_particles[1].position.y <= 100);
+    REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
+    REQUIRE(updated_particles[1].status == disease::Status::kSymptomatic);
+    REQUIRE(updated_particles[1].color == vec3(1, 0, 0));
+    REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+    REQUIRE(updated_particles[1].time_infected == 490);
+    REQUIRE(updated_particles[1].is_quarantined == true);
   }
 }

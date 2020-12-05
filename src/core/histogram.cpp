@@ -10,11 +10,38 @@ Histogram::Histogram(const vector<Disease::Person>& people,
   container_top_right_corner_ = container_top_right_corner;
   time_elapsed_since_outbreak_ = 0;
 
+  bottom_most_boundary_of_histogram_ = container_top_right_corner.y + kHistogramGraphDimension +
+                                       kLabelSpacingFromHistogramTimes2 + kLabelSpacingFromHistogram;
+  x_coordinate_of_status_stat_labels_ = container_top_right_corner_.x +
+      kSpacingFromContainer + kHistogramGraphDimension +
+      kLabelSpacingFromHistogramTimes2 + kLabelSpacingFromHistogramTimes2;
+
   SortPopulation(people);
 }
 
 const map<Status, vector<Disease::Person>>& Histogram::GetSortedPopulation() const {
   return population_sorted_by_status_;
+}
+
+double Histogram::GetTimeElapsedSinceOutbreak() const {
+  return time_elapsed_since_outbreak_;
+}
+
+const vector<map<Status, vector<Disease::Person>>>& Histogram::GetCumulativeInfoOfPopulation() const {
+  return cumulative_info_of_population_;
+}
+
+size_t Histogram::GetBottomMostBoundaryOfHistogram() const {
+  return bottom_most_boundary_of_histogram_;
+}
+
+size_t Histogram::GetXCoordinateOfStatusStatLabels() const {
+  return x_coordinate_of_status_stat_labels_;
+}
+
+size_t Histogram::GetYCoordinateOfLastStatusStatLabel() const {
+  return container_top_right_corner_.y + kLabelSpacingFromHistogram +
+      (kNumOfStatuses - 1) * kLabelSpacingFromHistogramTimes2;
 }
 
 void Histogram::SortPopulation(const vector<Disease::Person>& population) {
@@ -29,8 +56,12 @@ void Histogram::SortPopulation(const vector<Disease::Person>& population) {
 
 void Histogram::Update(const vector<Disease::Person>& updated_population, size_t time_passed) {
   SortPopulation(updated_population);
-  if (population_sorted_by_status_[Status::kSusceptible].size() != 0 ||
-      population_sorted_by_status_[Status::kInfectious].size() != 0) {
+
+  if (population_sorted_by_status_.size() == 0) {
+    time_elapsed_since_outbreak_ = time_passed;
+    cumulative_info_of_population_.clear();
+  } else if (population_sorted_by_status_[Status::kSymptomatic].size() != 0 ||
+             population_sorted_by_status_[Status::kAsymptomatic].size() != 0) {
     time_elapsed_since_outbreak_ = time_passed;
     cumulative_info_of_population_.push_back(population_sorted_by_status_);
   }
@@ -74,13 +105,25 @@ void Histogram::DrawHistogramBins(double left_boundary_of_histogram,
 
   // Loop through vector; each element represents one frame, which is one bin of the histogram
   for (const map<Status, vector<Disease::Person>>& info_for_frame : cumulative_info_of_population_) {
-    if (info_for_frame.count(Status::kInfectious) != 0) {
+    if (info_for_frame.count(Status::kSymptomatic) != 0) {
       DrawStatusBin(current_left_side_bin_x,
                     histogram_top_left_corner_y + kHistogramGraphDimension -
-                    (info_for_frame.at(Status::kInfectious).size() * y_increment),
+                    (info_for_frame.at(Status::kSymptomatic).size() * y_increment),
                     current_left_side_bin_x + x_increment,
                     histogram_top_left_corner_y + kHistogramGraphDimension,
-                    info_for_frame.at(Status::kInfectious).front().color);
+                    info_for_frame.at(Status::kSymptomatic).front().color);
+    }
+
+    if (info_for_frame.count(Status::kAsymptomatic) != 0) {
+      double bin_top_left_y = histogram_top_left_corner_y + kHistogramGraphDimension -
+                              (info_for_frame.at(Status::kSymptomatic).size() * y_increment) -
+                              (info_for_frame.at(Status::kAsymptomatic).size() * y_increment);
+      double bin_bottom_right_y = histogram_top_left_corner_y + kHistogramGraphDimension -
+                                  (info_for_frame.at(Status::kSymptomatic).size() * y_increment);
+
+      DrawStatusBin(current_left_side_bin_x,bin_top_left_y,
+                    current_left_side_bin_x + x_increment, bin_bottom_right_y,
+                    info_for_frame.at(Status::kAsymptomatic).front().color);
     }
 
     if (info_for_frame.count(Status::kRemoved) != 0) {
@@ -123,13 +166,14 @@ void Histogram::DrawHistogramLabels(double left_boundary_of_histogram,
   // Label bounds of axes
   DrawBoundsLabels(left_boundary_of_histogram, histogram_top_left_corner_y);
 
-  DrawStatusStatistics(left_boundary_of_histogram);
+  DrawStatusStatistics();
 }
 
 void Histogram::DrawAxesLabels(double left_boundary_of_histogram,
                                double histogram_top_left_corner_y) const {
   double x_centered_x_axis_label = (left_boundary_of_histogram + (left_boundary_of_histogram + kHistogramGraphDimension)) /2;
-  double y_centered_x_axis_label = histogram_top_left_corner_y + kHistogramGraphDimension + 3 * kLabelSpacingFromHistogram;
+  double y_centered_x_axis_label = histogram_top_left_corner_y + kHistogramGraphDimension +
+      kLabelSpacingFromHistogramTimes2 + kLabelSpacingFromHistogram;
   ci::gl::drawStringCentered(
       "Time Since Outbreak",
       glm::vec2(x_centered_x_axis_label, y_centered_x_axis_label), ci::Color("black"));
@@ -161,32 +205,40 @@ void Histogram::DrawBoundsLabels(double left_boundary_of_histogram,
                                   histogram_top_left_corner_y), ci::Color("black"));
 }
 
-void Histogram::DrawStatusStatistics(double left_boundary_of_histogram) const {
+void Histogram::DrawStatusStatistics() const {
   size_t num_susceptible = 0;
-  size_t num_infections = 0;
+  size_t num_symptomatic = 0;
+  size_t num_asymptomatic = 0;
   size_t num_removed = 0;
 
   if (population_sorted_by_status_.count(Status::kSusceptible) != 0) {
     num_susceptible = population_sorted_by_status_.at(Status::kSusceptible).size();
   }
-  if (population_sorted_by_status_.count(Status::kInfectious) != 0) {
-    num_infections = population_sorted_by_status_.at(Status::kInfectious).size();
+  if (population_sorted_by_status_.count(Status::kSymptomatic) != 0) {
+    num_symptomatic = population_sorted_by_status_.at(Status::kSymptomatic).size();
+  }
+  if (population_sorted_by_status_.count(Status::kAsymptomatic) != 0) {
+    num_asymptomatic = population_sorted_by_status_.at(Status::kAsymptomatic).size();
   }
   if (population_sorted_by_status_.count(Status::kRemoved) != 0) {
     num_removed = population_sorted_by_status_.at(Status::kRemoved).size();
   }
 
+  size_t label_spacing_y = container_top_right_corner_.y + kLabelSpacingFromHistogram;
   ci::gl::drawString("Number of People Susceptible: " + std::to_string(num_susceptible),
-                    vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2
-                    + kLabelSpacingFromHistogramTimes2, container_top_right_corner_.y + kLabelSpacingFromHistogram), ci::Color("black"));
-  ci::gl::drawString("Number of People Infectious: " + std::to_string(num_infections),
-                     vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2
-                     + kLabelSpacingFromHistogramTimes2,container_top_right_corner_.y + kLabelSpacingFromHistogram
-                     + kLabelSpacingFromHistogramTimes2), ci::Color("black"));
+                    vec2(x_coordinate_of_status_stat_labels_, label_spacing_y), ci::Color("blue"));
+
+  label_spacing_y += kLabelSpacingFromHistogramTimes2;
+  ci::gl::drawString("Number of People Symptomatic: " + std::to_string(num_symptomatic),
+                     vec2(x_coordinate_of_status_stat_labels_, label_spacing_y), ci::Color("red"));
+
+  label_spacing_y += kLabelSpacingFromHistogramTimes2;
+  ci::gl::drawString("Number of People Asymptomatic: " + std::to_string(num_asymptomatic),
+                     vec2(x_coordinate_of_status_stat_labels_, label_spacing_y), ci::Color("black"));
+
+  label_spacing_y += kLabelSpacingFromHistogramTimes2;
   ci::gl::drawString("Number of People Removed: " + std::to_string(num_removed),
-                     vec2(left_boundary_of_histogram + kHistogramGraphDimension + kLabelSpacingFromHistogramTimes2
-                     + kLabelSpacingFromHistogramTimes2,container_top_right_corner_.y + kLabelSpacingFromHistogram
-                     + kLabelSpacingFromHistogramTimes2 + kLabelSpacingFromHistogramTimes2),ci::Color("black"));
+                     vec2(x_coordinate_of_status_stat_labels_, label_spacing_y),ci::Color("gray"));
 }
 
 }  // namespace disease
