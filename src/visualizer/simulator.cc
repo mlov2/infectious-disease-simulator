@@ -258,6 +258,10 @@ std::string Simulator::GetFeatureBeingChanged() const {
   return feature_being_changed;
 }
 
+size_t Simulator::GetIncrementOrDecrementValue() const {
+  return kIncrementOrDecrementBy;
+}
+
 double Simulator::GetTopMargin() {
   return kTopContainerMargin;
 }
