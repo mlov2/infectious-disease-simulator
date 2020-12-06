@@ -118,7 +118,7 @@ class Disease {
   size_t kMinimumExposureTime = 5;
   size_t kMaximumExposureTime = 50;
   size_t kInfectedTimeToBeRemoved = 500;
-  size_t kMinimumInfectedTime = 5;
+  size_t kMinimumInfectedTime = 100;
   size_t kMaximumInfectedTime = 1000;
   size_t kAmountOfSocialDistance = 5;
   size_t kMinimumSocialDistancePercentage = 0;
