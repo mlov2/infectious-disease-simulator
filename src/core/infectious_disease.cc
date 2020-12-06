@@ -111,6 +111,10 @@ size_t Disease::GetMaximumInfectedTime() const {
   return kMaximumInfectedTime;
 }
 
+size_t Disease::GetAmountOfSocialDistance() const {
+  return kAmountOfSocialDistance;
+}
+
 size_t Disease::GetMinimumSocialDistancePercentage() const {
   return kMinimumSocialDistancePercentage;
 }

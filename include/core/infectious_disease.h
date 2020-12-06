@@ -86,6 +86,7 @@ class Disease {
   size_t GetMaximumExposureTime() const;
   size_t GetMinimumInfectedTime() const;
   size_t GetMaximumInfectedTime() const;
+  size_t GetAmountOfSocialDistance() const;
   size_t GetMinimumSocialDistancePercentage() const;
   size_t GetMaximumSocialDistancePercentage() const;
   size_t GetMinimumInfectionRadius() const;
