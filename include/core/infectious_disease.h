@@ -82,6 +82,15 @@ class Disease {
   size_t GetPercentPerformingSocialDistance() const;
   size_t GetRadiusOfInfection() const;
 
+  size_t GetMinimumExposureTime() const;
+  size_t GetMaximumExposureTime() const;
+  size_t GetMinimumInfectedTime() const;
+  size_t GetMaximumInfectedTime() const;
+  size_t GetMinimumSocialDistancePercentage() const;
+  size_t GetMaximumSocialDistancePercentage() const;
+  size_t GetMinimumInfectionRadius() const;
+  size_t GetMaximumInfectionRadius() const;
+
   /*
    * Create a population where all but one is susceptible to the disease (the
    * single person is patient zero).
@@ -106,13 +115,16 @@ class Disease {
   size_t kSusceptiblePopulation = 200;
   size_t kExposureTimeToBeInfected = 25;
   size_t kMinimumExposureTime = 5;
+  size_t kMaximumExposureTime = 50;
   size_t kInfectedTimeToBeRemoved = 500;
   size_t kMinimumInfectedTime = 5;
+  size_t kMaximumInfectedTime = 1000;
   size_t kAmountOfSocialDistance = 5;
-  double kMinimumSocialDistancePercentage = 0.0;
-  double kMaximumSocialDistancePercentage = 1.0;
+  size_t kMinimumSocialDistancePercentage = 0;
+  size_t kMaximumSocialDistancePercentage = 100;
   size_t kInfectionRadius = 10;
   size_t kMinimumInfectionRadius = 5;
+  size_t kMaximumInfectionRadius = 30;
   size_t kTimeToBeDetectedForQuarantine = 70;
   double kProbabilityOfBeingAsymptomatic = 0.2;
   double kProbabilityOfBeingSymptomatic = 0.8;
