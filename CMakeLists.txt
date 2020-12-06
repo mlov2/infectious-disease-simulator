@@ -59,7 +59,8 @@ list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
         src/visualizer/simulator.cc)
 
 list(APPEND TEST_FILES tests/test_infectious_disease.cc
-        tests/test_histogram.cpp)
+        tests/test_histogram.cpp
+        tests/test_simulator.cpp)
 
 ci_make_app(
         APP_NAME        infectious-disease-ui
