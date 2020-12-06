@@ -34,7 +34,23 @@ TEST_CASE("Check feature values change") {
     }
 
     SECTION("Exposure time is minimum before change") {
+      SECTION("With arrow up") {
 
+      }
+
+      SECTION("With arrow down") {
+
+      }
+    }
+
+    SECTION("Exposure time is maximum before change") {
+      SECTION("With arrow up") {
+
+      }
+
+      SECTION("With arrow down") {
+
+      }
     }
   }
 
@@ -48,7 +64,23 @@ TEST_CASE("Check feature values change") {
     }
 
     SECTION("Infected time is minimum before change") {
+      SECTION("With arrow up") {
 
+      }
+
+      SECTION("With arrow down") {
+
+      }
+    }
+
+    SECTION("Infected time is maximum before change") {
+      SECTION("With arrow up") {
+
+      }
+
+      SECTION("With arrow down") {
+
+      }
     }
   }
 
@@ -62,11 +94,23 @@ TEST_CASE("Check feature values change") {
     }
 
     SECTION("Social distance is minimum before change") {
+      SECTION("With arrow up") {
 
+      }
+
+      SECTION("With arrow down") {
+
+      }
     }
 
     SECTION("Social distance is maximum before change") {
+      SECTION("With arrow up") {
 
+      }
+
+      SECTION("With arrow down") {
+
+      }
     }
   }
 
@@ -80,7 +124,23 @@ TEST_CASE("Check feature values change") {
     }
 
     SECTION("Infection radius is minimum before change") {
+      SECTION("With arrow up") {
 
+      }
+
+      SECTION("With arrow down") {
+
+      }
+    }
+
+    SECTION("Infection radius is maximum before change") {
+      SECTION("With arrow up") {
+
+      }
+
+      SECTION("With arrow down") {
+
+      }
     }
 
     SECTION("Infection radius cannot be lower than social distance value") {
