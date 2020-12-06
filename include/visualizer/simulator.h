@@ -123,6 +123,8 @@ class Simulator {
    */
   void DrawFeatureLabels() const;
 
+  void DrawConstraintsMessage(double y_location) const;
+
   std::string GetFeatureBeingChanged() const;
 };
 

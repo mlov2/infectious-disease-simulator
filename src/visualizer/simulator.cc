@@ -96,6 +96,8 @@ void Simulator::DrawFeatureChangeInstructions() const {
     // General instructions
     double general_instructions_y_location = y_location - kInitialYLocForGeneralInstructionsMultiplier *
         kSpacesFromContainer;
+    DrawConstraintsMessage(general_instructions_y_location);
+
     ci::gl::drawString(
         "You are currently changing: " + GetFeatureBeingChanged(),
         glm::vec2(x_location, general_instructions_y_location), ci::Color("black"));
@@ -168,6 +170,56 @@ void Simulator::DrawFeatureLabels() const {
   ci::gl::drawString(
       "Radius of infection: " + std::to_string(disease_.GetRadiusOfInfection()),
       glm::vec2(x_location, y_location), ci::Color("black"));
+}
+
+void Simulator::DrawConstraintsMessage(double y_location) const {
+  double x_location = histogram_.GetXCoordinateOfStatusStatLabels();
+
+  switch (int(feature_currently_being_changed_)) {
+    case 1:
+      if (disease_.GetExposureTime() >= disease_.GetMaximumExposureTime()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its max value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      } else if (disease_.GetExposureTime() <= disease_.GetMinimumExposureTime()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its min value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      }
+      break;
+
+    case 2:
+      if (disease_.GetInfectedTime() >= disease_.GetMaximumInfectedTime()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its max value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      } else if (disease_.GetInfectedTime() <= disease_.GetMinimumInfectedTime()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its min value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      }
+      break;
+
+    case 3:
+      if (disease_.GetPercentPerformingSocialDistance() >= disease_.GetMaximumSocialDistancePercentage()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its max value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      } else if (disease_.GetPercentPerformingSocialDistance() <= disease_.GetMinimumSocialDistancePercentage()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its min value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      }
+      break;
+
+    case 4:
+      if (disease_.GetRadiusOfInfection() >= disease_.GetMaximumInfectionRadius()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its max value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      } else if (disease_.GetRadiusOfInfection() <= disease_.GetMinimumInfectionRadius()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its min value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      } else if (disease_.GetRadiusOfInfection() <= disease_.GetAmountOfSocialDistance() &&
+          disease_.GetPercentPerformingSocialDistance() != 0) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " cannot be lower than social distance value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      }
+      break;
+  }
 }
 
 void Simulator::CreatePopulation() {
