@@ -191,33 +191,52 @@ void Simulator::ChangeFeatureValue(bool is_key_up) {
 
       case 1:  // kExposureTime
         if (is_key_up) {
-          disease_.SetExposureTime(disease_.GetExposureTime() + kIncrementOrDecrementBy);
+          if (disease_.GetExposureTime() < disease_.GetMaximumExposureTime()) {
+            disease_.SetExposureTime(disease_.GetExposureTime() + kIncrementOrDecrementBy);
+          }
         } else {
-          disease_.SetExposureTime(disease_.GetExposureTime() - kIncrementOrDecrementBy);
+          if (disease_.GetExposureTime() > disease_.GetMinimumExposureTime()) {
+            disease_.SetExposureTime(disease_.GetExposureTime() - kIncrementOrDecrementBy);
+          }
         }
         break;
 
       case 2:  // kInfectedTime
         if (is_key_up) {
-          disease_.SetInfectedTime(disease_.GetInfectedTime() + kIncrementOrDecrementBy);
+          if (disease_.GetInfectedTime() < disease_.GetMaximumInfectedTime()) {
+            disease_.SetInfectedTime(disease_.GetInfectedTime() + kIncrementOrDecrementBy);
+          }
         } else {
-          disease_.SetInfectedTime(disease_.GetInfectedTime() - kIncrementOrDecrementBy);
+          if (disease_.GetInfectedTime() > disease_.GetMinimumInfectedTime()) {
+            disease_.SetInfectedTime(disease_.GetInfectedTime() - kIncrementOrDecrementBy);
+          }
         }
         break;
 
       case 3:  // kSocialDistance
         if (is_key_up) {
-          disease_.SetPercentPerformingSocialDistance(disease_.GetPercentPerformingSocialDistance() + kIncrementOrDecrementBy);
+          if (disease_.GetPercentPerformingSocialDistance() < disease_.GetMaximumSocialDistancePercentage()) {
+            disease_.SetPercentPerformingSocialDistance(
+                disease_.GetPercentPerformingSocialDistance() + kIncrementOrDecrementBy);
+          }
         } else {
-          disease_.SetPercentPerformingSocialDistance(disease_.GetPercentPerformingSocialDistance() - kIncrementOrDecrementBy);
+          if (disease_.GetPercentPerformingSocialDistance() > disease_.GetMinimumSocialDistancePercentage()) {
+            disease_.SetPercentPerformingSocialDistance(
+                disease_.GetPercentPerformingSocialDistance() - kIncrementOrDecrementBy);
+          }
         }
         break;
 
       case 4:  // kInfectionRadius
         if (is_key_up) {
-          disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() + kIncrementOrDecrementBy);
+          if (disease_.GetRadiusOfInfection() < disease_.GetMaximumInfectionRadius()) {
+            disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() + kIncrementOrDecrementBy);
+          }
         } else {
-          disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() - kIncrementOrDecrementBy);
+          if (disease_.GetRadiusOfInfection() > disease_.GetMinimumInfectionRadius() &&
+              (disease_.GetRadiusOfInfection() > disease_.GetAmountOfSocialDistance())) {
+            disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() - kIncrementOrDecrementBy);
+          }
         }
         break;
     }
