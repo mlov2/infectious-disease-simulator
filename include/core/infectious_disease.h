@@ -74,6 +74,7 @@ class Disease {
   void SetInfectedTime(size_t infected_time);
   void SetPercentPerformingSocialDistance(size_t percent_performing_social_distance);
   void SetRadiusOfInfection(size_t radius_of_infection);
+
   const vector<Person>& GetPopulation();
   bool GetShouldQuarantineValue() const;
   size_t GetExposureTime() const;
@@ -103,13 +104,22 @@ class Disease {
   // Stats as constants
   // ==================
   size_t kSusceptiblePopulation = 200;
-  size_t kInfectionRadius = 5;
   size_t kExposureTimeToBeInfected = 25;
+  size_t kMinimumExposureTime = 5;
   size_t kInfectedTimeToBeRemoved = 500;
+  size_t kMinimumInfectedTime = 5;
+  size_t kAmountOfSocialDistance = 5;
+  double kMinimumSocialDistancePercentage = 0.0;
+  double kMaximumSocialDistancePercentage = 1.0;
+  size_t kInfectionRadius = 10;
+  size_t kMinimumInfectionRadius = 5;
   size_t kTimeToBeDetectedForQuarantine = 70;
   double kProbabilityOfBeingAsymptomatic = 0.2;
   double kProbabilityOfBeingSymptomatic = 0.8;
 
+  // ==================
+  // Stats as variables
+  // ==================
   bool should_quarantine_;
   size_t exposure_time_to_be_infected_;
   size_t infected_time_to_be_removed_;
