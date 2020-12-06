@@ -95,6 +95,38 @@ size_t Disease::GetRadiusOfInfection() const {
   return radius_of_infection_;
 }
 
+size_t Disease::GetMinimumExposureTime() const {
+  return kMinimumExposureTime;
+}
+
+size_t Disease::GetMaximumExposureTime() const {
+  return kMaximumExposureTime;
+}
+
+size_t Disease::GetMinimumInfectedTime() const {
+  return kMinimumInfectedTime;
+}
+
+size_t Disease::GetMaximumInfectedTime() const {
+  return kMaximumInfectedTime;
+}
+
+size_t Disease::GetMinimumSocialDistancePercentage() const {
+  return kMinimumSocialDistancePercentage;
+}
+
+size_t Disease::GetMaximumSocialDistancePercentage() const {
+  return kMaximumSocialDistancePercentage;
+}
+
+size_t Disease::GetMinimumInfectionRadius() const {
+  return kMinimumInfectionRadius;
+}
+
+size_t Disease::GetMaximumInfectionRadius() const {
+  return kMaximumInfectionRadius;
+}
+
 void Disease::CreatePopulation() {
   // Add people to population if there isn't anybody in the population
   if (population_.size() == 0) {
