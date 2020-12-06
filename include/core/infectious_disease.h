@@ -72,13 +72,13 @@ class Disease {
   void SetShouldQuarantine(bool should_quarantine);
   void SetExposureTime(size_t exposure_time);
   void SetInfectedTime(size_t infected_time);
-  void SetAmountOfSocialDistance(size_t amount_of_social_distance);
+  void SetPercentPerformingSocialDistance(size_t percent_performing_social_distance);
   void SetRadiusOfInfection(size_t radius_of_infection);
   const vector<Person>& GetPopulation();
   bool GetShouldQuarantineValue() const;
   size_t GetExposureTime() const;
   size_t GetInfectedTime() const;
-  size_t GetAmountOfSocialDistance() const;
+  size_t GetPercentPerformingSocialDistance() const;
   size_t GetRadiusOfInfection() const;
 
   /*
@@ -113,7 +113,7 @@ class Disease {
   bool should_quarantine_;
   size_t exposure_time_to_be_infected_;
   size_t infected_time_to_be_removed_;
-  size_t amount_of_social_distance_;
+  size_t percent_performing_social_distance_;
   size_t radius_of_infection_;
 
   bool is_infection_determination_random_;

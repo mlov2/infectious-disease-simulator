@@ -122,7 +122,7 @@ void Simulator::DrawFeatureChangeInstructions() const {
 
     y_location += kSpacesFromContainer;
     ci::gl::drawString(
-        "To change the amount of social distance, press 'd'",
+        "To change the percent of population social distancing, press 'd'",
         glm::vec2(x_location, y_location), ci::Color("black"));
 
     y_location += kSpacesFromContainer;
@@ -160,7 +160,8 @@ void Simulator::DrawFeatureLabels() const {
 
   y_location += kSpacesFromContainer;
   ci::gl::drawString(
-      "Amount of social distance: " + std::to_string(disease_.GetAmountOfSocialDistance()),
+      "Percent of population social distancing: " +
+      std::to_string(disease_.GetPercentPerformingSocialDistance()) + "%",
       glm::vec2(x_location, y_location), ci::Color("black"));
 
   y_location += kSpacesFromContainer;
@@ -206,9 +207,9 @@ void Simulator::ChangeFeatureValue(bool is_key_up) {
 
       case 3:  // kSocialDistance
         if (is_key_up) {
-          disease_.SetAmountOfSocialDistance(disease_.GetAmountOfSocialDistance() + kIncrementOrDecrementBy);
+          disease_.SetPercentPerformingSocialDistance(disease_.GetPercentPerformingSocialDistance() + kIncrementOrDecrementBy);
         } else {
-          disease_.SetAmountOfSocialDistance(disease_.GetAmountOfSocialDistance() - kIncrementOrDecrementBy);
+          disease_.SetPercentPerformingSocialDistance(disease_.GetPercentPerformingSocialDistance() - kIncrementOrDecrementBy);
         }
         break;
 

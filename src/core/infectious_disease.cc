@@ -18,7 +18,7 @@ Disease::Disease(double left_margin, double top_margin,
   should_quarantine_ = true;
   exposure_time_to_be_infected_ = kExposureTimeToBeInfected;
   infected_time_to_be_removed_ = kInfectedTimeToBeRemoved;
-  amount_of_social_distance_ = 0;
+  percent_performing_social_distance_ = 0;
   radius_of_infection_ = kInfectionRadius;
   is_infection_determination_random_ = true;
   is_symptomatic_ = true;
@@ -42,7 +42,7 @@ Disease::Disease(double left_margin, double top_margin,
   should_quarantine_ = true;
   exposure_time_to_be_infected_ = exposure_time;
   infected_time_to_be_removed_ = infected_time;
-  amount_of_social_distance_ = 0;
+  percent_performing_social_distance_ = 0;
   radius_of_infection_ = kInfectionRadius;
   is_infection_determination_random_ = is_infection_determination_random;
   is_symptomatic_ = is_symptomatic;
@@ -63,8 +63,8 @@ void Disease::SetInfectedTime(size_t infected_time) {
   infected_time_to_be_removed_ = infected_time;
 }
 
-void Disease::SetAmountOfSocialDistance(size_t amount_of_social_distance) {
-  amount_of_social_distance_ = amount_of_social_distance;
+void Disease::SetPercentPerformingSocialDistance(size_t percent_performing_social_distance) {
+  percent_performing_social_distance_ = percent_performing_social_distance;
 }
 
 void Disease::SetRadiusOfInfection(size_t radius_of_infection) {
@@ -87,8 +87,8 @@ size_t Disease::GetInfectedTime() const {
   return infected_time_to_be_removed_;
 }
 
-size_t Disease::GetAmountOfSocialDistance() const {
-  return amount_of_social_distance_;
+size_t Disease::GetPercentPerformingSocialDistance() const {
+  return percent_performing_social_distance_;
 }
 
 size_t Disease::GetRadiusOfInfection() const {
