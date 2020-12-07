@@ -28,7 +28,10 @@ TEST_CASE("Check member variables update") {
 }
 
 TEST_CASE("Check population gets created") {
+  Simulator simulator;
 
+  simulator.CreatePopulation();
+  REQUIRE(simulator.GetDiseaseClass().GetPopulation().size() == 201);
 }
 
 TEST_CASE("Check feature values change") {
