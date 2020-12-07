@@ -35,13 +35,27 @@ TEST_CASE("Check population gets created") {
 }
 
 TEST_CASE("Check feature values change") {
-  SECTION("Check quarantine value changes") {
-    SECTION("With arrow up") {
+  Simulator simulator;
 
+  SECTION("Check quarantine value changes") {
+    simulator.ChangeFeature(disease::FeatureChangeKey::kQuarantine);
+    REQUIRE(simulator.GetFeatureCurrentlyChanging() == disease::FeatureChangeKey::kQuarantine);
+    REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == true);
+
+    SECTION("With arrow up") {
+      simulator.ChangeFeatureValue(true);
+      REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == false);
+
+      simulator.ChangeFeatureValue(true);
+      REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == true);
     }
 
     SECTION("With arrow down") {
+      simulator.ChangeFeatureValue(false);
+      REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == false);
 
+      simulator.ChangeFeatureValue(false);
+      REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == true);
     }
   }
 
