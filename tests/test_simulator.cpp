@@ -268,7 +268,16 @@ TEST_CASE("Check feature values change") {
 }
 
 TEST_CASE("Check member variables clear") {
+  Simulator simulator;
 
+  simulator.CreatePopulation();
+  simulator.Update();
+  REQUIRE(simulator.GetParticlesInfo().size() == 201);
+  REQUIRE(simulator.GetTimePassed() == 1);
+
+  simulator.Clear();
+  REQUIRE(simulator.GetParticlesInfo().size() == 0);
+  REQUIRE(simulator.GetTimePassed() == 0);
 }
 
 TEST_CASE("Check GetFeatureBeingChanged() works") {
