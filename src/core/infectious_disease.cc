@@ -407,6 +407,80 @@ void Disease::UpdatePosition(size_t current_index) {
   }
 }
 
+void Disease::SocialDistance(size_t current_index) {
+  if (population_[current_index].is_social_distancing) {
+
+    // Find all the people who are within the bubble
+    for (size_t other_index = current_index + 1; other_index < population_.size(); other_index++) {
+      if (WithinDistancingBubble(population_[current_index], population_[other_index])) {
+        // Save the position of the person within the bubble
+        SavePositionRelativeToCurrentPerson(current_index, other_index);
+
+        // Check if the current particle needs to be added to the other person's save list
+        if (population_[other_index].is_social_distancing) {
+          SavePositionRelativeToCurrentPerson(other_index, current_index);
+        }
+      }
+    }
+
+    // Determine the direction the person will have to move
+    // in to continue practicing social distancing
+    UpdateVelocity(current_index);
+  }
+}
+
+bool Disease::WithinDistancingBubble(const Disease::Person& current_person, const Disease::Person& other_person) const {
+  // Calculate distance between center of particles
+  double position_x_val_difference = current_person.position.x - other_person.position.x;
+  double position_y_val_difference = current_person.position.y - other_person.position.y;
+  double sum_of_squared_differences = (position_x_val_difference * position_x_val_difference) +
+                                      (position_y_val_difference * position_y_val_difference);
+  double distance_between_centers = sqrt(sum_of_squared_differences);
+
+  return (distance_between_centers <= (current_person.radius + other_person.radius + kAmountOfSocialDistance));
+}
+
+void Disease::SavePositionRelativeToCurrentPerson(size_t current_index, size_t other_index) {
+  if (population_[other_index].position.x > population_[current_index].position.x) {
+    population_[current_index].positions_of_people_in_bubble["right"] += 1;
+  } else if (population_[other_index].position.x < population_[current_index].position.x) {
+    population_[current_index].positions_of_people_in_bubble["left"] += 1;
+  }
+
+  if (population_[other_index].position.y > population_[current_index].position.y) {
+    population_[current_index].positions_of_people_in_bubble["down"] += 1;
+  } else if (population_[other_index].position.y < population_[current_index].position.y) {
+    population_[current_index].positions_of_people_in_bubble["up"] += 1;
+  }
+}
+
+void Disease::UpdateVelocity(size_t current_index) {
+  int x_sign = 1;
+  int y_sign = 1;
+
+  size_t num_people_above_current_particle = population_[current_index].positions_of_people_in_bubble["up"];
+  size_t num_people_below_current_particle = population_[current_index].positions_of_people_in_bubble["down"];
+  size_t num_people_left_current_particle = population_[current_index].positions_of_people_in_bubble["left"];
+  size_t num_people_right_current_particle = population_[current_index].positions_of_people_in_bubble["right"];
+
+  if (num_people_above_current_particle < num_people_below_current_particle) {
+    y_sign = -1;
+  }
+  if (num_people_left_current_particle < num_people_right_current_particle) {
+    x_sign = -1;
+  }
+
+  if (num_people_above_current_particle != num_people_below_current_particle) {
+    population_[current_index].velocity.y = ci::randFloat(0, 1);
+  }
+  if (num_people_left_current_particle != num_people_right_current_particle) {
+    population_[current_index].velocity.x = ci::randFloat(0, 1);
+  }
+
+  population_[current_index].velocity.x = population_[current_index].velocity.x * x_sign;
+  population_[current_index].velocity.y = population_[current_index].velocity.y * y_sign;
+}
+
 vec2 Disease::KeepWithinContainer(const vec2& updated_position, double current_particle_radius,
                                   double left_bound, double top_bound,
                                   double right_bound, double bottom_bound) {

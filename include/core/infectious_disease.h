@@ -303,6 +303,42 @@ class Disease {
   void UpdatePosition(size_t current_index);
 
   /*
+   * Determines how the current person, if performing social distancing, will social
+   * distance.
+   *
+   * @param current_index The index of the current person in the population vector
+   */
+  void SocialDistance(size_t current_index);
+
+  /*
+   * Determines whether a person is within the current person's social distancing bubble.
+   *
+   * @param current_person The current Person who is performing social distancing
+   * @param other_person The Person to check
+   * @return A bool representing if the other person is within the current person's social
+   *     distancing bubble
+   */
+  bool WithinDistancingBubble(const Disease::Person& current_person, const Disease::Person& other_person) const;
+
+
+
+  /*
+   * Saves the other person's position relative to the current person's.
+   *
+   * @param current_index The index of the current person in the population vector
+   * @param other_index The index of the other person in the population vector
+   */
+  void SavePositionRelativeToCurrentPerson(size_t current_index, size_t other_index);
+
+  /*
+   * Updates the current person's velocity based on who's within their
+   * social distancing bubble.
+   *
+   * @param current_index The index of the current person in the population vector
+   */
+  void UpdateVelocity(size_t current_index);
+
+  /*
    * Adjusts the updated position so that the particle will still be within the
    * container walls when the position is updated.
    *
