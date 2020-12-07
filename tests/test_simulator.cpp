@@ -110,31 +110,51 @@ TEST_CASE("Check feature values change") {
   }
 
   SECTION("Check infected time changes") {
-    SECTION("With arrow up") {
+    simulator.ChangeFeature(disease::FeatureChangeKey::kInfectedTime);
+    REQUIRE(simulator.GetFeatureCurrentlyChanging() == disease::FeatureChangeKey::kInfectedTime);
+    REQUIRE(simulator.GetDiseaseClass().GetInfectedTime() == 500);
 
+    SECTION("With arrow up") {
+      simulator.ChangeFeatureValue(true);
+      REQUIRE(simulator.GetDiseaseClass().GetInfectedTime() == 505);
     }
 
     SECTION("With arrow down") {
-
+      simulator.ChangeFeatureValue(false);
+      REQUIRE(simulator.GetDiseaseClass().GetInfectedTime() == 495);
     }
 
     SECTION("Infected time is minimum before change") {
-      SECTION("With arrow up") {
+      while (simulator.GetDiseaseClass().GetInfectedTime() > 100) {
+        simulator.ChangeFeatureValue(false);
+      }
+      REQUIRE(simulator.GetDiseaseClass().GetInfectedTime() == 100);
 
+      SECTION("With arrow up") {
+        simulator.ChangeFeatureValue(true);
+        REQUIRE(simulator.GetDiseaseClass().GetInfectedTime() == 105);
       }
 
       SECTION("With arrow down") {
-
+        simulator.ChangeFeatureValue(false);
+        REQUIRE(simulator.GetDiseaseClass().GetInfectedTime() == 100);
       }
     }
 
     SECTION("Infected time is maximum before change") {
-      SECTION("With arrow up") {
+      while (simulator.GetDiseaseClass().GetInfectedTime() < 1000) {
+        simulator.ChangeFeatureValue(true);
+      }
+      REQUIRE(simulator.GetDiseaseClass().GetInfectedTime() == 1000);
 
+      SECTION("With arrow up") {
+        simulator.ChangeFeatureValue(true);
+        REQUIRE(simulator.GetDiseaseClass().GetInfectedTime() == 1000);
       }
 
       SECTION("With arrow down") {
-
+        simulator.ChangeFeatureValue(false);
+        REQUIRE(simulator.GetDiseaseClass().GetInfectedTime() == 995);
       }
     }
   }
