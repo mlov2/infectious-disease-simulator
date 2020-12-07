@@ -8,6 +8,7 @@
 
 using glm::vec2;
 using glm::vec3;
+using std::map;
 using std::string;
 using std::vector;
 
@@ -58,6 +59,7 @@ class Disease {
       bool has_been_exposed_in_frame;
       bool is_quarantined;
       bool is_social_distancing;
+      map<string, size_t> positions_of_people_in_bubble;
   };
 
   Disease() = default;
