@@ -160,31 +160,50 @@ TEST_CASE("Check feature values change") {
   }
 
   SECTION("Check social distance changes") {
-    SECTION("With arrow up") {
+    simulator.ChangeFeature(disease::FeatureChangeKey::kSocialDistance);
+    REQUIRE(simulator.GetFeatureCurrentlyChanging() == disease::FeatureChangeKey::kSocialDistance);
+    REQUIRE(simulator.GetDiseaseClass().GetPercentPerformingSocialDistance() == 0);
 
+    SECTION("With arrow up") {
+      simulator.ChangeFeatureValue(true);
+      REQUIRE(simulator.GetDiseaseClass().GetPercentPerformingSocialDistance() == 5);
     }
 
     SECTION("With arrow down") {
+      simulator.ChangeFeatureValue(true);
+      simulator.ChangeFeatureValue(true);
+      REQUIRE(simulator.GetDiseaseClass().GetPercentPerformingSocialDistance() == 10);
 
+      simulator.ChangeFeatureValue(false);
+      REQUIRE(simulator.GetDiseaseClass().GetPercentPerformingSocialDistance() == 5);
     }
 
     SECTION("Social distance is minimum before change") {
       SECTION("With arrow up") {
-
+        simulator.ChangeFeatureValue(true);
+        REQUIRE(simulator.GetDiseaseClass().GetPercentPerformingSocialDistance() == 5);
       }
 
       SECTION("With arrow down") {
-
+        simulator.ChangeFeatureValue(false);
+        REQUIRE(simulator.GetDiseaseClass().GetPercentPerformingSocialDistance() == 0);
       }
     }
 
     SECTION("Social distance is maximum before change") {
-      SECTION("With arrow up") {
+      while (simulator.GetDiseaseClass().GetPercentPerformingSocialDistance() < 100) {
+        simulator.ChangeFeatureValue(true);
+      }
+      REQUIRE(simulator.GetDiseaseClass().GetPercentPerformingSocialDistance() == 100);
 
+      SECTION("With arrow up") {
+        simulator.ChangeFeatureValue(true);
+        REQUIRE(simulator.GetDiseaseClass().GetPercentPerformingSocialDistance() == 100);
       }
 
       SECTION("With arrow down") {
-
+        simulator.ChangeFeatureValue(false);
+        REQUIRE(simulator.GetDiseaseClass().GetPercentPerformingSocialDistance() == 95);
       }
     }
   }
