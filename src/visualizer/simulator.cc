@@ -329,16 +329,8 @@ std::string Simulator::GetFeatureBeingChanged() const {
   return feature_being_changed;
 }
 
-double Simulator::GetTopMargin() {
-  return kTopContainerMargin;
-}
-
 const vector<Disease::Person>& Simulator::GetParticlesInfo() {
   return particles_info;
-}
-
-size_t Simulator::GetIncrementOrDecrementValue() const {
-  return kIncrementOrDecrementBy;
 }
 
 size_t Simulator::GetTimePassed() const {
@@ -351,6 +343,10 @@ FeatureChangeKey Simulator::GetFeatureCurrentlyChanging() const {
 
 Disease Simulator::GetDiseaseClass() const {
   return disease_;
+}
+
+double Simulator::GetTopMargin() {
+  return kTopContainerMargin;
 }
 
 }  // namespace visualizer
