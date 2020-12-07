@@ -107,6 +107,8 @@ class Disease {
   void UpdateParticles();
 
  private:
+  const size_t kOneHundred = 100;
+
   // ================
   // Person constants
   // ================

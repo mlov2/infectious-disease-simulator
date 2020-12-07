@@ -138,6 +138,12 @@ void Disease::CreatePopulation() {
       population_.push_back(CreatePerson());
     }
     population_.push_back(CreatePatientZero());
+
+    // Determine people social distancing
+    double social_distancing_percentage = percent_performing_social_distance_ / kOneHundred;
+    for (size_t person = 0; person < size_t(social_distancing_percentage * population_.size()); person++) {
+      population_[person].is_social_distancing = true;
+    }
   }
 }
 
@@ -156,6 +162,7 @@ Disease::Person Disease::CreatePerson() {
   new_person.time_infected = 0;
   new_person.has_been_exposed_in_frame = false;
   new_person.is_quarantined = false;
+  new_person.is_social_distancing = false;
 
   return new_person;
 }
