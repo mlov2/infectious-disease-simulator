@@ -211,24 +211,6 @@ void Disease::ResetExposureInFrame() {
   }
 }
 
-void Disease::UpdatePosition(size_t current_index) {
-  vec2 updated_position = population_[current_index].position +
-                          population_[current_index].velocity;
-
-  if (population_[current_index].is_quarantined) {
-    if (should_quarantine_) {
-      population_[current_index].position =
-          KeepWithinContainer(updated_position, population_[current_index].radius,
-                              quarantine_left_wall_, quarantine_top_wall_,
-                              quarantine_right_wall_, quarantine_bottom_wall_);
-    }
-  } else {
-    population_[current_index].position =
-        KeepWithinContainer(updated_position, population_[current_index].radius,
-                            left_wall_, top_wall_, right_wall_, bottom_wall_);
-  }
-}
-
 Disease::Person Disease::UpdatePersonStatus(const Person& current_person, size_t current_index) {
   Person patient = current_person;
 
@@ -401,6 +383,24 @@ Disease::Person Disease::QuarantinePerson(const Disease::Person& current_person)
   infected_person.is_quarantined = true;
 
   return infected_person;
+}
+
+void Disease::UpdatePosition(size_t current_index) {
+  vec2 updated_position = population_[current_index].position +
+                          population_[current_index].velocity;
+
+  if (population_[current_index].is_quarantined) {
+    if (should_quarantine_) {
+      population_[current_index].position =
+          KeepWithinContainer(updated_position, population_[current_index].radius,
+                              quarantine_left_wall_, quarantine_top_wall_,
+                              quarantine_right_wall_, quarantine_bottom_wall_);
+    }
+  } else {
+    population_[current_index].position =
+        KeepWithinContainer(updated_position, population_[current_index].radius,
+                            left_wall_, top_wall_, right_wall_, bottom_wall_);
+  }
 }
 
 vec2 Disease::KeepWithinContainer(const vec2& updated_position, double current_particle_radius,
