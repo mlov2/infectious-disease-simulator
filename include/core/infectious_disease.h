@@ -183,9 +183,10 @@ class Disease {
   Person CreatePatientZero();
 
   /*
-   * Resets each person's has_been_exposed_in_frame status to false.
+   * Resets each person's has_been_exposed_in_frame status to false and
+   * clears positions_of_people_in_bubble.
    */
-  void ResetExposureInFrame();
+  void ResetFrame();
 
   /*
    * Updates the person's status based on the current stats for the person (i.e.

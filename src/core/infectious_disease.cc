@@ -177,7 +177,7 @@ Disease::Person Disease::CreatePatientZero() {
 }
 
 void Disease::UpdateParticles() {
-  ResetExposureInFrame();
+  ResetFrame();
 
   for (size_t current = 0; current < population_.size(); current++) {
     // Update Status
@@ -205,7 +205,7 @@ void Disease::UpdateParticles() {
   }
 }
 
-void Disease::ResetExposureInFrame() {
+void Disease::ResetFrame() {
   for (size_t current = 0; current < population_.size(); current++) {
     population_[current].has_been_exposed_in_frame = false;
   }
