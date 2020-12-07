@@ -318,7 +318,7 @@ std::string Simulator::GetFeatureBeingChanged() const {
       break;
 
     case 3:
-      feature_being_changed = "'Amount of Social Distance'";
+      feature_being_changed = "'Percent of Population Social Distancing'";
       break;
 
     case 4:
