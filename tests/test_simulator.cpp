@@ -5,8 +5,26 @@
 
 #include <catch2/catch.hpp>
 
-TEST_CASE("Check member variables update") {
+using disease::visualizer::Simulator;
 
+TEST_CASE("Check member variables update") {
+  Simulator simulator;
+
+  SECTION("Population has been created") {
+    simulator.CreatePopulation();
+
+    simulator.Update();
+
+    REQUIRE(simulator.GetParticlesInfo().size() == 201);
+    REQUIRE(simulator.GetTimePassed() == 1);
+  }
+
+  SECTION("Population has not been created") {
+    simulator.Update();
+
+    REQUIRE(simulator.GetParticlesInfo().size() == 0);
+    REQUIRE(simulator.GetTimePassed() == 0);
+  }
 }
 
 TEST_CASE("Check population gets created") {
