@@ -209,36 +209,60 @@ TEST_CASE("Check feature values change") {
   }
 
   SECTION("Check infection radius changes") {
-    SECTION("With arrow up") {
+    simulator.ChangeFeature(disease::FeatureChangeKey::kInfectionRadius);
+    REQUIRE(simulator.GetFeatureCurrentlyChanging() == disease::FeatureChangeKey::kInfectionRadius);
+    REQUIRE(simulator.GetDiseaseClass().GetRadiusOfInfection() == 10);
 
+    SECTION("With arrow up") {
+      simulator.ChangeFeatureValue(true);
+      REQUIRE(simulator.GetDiseaseClass().GetRadiusOfInfection() == 15);
     }
 
     SECTION("With arrow down") {
-
+      simulator.ChangeFeatureValue(false);
+      REQUIRE(simulator.GetDiseaseClass().GetRadiusOfInfection() == 5);
     }
 
     SECTION("Infection radius is minimum before change") {
-      SECTION("With arrow up") {
+      simulator.ChangeFeatureValue(false);
+      REQUIRE(simulator.GetDiseaseClass().GetRadiusOfInfection() == 5);
 
+      SECTION("With arrow up") {
+        simulator.ChangeFeatureValue(true);
+        REQUIRE(simulator.GetDiseaseClass().GetRadiusOfInfection() == 10);
       }
 
       SECTION("With arrow down") {
-
+        simulator.ChangeFeatureValue(false);
+        REQUIRE(simulator.GetDiseaseClass().GetRadiusOfInfection() == 5);
       }
     }
 
     SECTION("Infection radius is maximum before change") {
-      SECTION("With arrow up") {
+      while (simulator.GetDiseaseClass().GetRadiusOfInfection() < 30) {
+        simulator.ChangeFeatureValue(true);
+      }
+      REQUIRE(simulator.GetDiseaseClass().GetRadiusOfInfection() == 30);
 
+      SECTION("With arrow up") {
+        simulator.ChangeFeatureValue(true);
+        REQUIRE(simulator.GetDiseaseClass().GetRadiusOfInfection() == 30);
       }
 
       SECTION("With arrow down") {
-
+        simulator.ChangeFeatureValue(false);
+        REQUIRE(simulator.GetDiseaseClass().GetRadiusOfInfection() == 25);
       }
     }
 
     SECTION("Infection radius cannot be lower than social distance value") {
+      while (simulator.GetDiseaseClass().GetRadiusOfInfection() > 5) {
+        simulator.ChangeFeatureValue(false);
+      }
+      REQUIRE(simulator.GetDiseaseClass().GetRadiusOfInfection() == 5);
 
+      simulator.ChangeFeatureValue(false);
+      REQUIRE(simulator.GetDiseaseClass().GetRadiusOfInfection() == 5);
     }
   }
 }
