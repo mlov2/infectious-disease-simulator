@@ -281,23 +281,35 @@ TEST_CASE("Check member variables clear") {
 }
 
 TEST_CASE("Check GetFeatureBeingChanged() works") {
-  SECTION("Quarantine is feature being changed") {
+  Simulator simulator;
 
+  SECTION("Quarantine is feature being changed") {
+    simulator.ChangeFeature(disease::FeatureChangeKey::kQuarantine);
+    REQUIRE(simulator.GetFeatureCurrentlyChanging() == disease::FeatureChangeKey::kQuarantine);
+    REQUIRE(simulator.GetFeatureBeingChanged() == "'Should Quarantine'");
   }
 
   SECTION("Exposed time is feature being changed") {
-
+    simulator.ChangeFeature(disease::FeatureChangeKey::kExposureTime);
+    REQUIRE(simulator.GetFeatureCurrentlyChanging() == disease::FeatureChangeKey::kExposureTime);
+    REQUIRE(simulator.GetFeatureBeingChanged() == "'Exposed Time'");
   }
 
   SECTION("Infected time is feature being changed") {
-
+    simulator.ChangeFeature(disease::FeatureChangeKey::kInfectedTime);
+    REQUIRE(simulator.GetFeatureCurrentlyChanging() == disease::FeatureChangeKey::kInfectedTime);
+    REQUIRE(simulator.GetFeatureBeingChanged() == "'Infected Time'");
   }
 
   SECTION("Social distance is feature being changed") {
-
+    simulator.ChangeFeature(disease::FeatureChangeKey::kSocialDistance);
+    REQUIRE(simulator.GetFeatureCurrentlyChanging() == disease::FeatureChangeKey::kSocialDistance);
+    REQUIRE(simulator.GetFeatureBeingChanged() == "'Percent of Population Social Distancing'");
   }
 
   SECTION("Radius of infection is feature being changed") {
-
+    simulator.ChangeFeature(disease::FeatureChangeKey::kInfectionRadius);
+    REQUIRE(simulator.GetFeatureCurrentlyChanging() == disease::FeatureChangeKey::kInfectionRadius);
+    REQUIRE(simulator.GetFeatureBeingChanged() == "'Radius of Infection'");
   }
 }
