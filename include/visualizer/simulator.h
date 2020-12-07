@@ -125,8 +125,20 @@ class Simulator {
    */
   void DrawFeatureLabels() const;
 
+  /*
+   * Draws a message that will be displayed to the user if the feature
+   * they are currently changes reaches its min or max value.
+   *
+   * @param y_location A double representing the y_coordinate of the
+   *     location the string will be drawn
+   */
   void DrawConstraintsMessage(double y_location) const;
 
+  /*
+   * Changes the feature being changed from enum class type to a string.
+   *
+   * @return A string that holds the feature name
+   */
   std::string GetFeatureBeingChanged() const;
 };
 
