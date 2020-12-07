@@ -139,13 +139,6 @@ class Simulator {
    *     location the string will be drawn
    */
   void DrawConstraintsMessage(double y_location) const;
-
-  /*
-   * Changes the feature being changed from enum class type to a string.
-   *
-   * @return A string that holds the feature name
-   */
-  std::string GetFeatureBeingChanged() const;
 };
 
 }  // namespace visualizer
