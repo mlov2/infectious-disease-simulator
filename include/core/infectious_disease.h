@@ -187,13 +187,6 @@ class Disease {
   void ResetExposureInFrame();
 
   /*
-   * Updates the current person's position.
-   *
-   * @param current_index The index of the current person in the population vector
-   */
-  void UpdatePosition(size_t current_index);
-
-  /*
    * Updates the person's status based on the current stats for the person (i.e.
    * exposure time if currently susceptible or infected time if currently infected).
    *
@@ -299,6 +292,13 @@ class Disease {
    * @return A Person representing the current person with updated info
    */
   Person QuarantinePerson(const Person& current_person);
+
+  /*
+   * Updates the current person's position.
+   *
+   * @param current_index The index of the current person in the population vector
+   */
+  void UpdatePosition(size_t current_index);
 
   /*
    * Adjusts the updated position so that the particle will still be within the
