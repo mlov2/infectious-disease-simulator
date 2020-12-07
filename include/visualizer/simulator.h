@@ -58,7 +58,7 @@ class Simulator {
    *
    * @param is_key_up A bool representing if the up key was pressed
    */
-  void ChangeFeatureValue(bool is_key_up);  // TODO: Write tests for this function
+  void ChangeFeatureValue(bool is_key_up);
 
   const vector<Disease::Person>& GetParticlesInfo();
   size_t GetTimePassed() const;
