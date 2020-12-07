@@ -208,6 +208,7 @@ void Disease::UpdateParticles() {
 void Disease::ResetFrame() {
   for (size_t current = 0; current < population_.size(); current++) {
     population_[current].has_been_exposed_in_frame = false;
+    population_[current].positions_of_people_in_bubble.clear();
   }
 }
 
