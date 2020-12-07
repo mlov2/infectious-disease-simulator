@@ -329,16 +329,20 @@ std::string Simulator::GetFeatureBeingChanged() const {
   return feature_being_changed;
 }
 
-size_t Simulator::GetIncrementOrDecrementValue() const {
-  return kIncrementOrDecrementBy;
-}
-
 double Simulator::GetTopMargin() {
   return kTopContainerMargin;
 }
 
 const vector<Disease::Person>& Simulator::GetParticlesInfo() {
   return particles_info;
+}
+
+size_t Simulator::GetIncrementOrDecrementValue() const {
+  return kIncrementOrDecrementBy;
+}
+
+size_t Simulator::GetTimePassed() const {
+  return time_passed_;
 }
 
 }  // namespace visualizer

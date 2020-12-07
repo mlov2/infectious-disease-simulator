@@ -60,9 +60,9 @@ class Simulator {
    */
   void ChangeFeatureValue(bool is_key_up);  // TODO: Write tests for this function
 
-  size_t GetIncrementOrDecrementValue() const;
-
   const vector<Disease::Person>& GetParticlesInfo();
+  size_t GetTimePassed() const;
+  size_t GetIncrementOrDecrementValue() const;
 
   double GetTopMargin();
 
