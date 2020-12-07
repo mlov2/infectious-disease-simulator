@@ -64,7 +64,13 @@ class Simulator {
   size_t GetTimePassed() const;
   FeatureChangeKey GetFeatureCurrentlyChanging() const;
   Disease GetDiseaseClass() const;
-  size_t GetIncrementOrDecrementValue() const;
+
+  /*
+   * Changes the feature being changed from enum class type to a string.
+   *
+   * @return A string that holds the feature name
+   */
+  std::string GetFeatureBeingChanged() const;
 
   double GetTopMargin();
 
