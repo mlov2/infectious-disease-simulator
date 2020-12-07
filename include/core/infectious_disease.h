@@ -109,8 +109,6 @@ class Disease {
   void UpdateParticles();
 
  private:
-  const size_t kOneHundred = 100;
-
   // ================
   // Person constants
   // ================
@@ -119,6 +117,7 @@ class Disease {
   // ==================
   // Stats as constants
   // ==================
+  double kOneHundred = 100;
   size_t kSusceptiblePopulation = 200;
   size_t kExposureTimeToBeInfected = 25;
   size_t kMinimumExposureTime = 5;
