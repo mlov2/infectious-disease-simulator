@@ -62,6 +62,8 @@ class Simulator {
 
   const vector<Disease::Person>& GetParticlesInfo();
   size_t GetTimePassed() const;
+  FeatureChangeKey GetFeatureCurrentlyChanging() const;
+  Disease GetDiseaseClass() const;
   size_t GetIncrementOrDecrementValue() const;
 
   double GetTopMargin();

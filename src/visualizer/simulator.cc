@@ -345,6 +345,14 @@ size_t Simulator::GetTimePassed() const {
   return time_passed_;
 }
 
+FeatureChangeKey Simulator::GetFeatureCurrentlyChanging() const {
+  return feature_currently_being_changed_;
+}
+
+Disease Simulator::GetDiseaseClass() const {
+  return disease_;
+}
+
 }  // namespace visualizer
 
 }  // namespace disease
