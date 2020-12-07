@@ -140,7 +140,7 @@ void Disease::CreatePopulation() {
     population_.push_back(CreatePatientZero());
 
     // Determine people social distancing
-    double social_distancing_percentage = percent_performing_social_distance_ / kOneHundred;
+    double social_distancing_percentage = double(percent_performing_social_distance_) / kOneHundred;
     for (size_t person = 0; person < size_t(social_distancing_percentage * population_.size()); person++) {
       population_[person].is_social_distancing = true;
     }
