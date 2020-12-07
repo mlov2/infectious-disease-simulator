@@ -387,17 +387,20 @@ Disease::Person Disease::QuarantinePerson(const Disease::Person& current_person)
 }
 
 void Disease::UpdatePosition(size_t current_index) {
-  vec2 updated_position = population_[current_index].position +
-                          population_[current_index].velocity;
-
   if (population_[current_index].is_quarantined) {
     if (should_quarantine_) {
+      vec2 updated_position = population_[current_index].position +
+                              population_[current_index].velocity;
       population_[current_index].position =
           KeepWithinContainer(updated_position, population_[current_index].radius,
                               quarantine_left_wall_, quarantine_top_wall_,
                               quarantine_right_wall_, quarantine_bottom_wall_);
     }
   } else {
+    SocialDistance(current_index);
+
+    vec2 updated_position = population_[current_index].position +
+                            population_[current_index].velocity;
     population_[current_index].position =
         KeepWithinContainer(updated_position, population_[current_index].radius,
                             left_wall_, top_wall_, right_wall_, bottom_wall_);
