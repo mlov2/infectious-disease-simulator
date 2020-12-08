@@ -15,7 +15,7 @@ Disease::Disease(double left_margin, double top_margin,
   quarantine_right_wall_ = quarantine_bottom_right.x;
   quarantine_bottom_wall_ = quarantine_bottom_right.y;
 
-  should_quarantine_ = true;
+  should_quarantine_ = false;
   exposure_time_to_be_infected_ = kExposureTimeToBeInfected;
   infected_time_to_be_removed_ = kInfectedTimeToBeRemoved;
   percent_performing_social_distance_ = 0;
@@ -41,7 +41,7 @@ Disease::Disease(double left_margin, double top_margin,
   quarantine_right_wall_ = quarantine_bottom_right.x;
   quarantine_bottom_wall_ = quarantine_bottom_right.y;
 
-  should_quarantine_ = true;
+  should_quarantine_ = false;
   exposure_time_to_be_infected_ = exposure_time;
   infected_time_to_be_removed_ = infected_time;
   percent_performing_social_distance_ = 0;

@@ -1886,6 +1886,8 @@ TEST_CASE("Check infected people get quarantined") {
                             25, 500, false, true, false);
   Disease::Person person;
 
+  disease.SetShouldQuarantine(true);
+
   SECTION("Infection time is exactly the time needed to be put into quarantine") {
     vector<Disease::Person> all_particles;
 

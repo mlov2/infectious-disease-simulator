@@ -40,22 +40,22 @@ TEST_CASE("Check feature values change") {
   SECTION("Check quarantine value changes") {
     simulator.ChangeFeature(disease::FeatureChangeKey::kQuarantine);
     REQUIRE(simulator.GetFeatureCurrentlyChanging() == disease::FeatureChangeKey::kQuarantine);
-    REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == true);
+    REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == false);
 
     SECTION("With arrow up") {
       simulator.ChangeFeatureValue(true);
-      REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == false);
+      REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == true);
 
       simulator.ChangeFeatureValue(true);
-      REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == true);
+      REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == false);
     }
 
     SECTION("With arrow down") {
       simulator.ChangeFeatureValue(false);
-      REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == false);
+      REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == true);
 
       simulator.ChangeFeatureValue(false);
-      REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == true);
+      REQUIRE(simulator.GetDiseaseClass().GetShouldQuarantineValue() == false);
     }
   }
 
