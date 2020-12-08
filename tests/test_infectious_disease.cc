@@ -2004,3 +2004,37 @@ TEST_CASE("Check infected people get quarantined") {
     REQUIRE(updated_particles[1].positions_of_people_in_bubble.empty());
   }
 }
+
+TEST_CASE("Check social distancing") {
+  SECTION("W/ quarantine") {
+
+  }
+
+  SECTION("W/o quarantine") {
+
+  }
+
+  SECTION("Two particles") {
+    SECTION("Both particles are social distancing") {
+
+    }
+
+    SECTION("One of two particles are social distancing") {
+
+    }
+  }
+
+  SECTION("Three particles") {
+    SECTION("All particles are social distancing") {
+
+    }
+
+    SECTION("One of three particles are social distancing") {
+
+    }
+
+    SECTION("Two of three particles are social distancing") {
+
+    }
+  }
+}
