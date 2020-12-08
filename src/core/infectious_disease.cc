@@ -473,12 +473,18 @@ void Disease::UpdateVelocity(size_t current_index) {
     x_sign = -1;
   }
 
-  if (is_new_distancing_velocity_random_) {
-    if (num_people_above_current_particle != num_people_below_current_particle) {
+  if (num_people_above_current_particle != num_people_below_current_particle) {
+    if (is_new_distancing_velocity_random_) {
       population_[current_index].velocity.y = ci::randFloat(0, 1);
+    } else {
+      population_[current_index].velocity.y = abs(population_[current_index].velocity.y);
     }
-    if (num_people_left_current_particle != num_people_right_current_particle) {
+  }
+  if (num_people_left_current_particle != num_people_right_current_particle) {
+    if (is_new_distancing_velocity_random_) {
       population_[current_index].velocity.x = ci::randFloat(0, 1);
+    } else {
+      population_[current_index].velocity.x = abs(population_[current_index].velocity.x);
     }
   }
 
