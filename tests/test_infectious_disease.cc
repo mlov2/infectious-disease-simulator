@@ -2008,9 +2008,117 @@ TEST_CASE("Check infected people get quarantined") {
 }
 
 TEST_CASE("Check social distancing") {
-  SECTION("W/ quarantine") {
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                            25, 500, false, true, false);
+  Disease::Person person;
 
+  SECTION("Check percent performing social distancing works") {
+    SECTION("0 percent social distancing") {
+      disease.SetPercentPerformingSocialDistance(0);
+      disease.CreatePopulation();
+      vector<Disease::Person> population = disease.GetPopulation();
+
+      size_t num_social_distancing = 0;
+      for (const Disease::Person& p : population) {
+        if (p.is_social_distancing) {
+          num_social_distancing += 1;
+        }
+      }
+
+      REQUIRE(num_social_distancing == 0);
+    }
+
+    SECTION("50 percent social distancing") {
+      disease.SetPercentPerformingSocialDistance(50);
+      disease.CreatePopulation();
+      vector<Disease::Person> population = disease.GetPopulation();
+
+      size_t num_social_distancing = 0;
+      for (const Disease::Person& p : population) {
+        if (p.is_social_distancing) {
+          num_social_distancing += 1;
+        }
+      }
+
+      REQUIRE(num_social_distancing == 100);
+    }
+
+    SECTION("100 percent social distancing") {
+      disease.SetPercentPerformingSocialDistance(100);
+      disease.CreatePopulation();
+      vector<Disease::Person> population = disease.GetPopulation();
+
+      size_t num_social_distancing = 0;
+      for (const Disease::Person& p : population) {
+        if (p.is_social_distancing) {
+          num_social_distancing += 1;
+        }
+      }
+
+      REQUIRE(num_social_distancing == 201);
+    }
   }
+
+  SECTION("W/ social distancing") {
+    SECTION("W/ quarantine--no social distancing occurs even if they practice it") {
+      disease.SetShouldQuarantine(true);
+
+      vector<Disease::Person> all_particles;
+
+      disease.SetPercentPerformingSocialDistance(100);
+
+      // Particle 1
+      person.radius = 10;
+      person.position = vec2(175, 75);
+      person.velocity = vec2(-5, 6);
+      person.status = disease::Status::kSymptomatic;
+      person.color = vec3(1,0,0);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 69;
+      person.has_been_exposed_in_frame = false;
+      person.is_quarantined = true;
+      person.is_social_distancing = true;
+      all_particles.push_back(person);
+
+      // Particle 2
+      person.radius = 10;
+      person.position = vec2(175, 55);
+      person.velocity = vec2(-5, 6);
+      person.status = disease::Status::kSymptomatic;
+      person.color = vec3(1,0,0);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 69;
+      person.has_been_exposed_in_frame = false;
+      person.is_quarantined = true;
+      person.is_social_distancing = true;
+      all_particles.push_back(person);
+
+      disease.SetPopulation(all_particles);
+      disease.UpdateParticles();
+      vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+      // Particle 1
+      REQUIRE(updated_particles[0].position == vec2(170, 81));
+      REQUIRE(updated_particles[0].velocity == vec2(-5.0, 6.0));
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
+      REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+      REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[0].time_infected == 70);
+      REQUIRE(updated_particles[0].is_quarantined == true);
+      REQUIRE(updated_particles[0].is_social_distancing == true);
+      REQUIRE(updated_particles[0].positions_of_people_in_bubble.empty());
+
+      // Particle 2
+      REQUIRE(updated_particles[1].position == vec2(170, 61));
+      REQUIRE(updated_particles[1].velocity == vec2(-5.0, 6.0));
+      REQUIRE(updated_particles[1].status == disease::Status::kSymptomatic);
+      REQUIRE(updated_particles[1].color == vec3(1, 0, 0));
+      REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[1].time_infected == 70);
+      REQUIRE(updated_particles[1].is_quarantined == true);
+      REQUIRE(updated_particles[1].is_social_distancing == true);
+      REQUIRE(updated_particles[1].positions_of_people_in_bubble.empty());
+    }
 
   SECTION("W/o quarantine") {
 
