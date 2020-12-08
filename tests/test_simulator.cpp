@@ -304,7 +304,7 @@ TEST_CASE("Check GetFeatureBeingChanged() works") {
   SECTION("Social distance is feature being changed") {
     simulator.ChangeFeature(disease::FeatureChangeKey::kSocialDistance);
     REQUIRE(simulator.GetFeatureCurrentlyChanging() == disease::FeatureChangeKey::kSocialDistance);
-    REQUIRE(simulator.GetFeatureBeingChanged() == "'Percent of Population Social Distancing'");
+    REQUIRE(simulator.GetFeatureBeingChanged() == "'Percent Social Distancing'");
   }
 
   SECTION("Radius of infection is feature being changed") {
