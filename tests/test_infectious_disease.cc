@@ -31,6 +31,8 @@ TEST_CASE("Create population", "[create population]") {
       REQUIRE(all_particles[i].time_infected == 0);
       REQUIRE(all_particles[i].has_been_exposed_in_frame == false);
       REQUIRE(all_particles[i].is_quarantined == false);
+      REQUIRE(all_particles[i].is_social_distancing == false);
+      REQUIRE(all_particles[i].positions_of_people_in_bubble.empty());
     }
 
     // Patient zero created
@@ -49,6 +51,8 @@ TEST_CASE("Create population", "[create population]") {
     REQUIRE(all_particles[all_particles.size() - 1].time_infected == 0);
     REQUIRE(all_particles[all_particles.size() - 1].has_been_exposed_in_frame == false);
     REQUIRE(all_particles[all_particles.size() - 1].is_quarantined == false);
+    REQUIRE(all_particles[all_particles.size() - 1].is_social_distancing == false);
+    REQUIRE(all_particles[all_particles.size() - 1].positions_of_people_in_bubble.empty());
   }
 
   SECTION("Population isn't created more than once") {
@@ -77,6 +81,8 @@ TEST_CASE("Create population", "[create population]") {
       REQUIRE(all_particles[i].time_infected == 0);
       REQUIRE(all_particles[i].has_been_exposed_in_frame == false);
       REQUIRE(all_particles[i].is_quarantined == false);
+      REQUIRE(all_particles[i].is_social_distancing == false);
+      REQUIRE(all_particles[i].positions_of_people_in_bubble.empty());
     }
 
     // Patient zero created
@@ -95,6 +101,8 @@ TEST_CASE("Create population", "[create population]") {
     REQUIRE(all_particles[all_particles.size() - 1].time_infected == 0);
     REQUIRE(all_particles[all_particles.size() - 1].has_been_exposed_in_frame == false);
     REQUIRE(all_particles[all_particles.size() - 1].is_quarantined == false);
+    REQUIRE(all_particles[all_particles.size() - 1].is_social_distancing == false);
+    REQUIRE(all_particles[all_particles.size() - 1].positions_of_people_in_bubble.empty());
   }
 }
 
