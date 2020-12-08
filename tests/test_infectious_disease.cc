@@ -2120,19 +2120,75 @@ TEST_CASE("Check social distancing") {
       REQUIRE(updated_particles[1].positions_of_people_in_bubble.empty());
     }
 
-  SECTION("W/o quarantine") {
+    SECTION("W/o quarantine") {
+      SECTION("Both particles are social distancing") {
+        vector<Disease::Person> all_particles;
 
-  }
+        disease.SetPercentPerformingSocialDistance(100);
 
-  SECTION("Two particles") {
-    SECTION("Both particles are social distancing") {
+        // Particle 1
+        person.radius = 10;
+        person.position = vec2(75, 75);
+        person.velocity = vec2(-5, 6);
+        person.status = disease::Status::kSusceptible;
+        person.color = vec3(0, 0, 1);
+        person.continuous_exposure_time = 0;
+        person.time_infected = 0;
+        person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
+        person.is_social_distancing = true;
+        all_particles.push_back(person);
 
+        // Particle 2
+        person.radius = 10;
+        person.position = vec2(75, 55);
+        person.velocity = vec2(-5, 6);
+        person.status = disease::Status::kSymptomatic;
+        person.color = vec3(1, 0, 0);
+        person.continuous_exposure_time = 0;
+        person.time_infected = 69;
+        person.has_been_exposed_in_frame = false;
+        person.is_quarantined = false;
+        person.is_social_distancing = true;
+        all_particles.push_back(person);
+
+        disease.SetPopulation(all_particles);
+        disease.UpdateParticles();
+        vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+        // Particle 1
+        REQUIRE(updated_particles[0].position == vec2(70, 81));
+        REQUIRE(updated_particles[0].velocity == vec2(-5.0, 6.0));
+        REQUIRE(updated_particles[0].status == disease::Status::kSusceptible);
+        REQUIRE(updated_particles[0].color == vec3(0, 0, 1));
+        REQUIRE(updated_particles[0].continuous_exposure_time == 1);
+        REQUIRE(updated_particles[0].time_infected == 0);
+        REQUIRE(updated_particles[0].is_quarantined == false);
+        REQUIRE(updated_particles[0].is_social_distancing == true);
+        REQUIRE(updated_particles[0].positions_of_people_in_bubble["left"] == 0);
+        REQUIRE(updated_particles[0].positions_of_people_in_bubble["right"] == 0);
+        REQUIRE(updated_particles[0].positions_of_people_in_bubble["up"] == 1);
+        REQUIRE(updated_particles[0].positions_of_people_in_bubble["down"] == 0);
+
+        // Particle 2
+        REQUIRE(updated_particles[1].position == vec2(70, 49));
+        REQUIRE(updated_particles[1].velocity == vec2(-5.0, -6.0));
+        REQUIRE(updated_particles[1].status == disease::Status::kSymptomatic);
+        REQUIRE(updated_particles[1].color == vec3(1, 0, 0));
+        REQUIRE(updated_particles[1].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[1].time_infected == 70);
+        REQUIRE(updated_particles[1].is_quarantined == false);
+        REQUIRE(updated_particles[1].is_social_distancing == true);
+        REQUIRE(updated_particles[1].positions_of_people_in_bubble["left"] == 0);
+        REQUIRE(updated_particles[1].positions_of_people_in_bubble["right"] == 0);
+        REQUIRE(updated_particles[1].positions_of_people_in_bubble["up"] == 0);
+        REQUIRE(updated_particles[1].positions_of_people_in_bubble["down"] == 1);
+      }
+
+      SECTION("One of two particles are social distancing") {
+
+      }
     }
-
-    SECTION("One of two particles are social distancing") {
-
-    }
-  }
 
   SECTION("Three particles") {
     SECTION("All particles are social distancing") {
