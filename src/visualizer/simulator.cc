@@ -28,6 +28,11 @@ void Simulator::Update() {
     time_passed_++;
   }
   histogram_.Update(particles_info, time_passed_);
+
+  if (disease_.GetPercentPerformingSocialDistance() != 0 &&
+      disease_.GetRadiusOfInfection() < disease_.GetAmountOfSocialDistance() + kIncrementOrDecrementBy) {
+    disease_.SetRadiusOfInfection(disease_.GetAmountOfSocialDistance() + kIncrementOrDecrementBy);
+  }
 }
 
 void Simulator::Draw() const {
@@ -213,10 +218,14 @@ void Simulator::DrawConstraintsMessage(double y_location) const {
       } else if (disease_.GetRadiusOfInfection() <= disease_.GetMinimumInfectionRadius()) {
         ci::gl::drawString(GetFeatureBeingChanged() + " is at its min value",
                            glm::vec2(x_location, y_location), ci::Color("red"));
-      } else if (disease_.GetRadiusOfInfection() <= disease_.GetAmountOfSocialDistance() &&
+      } else if (disease_.GetRadiusOfInfection() <= (disease_.GetAmountOfSocialDistance() +
+          kIncrementOrDecrementBy) &&
           disease_.GetPercentPerformingSocialDistance() != 0) {
-        ci::gl::drawString(GetFeatureBeingChanged() + " cannot be lower than social distance value",
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its min value",
                            glm::vec2(x_location, y_location), ci::Color("red"));
+        ci::gl::drawString("when social distance is on",
+                           glm::vec2(x_location, y_location + kSpacesFromContainer),
+                           ci::Color("red"));
       }
       break;
   }
@@ -285,9 +294,15 @@ void Simulator::ChangeFeatureValue(bool is_key_up) {
             disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() + kIncrementOrDecrementBy);
           }
         } else {
-          if (disease_.GetRadiusOfInfection() > disease_.GetMinimumInfectionRadius() &&
-              (disease_.GetRadiusOfInfection() > disease_.GetAmountOfSocialDistance())) {
-            disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() - kIncrementOrDecrementBy);
+          if (disease_.GetPercentPerformingSocialDistance() != 0) {
+            if ((disease_.GetRadiusOfInfection() > disease_.GetMinimumInfectionRadius()) &&
+                (disease_.GetRadiusOfInfection() > disease_.GetAmountOfSocialDistance() + kIncrementOrDecrementBy)) {
+              disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() - kIncrementOrDecrementBy);
+            }
+          } else {
+            if (disease_.GetRadiusOfInfection() > disease_.GetMinimumInfectionRadius()) {
+              disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() - kIncrementOrDecrementBy);
+            }
           }
         }
         break;
