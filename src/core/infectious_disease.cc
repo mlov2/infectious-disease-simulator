@@ -22,13 +22,15 @@ Disease::Disease(double left_margin, double top_margin,
   radius_of_infection_ = kInfectionRadius;
   is_infection_determination_random_ = true;
   is_symptomatic_ = true;
+  is_new_distancing_velocity_random_ = true;
 }
 
 Disease::Disease(double left_margin, double top_margin,
                  double container_height, double container_width,
                  const vec2& quarantine_top_left, const vec2& quarantine_bottom_right,
                  size_t exposure_time, size_t infected_time,
-                 bool is_infection_determination_random, bool is_symptomatic) {
+                 bool is_infection_determination_random, bool is_symptomatic,
+                 bool is_new_distancing_velocity_random) {
   left_wall_ = left_margin;
   top_wall_ = top_margin;
   bottom_wall_ = top_wall_ + container_height;
@@ -46,6 +48,7 @@ Disease::Disease(double left_margin, double top_margin,
   radius_of_infection_ = kInfectionRadius;
   is_infection_determination_random_ = is_infection_determination_random;
   is_symptomatic_ = is_symptomatic;
+  is_new_distancing_velocity_random_ = is_new_distancing_velocity_random;
 }
 
 void Disease::SetPopulation(const vector<Disease::Person>& population_to_set_to) {
@@ -470,11 +473,13 @@ void Disease::UpdateVelocity(size_t current_index) {
     x_sign = -1;
   }
 
-  if (num_people_above_current_particle != num_people_below_current_particle) {
-    population_[current_index].velocity.y = ci::randFloat(0, 1);
-  }
-  if (num_people_left_current_particle != num_people_right_current_particle) {
-    population_[current_index].velocity.x = ci::randFloat(0, 1);
+  if (is_new_distancing_velocity_random_) {
+    if (num_people_above_current_particle != num_people_below_current_particle) {
+      population_[current_index].velocity.y = ci::randFloat(0, 1);
+    }
+    if (num_people_left_current_particle != num_people_right_current_particle) {
+      population_[current_index].velocity.x = ci::randFloat(0, 1);
+    }
   }
 
   population_[current_index].velocity.x = population_[current_index].velocity.x * x_sign;

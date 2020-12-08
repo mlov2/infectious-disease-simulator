@@ -70,7 +70,8 @@ class Disease {
           double container_height, double container_width,
           const vec2& quarantine_top_left, const vec2& quarantine_bottom_right,
           size_t exposure_time, size_t infected_time,
-          bool is_infection_determination_random, bool is_symptomatic);  // used for testing
+          bool is_infection_determination_random, bool is_symptomatic,
+          bool is_new_distancing_velocity_random);  // used for testing
 
   void SetPopulation(const vector<Person>& population_to_set_to);
   void SetShouldQuarantine(bool should_quarantine);
@@ -146,6 +147,7 @@ class Disease {
 
   bool is_infection_determination_random_;
   bool is_symptomatic_;
+  bool is_new_distancing_velocity_random_;
 
   // ===================
   // Container variables
