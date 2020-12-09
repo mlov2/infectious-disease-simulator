@@ -136,6 +136,11 @@ void Simulator::DrawFeatureChangeInstructions() const {
     ci::gl::drawString(
         "To change the radius of infection, press 'r'",
         glm::vec2(x_location, y_location), ci::Color("black"));
+
+    y_location += kSpacesFromContainer;
+    ci::gl::drawString(
+        "To change the if there should be a central location, press 'c'",
+        glm::vec2(x_location, y_location), ci::Color("black"));
   }
 }
 
@@ -147,12 +152,8 @@ void Simulator::DrawFeatureLabels() const {
       "FEATURE STATS",
       glm::vec2(x_location, y_location - kSpacesFromContainer), ci::Color("black"));
 
-  std::string quarantine = "No";
-  if (disease_.GetShouldQuarantineValue()) {
-    quarantine = "Yes";
-  }
   ci::gl::drawString(
-      "Should quarantine? " + quarantine,
+      "Should quarantine? " + ConvertFromBool(disease_.GetShouldQuarantineValue()),
       glm::vec2(x_location, y_location), ci::Color("black"));
 
   y_location += kSpacesFromContainer;
@@ -175,6 +176,20 @@ void Simulator::DrawFeatureLabels() const {
   ci::gl::drawString(
       "Radius of infection: " + std::to_string(disease_.GetRadiusOfInfection()),
       glm::vec2(x_location, y_location), ci::Color("black"));
+
+  y_location += kSpacesFromContainer;
+  ci::gl::drawString(
+      "Have central location? " + ConvertFromBool(disease_.GetHaveCentralLocation()),
+      glm::vec2(x_location, y_location), ci::Color("black"));
+}
+
+std::string Simulator::ConvertFromBool(bool boolean_value) const {
+  std::string value = "No";
+  if (boolean_value) {
+    value = "Yes";
+  }
+
+  return value;
 }
 
 void Simulator::DrawConstraintsMessage(double y_location) const {
@@ -306,6 +321,14 @@ void Simulator::ChangeFeatureValue(bool is_key_up) {
           }
         }
         break;
+
+      case 5:  // kCentralLocation
+        if (disease_.GetHaveCentralLocation()) {
+          disease_.SetHaveCentralLocation(false);
+        } else {
+          disease_.SetHaveCentralLocation(true);
+        }
+        break;
     }
   }
 }
@@ -338,6 +361,10 @@ std::string Simulator::GetFeatureBeingChanged() const {
 
     case 4:
       feature_being_changed = "'Radius of Infection'";
+      break;
+
+    case 5:
+      feature_being_changed = "'Have Central Location'";
       break;
   }
 

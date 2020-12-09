@@ -132,6 +132,8 @@ class Simulator {
    */
   void DrawFeatureLabels() const;
 
+  std::string ConvertFromBool(bool boolean_value) const;
+
   /*
    * Draws a message that will be displayed to the user if the feature
    * they are currently changes reaches its min or max value.
