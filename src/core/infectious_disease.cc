@@ -220,10 +220,8 @@ void Disease::UpdateParticles() {
     population_[current] = UpdatePersonStatus(population_[current], current);
 
     // TODO: Move this chunk of code to a separate function
-    // TODO: Delete color changes (used for debugging)
     if (have_central_location_ && !population_[current].is_quarantined) {
       if (population_[current].is_at_central_location) {
-        population_[current].color = ci::vec3(1,1,1); // white
         // Determine if the person leaves
         double probability = ci::randFloat(0,1);
         if (!is_leaving_loc_random_) {
@@ -237,7 +235,6 @@ void Disease::UpdateParticles() {
         if (probability <= kProbabilityOfLeavingLocation) {
           population_[current].is_at_central_location = false;
           population_[current].is_going_to_central_location = false;
-          population_[current].color = ci::vec3(1,0,1); // purple
         }
       } else if (population_[current].is_going_to_central_location) {
         // Move person to central location--wouldn't use if I
@@ -247,7 +244,6 @@ void Disease::UpdateParticles() {
         population_[current].position = vec2(new_x_position, new_y_position);
 
         // Check if person is at location yet
-        population_[current].color = ci::vec3(0,1,0); // green
         if (population_[current].position.x >= location_left_wall_ &&
             population_[current].position.x <= location_right_wall_ &&
             population_[current].position.y >= location_top_wall_ &&
@@ -267,7 +263,6 @@ void Disease::UpdateParticles() {
 
         if (probability <= kProbabilityOfGoingToLocation) {
           population_[current].is_going_to_central_location = true;
-          population_[current].color = ci::vec3(0,1,0);  // green
 
           // TODO: Visualize the particle moving to the new location instead of
           //  immediately moving it there--put that code here
