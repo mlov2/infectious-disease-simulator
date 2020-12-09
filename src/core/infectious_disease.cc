@@ -6,6 +6,7 @@ Disease::Disease(double left_margin, double top_margin,
                  double container_height, double container_width,
                  const vec2& quarantine_top_left, const vec2& quarantine_bottom_right,
                  const vec2& location_top_left, const vec2& location_bottom_right) {
+  // Initialize container values
   left_wall_ = left_margin;
   top_wall_ = top_margin;
   bottom_wall_ = top_wall_ + container_height;
@@ -21,6 +22,7 @@ Disease::Disease(double left_margin, double top_margin,
   location_right_wall_ = location_bottom_right.x;
   location_bottom_wall_ = location_bottom_right.y;
 
+  // Initialize feature values
   should_quarantine_ = false;
   exposure_time_to_be_infected_ = kExposureTimeToBeInfected;
   infected_time_to_be_removed_ = kInfectedTimeToBeRemoved;
@@ -28,6 +30,7 @@ Disease::Disease(double left_margin, double top_margin,
   radius_of_infection_ = kInfectionRadius;
   have_central_location_ = false;
 
+  // Initialize booleans
   is_infection_determination_random_ = true;
   is_symptomatic_ = true;
   is_new_distancing_velocity_random_ = true;
@@ -44,6 +47,7 @@ Disease::Disease(double left_margin, double top_margin,
                  bool is_infection_determination_random, bool is_symptomatic,
                  bool is_new_distancing_velocity_random, bool is_going_to_loc_random,
                  bool is_leaving_loc_random, bool is_below_threshold) {
+  // Initialize container values
   left_wall_ = left_margin;
   top_wall_ = top_margin;
   bottom_wall_ = top_wall_ + container_height;
@@ -59,6 +63,7 @@ Disease::Disease(double left_margin, double top_margin,
   location_right_wall_ = location_bottom_right.x;
   location_bottom_wall_ = location_bottom_right.y;
 
+  // Initialize feature values
   should_quarantine_ = false;
   exposure_time_to_be_infected_ = exposure_time;
   infected_time_to_be_removed_ = infected_time;
@@ -66,6 +71,7 @@ Disease::Disease(double left_margin, double top_margin,
   radius_of_infection_ = kInfectionRadius;
   have_central_location_ = false;
 
+  // Initialize booleans
   is_infection_determination_random_ = is_infection_determination_random;
   is_symptomatic_ = is_symptomatic;
   is_new_distancing_velocity_random_ = is_new_distancing_velocity_random;
@@ -74,6 +80,7 @@ Disease::Disease(double left_margin, double top_margin,
   is_below_threshold_ = is_below_threshold;
 }
 
+// Setters and Getters
 void Disease::SetPopulation(const vector<Disease::Person>& population_to_set_to) {
   population_ = population_to_set_to;
 }
