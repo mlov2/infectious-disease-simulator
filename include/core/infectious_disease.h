@@ -273,6 +273,38 @@ class Disease {
   bool WithinOneInfectionRadius(const Person& current_person, const Person& other_person) const;
 
   /*
+   * Determines if a person is going to, at, or leaving the central location.
+   * The person could also be doing none of the above.
+   *
+   * @param current The index of the current person in the population vector
+   */
+  void DetermineCentralLocationStatus(size_t current);
+
+  /*
+   * Determines if a person leaves the central location.
+   * If yes, their status gets changed.
+   *
+   * @param current The index of the current person in the population vector
+   */
+  void DetermineIfPersonLeavesCentralLocation(size_t current);
+
+  /*
+   * Determines if a person arrives at the central location.
+   * If yes, their status gets changed.
+   *
+   * @param current The index of the current person in the population vector
+   */
+  void DetermineIfPersonArrivesAtCentralLocation(size_t current);
+
+  /*
+   * Determines if a person goes to the central location.
+   * If yes, their status gets changed.
+   *
+   * @param current The index of the current person in the population vector
+   */
+  void DetermineIfPersonGoesToCentralLocation(size_t current);
+
+  /*
    * Checks for wall collisions with the current particle.
    *
    * @param current The index of the current particle
