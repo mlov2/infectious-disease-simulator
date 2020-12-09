@@ -2169,7 +2169,7 @@ TEST_CASE("Check particle updates properly w/ a central location") {
 
     person.radius = 2;
     person.position = vec2(65, 70);
-    person.velocity = vec2(-0.5, 0.6);
+    person.velocity = vec2(0.5, 0.6);
     person.status = disease::Status::kSusceptible;
     person.color = vec3(0, 0, 1);
     person.continuous_exposure_time = 0;
@@ -2185,11 +2185,11 @@ TEST_CASE("Check particle updates properly w/ a central location") {
     disease.UpdateParticles();
     vector<Disease::Person> updated_particles = disease.GetPopulation();
 
-    REQUIRE(updated_particles[0].position.x >= 45);
-    REQUIRE(updated_particles[0].position.x <= 55);
-    REQUIRE(updated_particles[0].position.y >= 45);
-    REQUIRE(updated_particles[0].position.y <= 55);
-    REQUIRE(updated_particles[0].velocity == vec2(-0.5, 0.6));
+    REQUIRE(updated_particles[0].position.x >= 47);
+    REQUIRE(updated_particles[0].position.x <= 53);
+    REQUIRE(updated_particles[0].position.y >= 47);
+    REQUIRE(updated_particles[0].position.y <= 53);
+    REQUIRE(updated_particles[0].velocity == vec2(0.5, 0.6));
     REQUIRE(updated_particles[0].status == disease::Status::kSusceptible);
     REQUIRE(updated_particles[0].color == vec3(0, 0, 1));
     REQUIRE(updated_particles[0].continuous_exposure_time == 0);
