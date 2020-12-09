@@ -50,6 +50,11 @@ Disease::Disease(double left_margin, double top_margin,
   quarantine_right_wall_ = quarantine_bottom_right.x;
   quarantine_bottom_wall_ = quarantine_bottom_right.y;
 
+  location_left_wall_ = location_top_left.x;
+  location_top_wall_ = location_top_left.y;
+  location_right_wall_ = location_bottom_right.x;
+  location_bottom_wall_ = location_bottom_right.y;
+
   should_quarantine_ = false;
   exposure_time_to_be_infected_ = exposure_time;
   infected_time_to_be_removed_ = infected_time;
