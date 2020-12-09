@@ -2038,9 +2038,39 @@ TEST_CASE("Check particle updates properly w/ a central location") {
                               false, false, true);
     disease1.SetHaveCentralLocation(true);
 
+    person.radius = 2;
+    person.status = disease::Status::kSymptomatic;
+    person.color = vec3(1, 0, 0);
+    person.continuous_exposure_time = 0;
+    person.time_infected = 0;
+    person.has_been_exposed_in_frame = false;
+    person.is_quarantined = false;
+    person.is_social_distancing = false;
+
     SECTION("Person is currently not going or at location") {
       // Person should go to location
+      vector<Disease::Person> all_particles;
+      person.position = vec2(70, 70);
+      person.velocity = vec2(0.5, -0.6);
+      person.is_going_to_central_location = false;
+      person.is_at_central_location = false;
+      all_particles.push_back(person);
 
+      disease1.SetPopulation(all_particles);
+      disease1.UpdateParticles();
+      vector<Disease::Person> updated_particles = disease1.GetPopulation();
+
+      REQUIRE(updated_particles[0].position == vec2(70.5, 69.4));
+      REQUIRE(updated_particles[0].velocity == vec2(0.5, -0.6));
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
+      REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+      REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
+      REQUIRE(updated_particles[0].is_social_distancing == false);
+      REQUIRE(updated_particles[0].positions_of_people_in_bubble.empty());
+      REQUIRE(updated_particles[0].is_going_to_central_location == true);
+      REQUIRE(updated_particles[0].is_at_central_location == false);
     }
 
     SECTION("Person is currently at location") {
