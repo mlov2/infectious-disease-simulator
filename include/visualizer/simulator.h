@@ -83,7 +83,7 @@ class Simulator {
   const double kContainerWidth = 550;
 
   // Central location info
-  const double kLocationDimension = 50;
+  const double kLocationDimension = 100;
   double location_left_margin_;
   double location_top_margin_;
 
