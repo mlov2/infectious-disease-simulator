@@ -226,6 +226,14 @@ void Disease::UpdateParticles() {
         population_[current].color = ci::vec3(1,1,1); // white
         // Determine if the person leaves
         double probability = ci::randFloat(0,1);
+        if (!is_leaving_loc_random_) {
+          if (is_below_threshold_) {
+            probability = kProbabilityOfLeavingLocation;
+          } else {
+            probability = 1 - kProbabilityOfLeavingLocation;
+          }
+        }
+
         if (probability <= kProbabilityOfLeavingLocation) {
           population_[current].is_at_central_location = false;
           population_[current].is_going_to_central_location = false;
@@ -243,6 +251,14 @@ void Disease::UpdateParticles() {
         }
       } else {
         double probability = ci::randFloat(0,1);
+        if (!is_going_to_loc_random_) {
+          if (is_below_threshold_) {
+            probability = kProbabilityOfLeavingLocation;
+          } else {
+            probability = 1 - kProbabilityOfLeavingLocation;
+          }
+        }
+
         if (probability <= kProbabilityOfGoingToLocation) {
           population_[current].is_going_to_central_location = true;
           population_[current].color = ci::vec3(0,1,0);  // green
