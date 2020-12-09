@@ -20,6 +20,8 @@ Disease::Disease(double left_margin, double top_margin,
   infected_time_to_be_removed_ = kInfectedTimeToBeRemoved;
   percent_performing_social_distance_ = 0;
   radius_of_infection_ = kInfectionRadius;
+  have_central_location_ = false;
+
   is_infection_determination_random_ = true;
   is_symptomatic_ = true;
   is_new_distancing_velocity_random_ = true;
@@ -46,6 +48,8 @@ Disease::Disease(double left_margin, double top_margin,
   infected_time_to_be_removed_ = infected_time;
   percent_performing_social_distance_ = 0;
   radius_of_infection_ = kInfectionRadius;
+  have_central_location_ = false;
+
   is_infection_determination_random_ = is_infection_determination_random;
   is_symptomatic_ = is_symptomatic;
   is_new_distancing_velocity_random_ = is_new_distancing_velocity_random;
@@ -74,6 +78,10 @@ void Disease::SetRadiusOfInfection(size_t radius_of_infection) {
   radius_of_infection_ = radius_of_infection;
 }
 
+void Disease::SetHaveCentralLocation(bool have_central_location) {
+  have_central_location_ = have_central_location;
+}
+
 const vector<Disease::Person>& Disease::GetPopulation() {
   return population_;
 }
@@ -96,6 +104,10 @@ size_t Disease::GetPercentPerformingSocialDistance() const {
 
 size_t Disease::GetRadiusOfInfection() const {
   return radius_of_infection_;
+}
+
+bool Disease::GetHaveCentralLocation() const {
+  return have_central_location_;
 }
 
 size_t Disease::GetMinimumExposureTime() const {

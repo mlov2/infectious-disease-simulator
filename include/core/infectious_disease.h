@@ -79,6 +79,7 @@ class Disease {
   void SetInfectedTime(size_t infected_time);
   void SetPercentPerformingSocialDistance(size_t percent_performing_social_distance);
   void SetRadiusOfInfection(size_t radius_of_infection);
+  void SetHaveCentralLocation(bool have_central_location);
 
   const vector<Person>& GetPopulation();
   bool GetShouldQuarantineValue() const;
@@ -86,6 +87,7 @@ class Disease {
   size_t GetInfectedTime() const;
   size_t GetPercentPerformingSocialDistance() const;
   size_t GetRadiusOfInfection() const;
+  bool GetHaveCentralLocation() const;
 
   size_t GetMinimumExposureTime() const;
   size_t GetMaximumExposureTime() const;
@@ -144,6 +146,7 @@ class Disease {
   size_t infected_time_to_be_removed_;
   size_t percent_performing_social_distance_;
   size_t radius_of_infection_;
+  bool have_central_location_;
 
   bool is_infection_determination_random_;
   bool is_symptomatic_;
