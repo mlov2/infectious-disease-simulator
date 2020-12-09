@@ -230,28 +230,7 @@ void Disease::UpdateParticles() {
     DetermineCentralLocationStatus(current);
 
     // Check for wall collisions
-    if (population_[current].is_quarantined) {
-      if (should_quarantine_) {
-        // Check for collision with quarantine box walls
-        CheckForWallCollisions(current, quarantine_left_wall_, quarantine_top_wall_,
-                               quarantine_right_wall_, quarantine_bottom_wall_, false);
-      }
-    } else if (population_[current].is_at_central_location) {
-      // Check for collision with inside of central location walls
-      if (have_central_location_) {
-        CheckForWallCollisions(current, location_left_wall_, location_top_wall_,
-                               location_right_wall_, location_bottom_wall_, false);
-      }
-    } else {
-      // Check for collision with container walls
-      CheckForWallCollisions(current, left_wall_, top_wall_, right_wall_, bottom_wall_, false);
-
-      if (have_central_location_) {
-        // Check for collision with outside of central location walls
-        CheckForWallCollisions(current, location_right_wall_, location_bottom_wall_,
-                               location_left_wall_, location_top_wall_, true);
-      }
-    }
+    CheckForAllWallCollisions(current);
 
     // Check if the person should be quarantined
     if (ShouldBeQuarantined(population_[current])) {
@@ -442,6 +421,31 @@ void Disease::DetermineIfPersonGoesToCentralLocation(size_t current) {
     // TODO: Visualize the particle moving to the new location instead of
     //  immediately moving it there (would need to adjust particle velocity
     //  so it's moving towards the location--put that code here)
+  }
+}
+
+void Disease::CheckForAllWallCollisions(size_t current) {
+  if (population_[current].is_quarantined) {
+    if (should_quarantine_) {
+      // Check for collision with quarantine box walls
+      CheckForWallCollisions(current, quarantine_left_wall_, quarantine_top_wall_,
+                             quarantine_right_wall_, quarantine_bottom_wall_, false);
+    }
+  } else if (population_[current].is_at_central_location) {
+    // Check for collision with inside of central location walls
+    if (have_central_location_) {
+      CheckForWallCollisions(current, location_left_wall_, location_top_wall_,
+                             location_right_wall_, location_bottom_wall_, false);
+    }
+  } else {
+    // Check for collision with container walls
+    CheckForWallCollisions(current, left_wall_, top_wall_, right_wall_, bottom_wall_, false);
+
+    if (have_central_location_) {
+      // Check for collision with outside of central location walls
+      CheckForWallCollisions(current, location_right_wall_, location_bottom_wall_,
+                             location_left_wall_, location_top_wall_, true);
+    }
   }
 }
 

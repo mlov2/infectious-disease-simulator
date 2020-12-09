@@ -305,6 +305,15 @@ class Disease {
   void DetermineIfPersonGoesToCentralLocation(size_t current);
 
   /*
+   * Holds all the checks for wall collisions, depending on what the current
+   * person's status is in terms of location (i.e. quarantine, central location,
+   * general community).
+   *
+   * @param current The index of the current person in the population vector
+   */
+  void CheckForAllWallCollisions(size_t current);
+
+  /*
    * Checks for wall collisions with the current particle.
    *
    * @param current The index of the current particle
