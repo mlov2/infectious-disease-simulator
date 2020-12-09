@@ -45,6 +45,10 @@ void InfectiousDiseaseApp::keyDown(ci::app::KeyEvent event) {
       simulator_.ChangeFeature(FeatureChangeKey::kSocialDistance);
       break;
 
+    case ci::app::KeyEvent::KEY_c:
+      simulator_.ChangeFeature(FeatureChangeKey::kCentralLocation);
+      break;
+
     case ci::app::KeyEvent::KEY_UP:
       simulator_.ChangeFeatureValue(true);
       break;
