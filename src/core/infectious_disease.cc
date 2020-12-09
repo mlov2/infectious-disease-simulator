@@ -221,7 +221,7 @@ void Disease::UpdateParticles() {
 
     // TODO: Move this chunk of code to a separate function
     // TODO: Delete color changes (used for debugging)
-    if (have_central_location_) {
+    if (have_central_location_ && !population_[current].is_quarantined) {
       if (population_[current].is_at_central_location) {
         population_[current].color = ci::vec3(1,1,1); // white
         // Determine if the person leaves
