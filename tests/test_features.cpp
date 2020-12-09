@@ -29,6 +29,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -42,6 +44,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -87,6 +91,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -100,6 +106,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         disease1.SetPopulation(all_particles);
@@ -143,6 +151,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -156,6 +166,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -201,6 +213,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -214,6 +228,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -257,6 +273,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -270,6 +288,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -317,6 +337,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -330,6 +352,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -373,6 +397,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -386,6 +412,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -431,6 +459,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -444,6 +474,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -487,6 +519,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -500,6 +534,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -547,6 +583,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -560,6 +598,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -603,6 +643,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -616,6 +658,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -661,6 +705,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -674,6 +720,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -717,6 +765,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         // Particle 2
@@ -730,6 +780,8 @@ TEST_CASE("Check person status updates") {
         person.has_been_exposed_in_frame = false;
         person.is_quarantined = false;
         person.is_social_distancing = false;
+        person.is_going_to_central_location = false;
+        person.is_at_central_location = false;
         all_particles.push_back(person);
 
         disease.SetPopulation(all_particles);
@@ -776,6 +828,8 @@ TEST_CASE("Check person status updates") {
       person.has_been_exposed_in_frame = false;
       person.is_quarantined = false;
       person.is_social_distancing = false;
+      person.is_going_to_central_location = false;
+      person.is_at_central_location = false;
       all_particles.push_back(person);
 
       // Particle 2
@@ -789,6 +843,8 @@ TEST_CASE("Check person status updates") {
       person.has_been_exposed_in_frame = false;
       person.is_quarantined = false;
       person.is_social_distancing = false;
+      person.is_going_to_central_location = false;
+      person.is_at_central_location = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -832,6 +888,8 @@ TEST_CASE("Check person status updates") {
       person.has_been_exposed_in_frame = false;
       person.is_quarantined = false;
       person.is_social_distancing = false;
+      person.is_going_to_central_location = false;
+      person.is_at_central_location = false;
       all_particles.push_back(person);
 
       // Particle 2
@@ -845,6 +903,8 @@ TEST_CASE("Check person status updates") {
       person.has_been_exposed_in_frame = false;
       person.is_quarantined = false;
       person.is_social_distancing = false;
+      person.is_going_to_central_location = false;
+      person.is_at_central_location = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -897,6 +957,8 @@ TEST_CASE("Check infected people get quarantined") {
     person.has_been_exposed_in_frame = false;
     person.is_quarantined = false;
     person.is_social_distancing = false;
+    person.is_going_to_central_location = false;
+    person.is_at_central_location = false;
     all_particles.push_back(person);
 
     // Particle 2
@@ -910,6 +972,8 @@ TEST_CASE("Check infected people get quarantined") {
     person.has_been_exposed_in_frame = false;
     person.is_quarantined = false;
     person.is_social_distancing = false;
+    person.is_going_to_central_location = false;
+    person.is_at_central_location = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -956,6 +1020,8 @@ TEST_CASE("Check infected people get quarantined") {
     person.has_been_exposed_in_frame = false;
     person.is_quarantined = false;
     person.is_social_distancing = false;
+    person.is_going_to_central_location = false;
+    person.is_at_central_location = false;
     all_particles.push_back(person);
 
     // Particle 2
@@ -969,6 +1035,8 @@ TEST_CASE("Check infected people get quarantined") {
     person.has_been_exposed_in_frame = false;
     person.is_quarantined = false;
     person.is_social_distancing = false;
+    person.is_going_to_central_location = false;
+    person.is_at_central_location = false;
     all_particles.push_back(person);
 
     disease.SetPopulation(all_particles);
@@ -1073,6 +1141,8 @@ TEST_CASE("Check social distancing") {
       person.has_been_exposed_in_frame = false;
       person.is_quarantined = true;
       person.is_social_distancing = true;
+      person.is_going_to_central_location = false;
+      person.is_at_central_location = false;
       all_particles.push_back(person);
 
       // Particle 2
@@ -1086,6 +1156,8 @@ TEST_CASE("Check social distancing") {
       person.has_been_exposed_in_frame = false;
       person.is_quarantined = true;
       person.is_social_distancing = true;
+      person.is_going_to_central_location = false;
+      person.is_at_central_location = false;
       all_particles.push_back(person);
 
       disease.SetPopulation(all_particles);
@@ -1133,6 +1205,8 @@ TEST_CASE("Check social distancing") {
           person.has_been_exposed_in_frame = false;
           person.is_quarantined = false;
           person.is_social_distancing = true;
+          person.is_going_to_central_location = false;
+          person.is_at_central_location = false;
           all_particles.push_back(person);
 
           // Particle 2
@@ -1146,6 +1220,8 @@ TEST_CASE("Check social distancing") {
           person.has_been_exposed_in_frame = false;
           person.is_quarantined = false;
           person.is_social_distancing = true;
+          person.is_going_to_central_location = false;
+          person.is_at_central_location = false;
           all_particles.push_back(person);
 
           disease.SetPopulation(all_particles);
@@ -1198,6 +1274,8 @@ TEST_CASE("Check social distancing") {
           person.is_quarantined = false;
           person.is_social_distancing = true;
           all_particles.push_back(person);
+          person.is_going_to_central_location = false;
+          person.is_at_central_location = false;
 
           // Particle 2
           person.radius = 10;
@@ -1210,6 +1288,8 @@ TEST_CASE("Check social distancing") {
           person.has_been_exposed_in_frame = false;
           person.is_quarantined = false;
           person.is_social_distancing = false;
+          person.is_going_to_central_location = false;
+          person.is_at_central_location = false;
           all_particles.push_back(person);
 
           disease.SetPopulation(all_particles);
@@ -1260,6 +1340,8 @@ TEST_CASE("Check social distancing") {
           person.has_been_exposed_in_frame = false;
           person.is_quarantined = false;
           person.is_social_distancing = true;
+          person.is_going_to_central_location = false;
+          person.is_at_central_location = false;
           all_particles.push_back(person);
 
           // Particle 2
@@ -1273,6 +1355,8 @@ TEST_CASE("Check social distancing") {
           person.has_been_exposed_in_frame = false;
           person.is_quarantined = false;
           person.is_social_distancing = true;
+          person.is_going_to_central_location = false;
+          person.is_at_central_location = false;
           all_particles.push_back(person);
 
           // Particle 3
@@ -1286,6 +1370,8 @@ TEST_CASE("Check social distancing") {
           person.has_been_exposed_in_frame = false;
           person.is_quarantined = false;
           person.is_social_distancing = true;
+          person.is_going_to_central_location = false;
+          person.is_at_central_location = false;
           all_particles.push_back(person);
 
           disease.SetPopulation(all_particles);
@@ -1351,6 +1437,8 @@ TEST_CASE("Check social distancing") {
           person.has_been_exposed_in_frame = false;
           person.is_quarantined = false;
           person.is_social_distancing = true;
+          person.is_going_to_central_location = false;
+          person.is_at_central_location = false;
           all_particles.push_back(person);
 
           // Particle 2
@@ -1364,6 +1452,8 @@ TEST_CASE("Check social distancing") {
           person.has_been_exposed_in_frame = false;
           person.is_quarantined = false;
           person.is_social_distancing = true;
+          person.is_going_to_central_location = false;
+          person.is_at_central_location = false;
           all_particles.push_back(person);
 
           // Particle 3
@@ -1377,6 +1467,8 @@ TEST_CASE("Check social distancing") {
           person.has_been_exposed_in_frame = false;
           person.is_quarantined = false;
           person.is_social_distancing = false;
+          person.is_going_to_central_location = false;
+          person.is_at_central_location = false;
           all_particles.push_back(person);
 
           disease.SetPopulation(all_particles);
@@ -1439,6 +1531,8 @@ TEST_CASE("Check social distancing") {
           person.has_been_exposed_in_frame = false;
           person.is_quarantined = false;
           person.is_social_distancing = true;
+          person.is_going_to_central_location = false;
+          person.is_at_central_location = false;
           all_particles.push_back(person);
 
           // Particle 2
@@ -1452,6 +1546,8 @@ TEST_CASE("Check social distancing") {
           person.has_been_exposed_in_frame = false;
           person.is_quarantined = false;
           person.is_social_distancing = false;
+          person.is_going_to_central_location = false;
+          person.is_at_central_location = false;
           all_particles.push_back(person);
 
           // Particle 3
@@ -1465,6 +1561,8 @@ TEST_CASE("Check social distancing") {
           person.has_been_exposed_in_frame = false;
           person.is_quarantined = false;
           person.is_social_distancing = false;
+          person.is_going_to_central_location = false;
+          person.is_at_central_location = false;
           all_particles.push_back(person);
 
           disease.SetPopulation(all_particles);
