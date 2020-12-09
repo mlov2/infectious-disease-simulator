@@ -337,11 +337,26 @@ class Disease {
    * @param current_particle The current particle to check
    * @param wall_position The position of the wall where the current particle
    *      would be touching
+   * @param is_horizontal_wall A bool representing if the wall being checked
+   *     is a horizontal wall
+   * @param is_lower_bound A bool representing if the particle's velocity
+   *     should be negative (b/c within a regular container, the particle's
+   *     velocity would have to be negative in order for it to collide with
+   *     the inside part of the top or left wall (which have smaller x/y values
+   *     compared to their counterparts)
+   * @param perpendicular_lower_bound A double representing the lower bound of the
+   *     container that's perpendicular to the current wall to check (could either
+   *     be left wall or top wall value)
+   * @param perpendicular_upper_bound A double representing the upper bound of the
+   *     container that's perpendicular to the current wall to check (could either
+   *     be right wall or bottom wall value)
+   * @param is_outside_collision A bool representing if the collision to check is
+   *     a collision with the outside of the container
    * @return A bool representing if the current particle is moving towards
    *     the wall
    */
   bool IsMovingTowardsWall(const Person& current_particle, const vec2& wall_position,
-                           bool is_lower_bound, bool is_horizontal,
+                           bool is_horizontal, bool is_lower_bound,
                            double perpendicular_lower_bound,
                            double perpendicular_upper_bound, bool is_outside_collision) const;
 

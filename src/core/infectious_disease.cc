@@ -459,7 +459,7 @@ bool Disease::HasCollidedWithWall(const Disease::Person& current_particle,
 
     // Checks if the particle is moving towards the wall
     if (IsMovingTowardsWall(current_particle, wall_position,
-                            is_lower_bound, is_horizontal_wall,
+                            is_horizontal_wall, is_lower_bound,
                             perpendicular_lower_bound,
                             perpendicular_upper_bound,
                             is_outside_collision)) {
@@ -470,8 +470,8 @@ bool Disease::HasCollidedWithWall(const Disease::Person& current_particle,
 }
 
 bool Disease::IsMovingTowardsWall(const Disease::Person& current_particle,
-                                  const vec2& wall_position, bool is_lower_bound,
-                                  bool is_horizontal, double perpendicular_lower_bound,
+                                  const vec2& wall_position, bool is_horizontal,
+                                  bool is_lower_bound, double perpendicular_lower_bound,
                                   double perpendicular_upper_bound, bool is_outside_collision) const {
   vec2 velocity_difference = current_particle.velocity;
   vec2 position_difference = current_particle.position - wall_position;
