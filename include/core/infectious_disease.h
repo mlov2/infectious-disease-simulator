@@ -124,14 +124,14 @@ class Disease {
   size_t kMinimumExposureTime = 5;
   size_t kMaximumExposureTime = 50;
   size_t kInfectedTimeToBeRemoved = 500;
-  size_t kMinimumInfectedTime = 100;
-  size_t kMaximumInfectedTime = 1000;
+  size_t kMinimumInfectedTime = 250;
+  size_t kMaximumInfectedTime = 750;
   size_t kAmountOfSocialDistance = 5;
   size_t kMinimumSocialDistancePercentage = 0;
   size_t kMaximumSocialDistancePercentage = 100;
   size_t kInfectionRadius = 10;
   size_t kMinimumInfectionRadius = 5;
-  size_t kMaximumInfectionRadius = 30;
+  size_t kMaximumInfectionRadius = 45;
   size_t kTimeToBeDetectedForQuarantine = 70;
   double kProbabilityOfBeingAsymptomatic = 0.2;
   double kProbabilityOfBeingSymptomatic = 0.8;
