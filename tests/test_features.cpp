@@ -11,7 +11,8 @@ using disease::Status;
 TEST_CASE("Check person status updates") {
   Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
                             vec2(45, 45), vec2(55, 55),
-                            25, 500, false, true, false);
+                            25, 500, false, true, false,
+                            false, false, false);
   Disease::Person person;
 
   SECTION("Current status is susceptible") {
@@ -79,7 +80,8 @@ TEST_CASE("Check person status updates") {
       SECTION("Exposure time is at (max - 1) -> Status changes to asymptomatic") {
         Disease disease1 = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
                                    vec2(45, 45), vec2(55, 55),
-                                   25, 500, false, false, false);
+                                   25, 500, false, false, false,
+                                   false, false, false);
         vector<Disease::Person> all_particles;
 
         // Particle 1
@@ -941,7 +943,8 @@ TEST_CASE("Check person status updates") {
 TEST_CASE("Check infected people get quarantined") {
   Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
                             vec2(45, 45), vec2(55, 55),
-                            25, 500, false, true, false);
+                            25, 500, false, true, false,
+                            false, false, false);
   Disease::Person person;
 
   disease.SetShouldQuarantine(true);
@@ -1076,7 +1079,8 @@ TEST_CASE("Check infected people get quarantined") {
 TEST_CASE("Check social distancing") {
   Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
                             vec2(45, 45), vec2(55, 55),
-                            25, 500, false, true, false);
+                            25, 500, false, true, false,
+                            false, false, false);
   Disease::Person person;
 
   SECTION("Check percent performing social distancing works") {

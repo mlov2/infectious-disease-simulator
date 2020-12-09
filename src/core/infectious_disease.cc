@@ -31,6 +31,9 @@ Disease::Disease(double left_margin, double top_margin,
   is_infection_determination_random_ = true;
   is_symptomatic_ = true;
   is_new_distancing_velocity_random_ = true;
+  is_going_to_loc_random_ = true;
+  is_leaving_loc_random_ = true;
+  is_below_threshold_ = true;
 }
 
 Disease::Disease(double left_margin, double top_margin,
@@ -39,7 +42,8 @@ Disease::Disease(double left_margin, double top_margin,
                  const vec2& location_top_left, const vec2& location_bottom_right,
                  size_t exposure_time, size_t infected_time,
                  bool is_infection_determination_random, bool is_symptomatic,
-                 bool is_new_distancing_velocity_random) {
+                 bool is_new_distancing_velocity_random, bool is_going_to_loc_random,
+                 bool is_leaving_loc_random, bool is_below_threshold) {
   left_wall_ = left_margin;
   top_wall_ = top_margin;
   bottom_wall_ = top_wall_ + container_height;
@@ -65,6 +69,9 @@ Disease::Disease(double left_margin, double top_margin,
   is_infection_determination_random_ = is_infection_determination_random;
   is_symptomatic_ = is_symptomatic;
   is_new_distancing_velocity_random_ = is_new_distancing_velocity_random;
+  is_going_to_loc_random_ = is_going_to_loc_random;
+  is_leaving_loc_random_ = is_leaving_loc_random;
+  is_below_threshold_ = is_below_threshold;
 }
 
 void Disease::SetPopulation(const vector<Disease::Person>& population_to_set_to) {
