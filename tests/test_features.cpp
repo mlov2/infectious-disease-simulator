@@ -10,6 +10,7 @@ using disease::Status;
 
 TEST_CASE("Check person status updates") {
   Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                            vec2(45, 45), vec2(55, 55),
                             25, 500, false, true, false);
   Disease::Person person;
 
@@ -77,6 +78,7 @@ TEST_CASE("Check person status updates") {
 
       SECTION("Exposure time is at (max - 1) -> Status changes to asymptomatic") {
         Disease disease1 = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                                   vec2(45, 45), vec2(55, 55),
                                    25, 500, false, false, false);
         vector<Disease::Person> all_particles;
 
@@ -938,6 +940,7 @@ TEST_CASE("Check person status updates") {
 
 TEST_CASE("Check infected people get quarantined") {
   Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                            vec2(45, 45), vec2(55, 55),
                             25, 500, false, true, false);
   Disease::Person person;
 
@@ -1072,6 +1075,7 @@ TEST_CASE("Check infected people get quarantined") {
 
 TEST_CASE("Check social distancing") {
   Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                            vec2(45, 45), vec2(55, 55),
                             25, 500, false, true, false);
   Disease::Person person;
 
