@@ -1807,6 +1807,42 @@ TEST_CASE("Check wall collisions w/ central location") {
         REQUIRE(updated_particles[0].is_at_central_location == false);
       }
     }
+
+    SECTION("Particles who are going to the location should not collide with outside walls") {
+      SECTION("Left wall") {
+
+      }
+
+      SECTION("Top wall") {
+
+      }
+
+      SECTION("Right wall") {
+
+      }
+
+      SECTION("Bottom wall") {
+
+      }
+    }
+
+    SECTION("Particles who are not near the location should not collide with outside of location walls") {
+      SECTION("Left wall") {
+
+      }
+
+      SECTION("Top wall") {
+
+      }
+
+      SECTION("Right wall") {
+
+      }
+
+      SECTION("Bottom wall") {
+
+      }
+    }
   }
 }
 
