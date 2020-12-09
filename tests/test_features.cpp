@@ -1915,20 +1915,109 @@ TEST_CASE("Check wall collisions w/ central location") {
     }
 
     SECTION("Particles who are not near the location should not collide with outside of location walls") {
-      SECTION("Left wall") {
+      // i.e. particles may be "colliding with" the same x or y position as a boundary, but the boundary
+      // isn't actually there
+      person.radius = 2;
+      person.status = disease::Status::kSusceptible;
+      person.color = vec3(0, 0, 1);
+      person.continuous_exposure_time = 0;
+      person.time_infected = 0;
+      person.has_been_exposed_in_frame = false;
+      person.is_quarantined = false;
+      person.is_social_distancing = false;
+      person.is_going_to_central_location = false;
+      person.is_at_central_location = false;
 
+      SECTION("Left wall") {
+        vector<Disease::Person> all_particles;
+        person.position = vec2(43, 70);
+        person.velocity = vec2(0.5, 0.6);
+        all_particles.push_back(person);
+
+        disease.SetPopulation(all_particles);
+        disease.UpdateParticles();
+        vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+        REQUIRE(updated_particles[0].position == vec2(43.5, 70.6));
+        REQUIRE(updated_particles[0].velocity == vec2(0.5, 0.6));
+        REQUIRE(updated_particles[0].status == disease::Status::kSusceptible);
+        REQUIRE(updated_particles[0].color == vec3(0, 0, 1));
+        REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[0].time_infected == 0);
+        REQUIRE(updated_particles[0].is_quarantined == false);
+        REQUIRE(updated_particles[0].is_social_distancing == false);
+        REQUIRE(updated_particles[0].positions_of_people_in_bubble.empty());
+        REQUIRE(updated_particles[0].is_going_to_central_location == false);
+        REQUIRE(updated_particles[0].is_at_central_location == false);
       }
 
       SECTION("Top wall") {
+        vector<Disease::Person> all_particles;
+        person.position = vec2(70, 43);
+        person.velocity = vec2(0.5, 0.6);
+        all_particles.push_back(person);
 
+        disease.SetPopulation(all_particles);
+        disease.UpdateParticles();
+        vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+        REQUIRE(updated_particles[0].position == vec2(70.5, 43.6));
+        REQUIRE(updated_particles[0].velocity == vec2(0.5, 0.6));
+        REQUIRE(updated_particles[0].status == disease::Status::kSusceptible);
+        REQUIRE(updated_particles[0].color == vec3(0, 0, 1));
+        REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[0].time_infected == 0);
+        REQUIRE(updated_particles[0].is_quarantined == false);
+        REQUIRE(updated_particles[0].is_social_distancing == false);
+        REQUIRE(updated_particles[0].positions_of_people_in_bubble.empty());
+        REQUIRE(updated_particles[0].is_going_to_central_location == false);
+        REQUIRE(updated_particles[0].is_at_central_location == false);
       }
 
       SECTION("Right wall") {
+        vector<Disease::Person> all_particles;
+        person.position = vec2(57, 70);
+        person.velocity = vec2(-0.5, 0.6);
+        all_particles.push_back(person);
 
+        disease.SetPopulation(all_particles);
+        disease.UpdateParticles();
+        vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+        REQUIRE(updated_particles[0].position == vec2(56.5, 70.6));
+        REQUIRE(updated_particles[0].velocity == vec2(-0.5, 0.6));
+        REQUIRE(updated_particles[0].status == disease::Status::kSusceptible);
+        REQUIRE(updated_particles[0].color == vec3(0, 0, 1));
+        REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[0].time_infected == 0);
+        REQUIRE(updated_particles[0].is_quarantined == false);
+        REQUIRE(updated_particles[0].is_social_distancing == false);
+        REQUIRE(updated_particles[0].positions_of_people_in_bubble.empty());
+        REQUIRE(updated_particles[0].is_going_to_central_location == false);
+        REQUIRE(updated_particles[0].is_at_central_location == false);
       }
 
       SECTION("Bottom wall") {
+        vector<Disease::Person> all_particles;
+        person.position = vec2(70, 57);
+        person.velocity = vec2(0.5, -0.6);
+        all_particles.push_back(person);
 
+        disease.SetPopulation(all_particles);
+        disease.UpdateParticles();
+        vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+        REQUIRE(updated_particles[0].position == vec2(70.5, 56.4));
+        REQUIRE(updated_particles[0].velocity == vec2(0.5, -0.6));
+        REQUIRE(updated_particles[0].status == disease::Status::kSusceptible);
+        REQUIRE(updated_particles[0].color == vec3(0, 0, 1));
+        REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+        REQUIRE(updated_particles[0].time_infected == 0);
+        REQUIRE(updated_particles[0].is_quarantined == false);
+        REQUIRE(updated_particles[0].is_social_distancing == false);
+        REQUIRE(updated_particles[0].positions_of_people_in_bubble.empty());
+        REQUIRE(updated_particles[0].is_going_to_central_location == false);
+        REQUIRE(updated_particles[0].is_at_central_location == false);
       }
     }
   }
