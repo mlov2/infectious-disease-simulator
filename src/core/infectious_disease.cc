@@ -315,6 +315,8 @@ Disease::Person Disease::DetermineInfectionStatus(const Person& current_person) 
   Person patient = current_person;
 
   double value_to_determine_infection_status = ci::randFloat(0,1);
+
+  // Following conditional section is mainly used for testing
   if (!is_infection_determination_random_) {
     if (is_symptomatic_) {
       value_to_determine_infection_status = kProbabilityOfBeingSymptomatic;
@@ -452,6 +454,7 @@ void Disease::CheckForAllWallCollisions(size_t current) {
 void Disease::CheckForWallCollisions(size_t current, double left_bound, double top_bound,
                                      double right_bound, double bottom_bound,
                                      bool is_outside_collision) {
+  // Check for collisions with horizontal walls
   if (HasCollidedWithWall(population_[current], top_bound, true, true,
                           left_bound, right_bound, is_outside_collision) ||
       HasCollidedWithWall(population_[current], bottom_bound, true, false,
@@ -461,6 +464,7 @@ void Disease::CheckForWallCollisions(size_t current, double left_bound, double t
     population_[current].velocity = new_velocity;
   }
 
+  // Check for collisions with vertical walls
   if (HasCollidedWithWall(population_[current], left_bound, false, true,
                           top_bound, bottom_bound, is_outside_collision) ||
       HasCollidedWithWall(population_[current], right_bound, false, false,
@@ -589,6 +593,7 @@ void Disease::UpdatePosition(size_t current_index) {
 
     vec2 updated_position = population_[current_index].position +
                             population_[current_index].velocity;
+
     if (population_[current_index].is_at_central_location) {
       population_[current_index].position =
           KeepWithinContainer(updated_position, population_[current_index].radius,
@@ -636,12 +641,14 @@ bool Disease::WithinDistancingBubble(const Disease::Person& current_person, cons
 }
 
 void Disease::SavePositionRelativeToCurrentPerson(size_t current_index, size_t other_index) {
+  // Check if the other person is to the right or left of the current person
   if (population_[other_index].position.x > population_[current_index].position.x) {
     population_[current_index].positions_of_people_in_bubble["right"] += 1;
   } else if (population_[other_index].position.x < population_[current_index].position.x) {
     population_[current_index].positions_of_people_in_bubble["left"] += 1;
   }
 
+  // Check if the other perosn is below or above the current person
   if (population_[other_index].position.y > population_[current_index].position.y) {
     population_[current_index].positions_of_people_in_bubble["down"] += 1;
   } else if (population_[other_index].position.y < population_[current_index].position.y) {
@@ -658,6 +665,7 @@ void Disease::UpdateVelocity(size_t current_index) {
   size_t num_people_left_current_particle = population_[current_index].positions_of_people_in_bubble["left"];
   size_t num_people_right_current_particle = population_[current_index].positions_of_people_in_bubble["right"];
 
+  // Determine direction current particle needs to move in to maintain social distance
   if (num_people_above_current_particle < num_people_below_current_particle) {
     y_sign = -1;
   }
@@ -665,6 +673,7 @@ void Disease::UpdateVelocity(size_t current_index) {
     x_sign = -1;
   }
 
+  // Change to the new velocity
   if (num_people_above_current_particle != num_people_below_current_particle) {
     if (is_new_distancing_velocity_random_) {
       population_[current_index].velocity.y = ci::randFloat(0, 1);
