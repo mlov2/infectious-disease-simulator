@@ -254,6 +254,12 @@ void Disease::UpdateParticles() {
         CheckForWallCollisions(current, quarantine_left_wall_, quarantine_top_wall_,
                                quarantine_right_wall_, quarantine_bottom_wall_, false);
       }
+    } else if (population_[current].is_at_central_location) {
+      // Check for collision with inside of central location walls
+      if (have_central_location_) {
+        CheckForWallCollisions(current, location_left_wall_, location_top_wall_,
+                               location_right_wall_, location_bottom_wall_, false);
+      }
     } else {
       // Check for collision with container walls
       CheckForWallCollisions(current, left_wall_, top_wall_, right_wall_, bottom_wall_, false);
