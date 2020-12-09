@@ -184,6 +184,8 @@ Disease::Person Disease::CreatePerson() {
   new_person.has_been_exposed_in_frame = false;
   new_person.is_quarantined = false;
   new_person.is_social_distancing = false;
+  new_person.is_going_to_central_location = false;
+  new_person.is_at_central_location = false;
 
   return new_person;
 }

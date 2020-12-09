@@ -47,6 +47,11 @@ class Disease {
    *     current frame
    * is_quarantined: represents if the person is in quarantine
    * is_social_distancing: represents if the person is social distancing
+   * positions_of_people_in_bubble: stores the count of people within social
+   *     distancing bubble (i.e. above, below, right, left)
+   * is_going_to_central_location: represents if the person is going to the
+   *     central location
+   * at_central_location: represents if the person is at the central location
    */
   struct Person {
       double radius;
@@ -60,6 +65,8 @@ class Disease {
       bool is_quarantined;
       bool is_social_distancing;
       map<string, size_t> positions_of_people_in_bubble;
+      bool is_going_to_central_location;
+      bool is_at_central_location;
   };
 
   Disease() = default;
