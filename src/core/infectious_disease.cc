@@ -502,20 +502,24 @@ bool Disease::IsMovingTowardsWallOnOutside(const Disease::Person& current_partic
     if (is_horizontal && current_particle.velocity.y < 0 &&
         current_particle.position.x > perpendicular_upper_bound &&
         current_particle.position.x < perpendicular_lower_bound) {
+      // i.e. if the wall is the bottom side of the container
       return true;
     } else if (!is_horizontal && current_particle.velocity.x < 0 &&
                current_particle.position.y > perpendicular_upper_bound &&
                current_particle.position.y < perpendicular_lower_bound) {
+      // i.e. if the wall is the right side of the container
       return true;
     }
   } else {
     if (is_horizontal && current_particle.velocity.y > 0 &&
         current_particle.position.x > perpendicular_upper_bound &&
         current_particle.position.x < perpendicular_lower_bound) {
+      // i.e. if the wall is the top side of the container
       return true;
     } else if (!is_horizontal && current_particle.velocity.x > 0 &&
                current_particle.position.y > perpendicular_upper_bound &&
                current_particle.position.y < perpendicular_lower_bound) {
+      // i.e. if the wall is the left side of the container
       return true;
     }
   }
