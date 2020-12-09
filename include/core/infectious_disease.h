@@ -183,6 +183,8 @@ class Disease {
   double location_right_wall_;
   double location_top_wall_;
   double location_bottom_wall_;
+  constexpr static double kProbabilityOfLeavingLocation = 0.005;
+  constexpr static double kProbabilityOfGoingToLocation = 0.0005;
 
   /*
    * Holds all the particles, each representing a person.
