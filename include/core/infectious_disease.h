@@ -280,6 +280,8 @@ class Disease {
    * @param top_bound The top bound of the container
    * @param right_bound The right bound of the container
    * @param bottom_bound The bottom bound of the container
+   * @param is_outside_collision A bool representing if the collision to check is
+   *     a collision with the outside of the container
    */
   void CheckForWallCollisions(size_t current, double left_bound, double top_bound,
                               double right_bound, double bottom_bound,
@@ -288,11 +290,24 @@ class Disease {
   /*
    * Checks if the current particle has collided with a specific wall.
    *
-   * @param particle the current Particle to check for a collision
-   * @param wall_boundary the wall to check for a collision with
-   * @param is_horizontal_wall a bool representing if the wall being checked
+   * @param current_particle The current Particle to check for a collision
+   * @param wall_boundary The wall to check for a collision with
+   * @param is_horizontal_wall A bool representing if the wall being checked
    *     is a horizontal wall
-   * @return a bool representing if the current particle has collided with
+   * @param is_lower_bound A bool representing if the particle's velocity
+   *     should be negative (b/c within a regular container, the particle's
+   *     velocity would have to be negative in order for it to collide with
+   *     the inside part of the top or left wall (which have smaller x/y values
+   *     compared to their counterparts)
+   * @param perpendicular_lower_bound A double representing the lower bound of the
+   *     container that's perpendicular to the current wall to check (could either
+   *     be left wall or top wall value)
+   * @param perpendicular_upper_bound A double representing the upper bound of the
+   *     container that's perpendicular to the current wall to check (could either
+   *     be right wall or bottom wall value)
+   * @param is_outside_collision A bool representing if the collision to check is
+   *     a collision with the outside of the container
+   * @return A bool representing if the current particle has collided with
    *     the wall
    */
   bool HasCollidedWithWall(const Person& current_particle, double wall_boundary,
