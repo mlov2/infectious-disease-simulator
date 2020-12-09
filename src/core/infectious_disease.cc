@@ -223,7 +223,7 @@ void Disease::UpdateParticles() {
   ResetFrame();
 
   for (size_t current = 0; current < population_.size(); current++) {
-    // Update Status
+    // Update Health Status
     population_[current] = UpdatePersonStatus(population_[current], current);
 
     // Update Central Location Status
