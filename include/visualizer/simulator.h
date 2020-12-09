@@ -81,7 +81,11 @@ class Simulator {
   const double kLeftContainerMargin = 25;
   const double kContainerHeight = 580;
   const double kContainerWidth = 550;
-  //const size_t kUpdatesPerSecond = 50;
+
+  // Central location info
+  const double kLocationDimension = 50;
+  double location_left_margin_;
+  double location_top_margin_;
 
   // Quarantine box info
   const double kSpacesFromContainer = 20;
@@ -105,6 +109,11 @@ class Simulator {
    * Draws the container.
    */
   void DrawContainer() const;
+
+  /*
+   * Draws the central location.
+   */
+  void DrawCentralLocation() const;
 
   /*
    * Draws the particles.

@@ -14,6 +14,9 @@ Simulator::Simulator() : histogram_(disease_.GetPopulation(),
   quarantine_box_bottom_right_x_ = quarantine_box_top_left_x_ + kQuarantineBoxWidth;
   quarantine_box_bottom_right_y_ = kTopContainerMargin + kContainerHeight;
 
+  location_left_margin_ = (kLeftContainerMargin + kLeftContainerMargin + kContainerWidth - kLocationDimension) / 2;
+  location_top_margin_ = (kTopContainerMargin + kTopContainerMargin + kContainerHeight - kLocationDimension) / 2;
+
   disease_ = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth,
                      vec2(quarantine_box_top_left_x_, quarantine_box_top_left_y_),
                      vec2(quarantine_box_bottom_right_x_, quarantine_box_bottom_right_y_));
@@ -42,6 +45,7 @@ void Simulator::Draw() const {
 
   // Draw the container
   DrawContainer();
+  DrawCentralLocation();
 
   // Draw the histograms
   if (particles_info.size() != 0) {
@@ -64,6 +68,18 @@ void Simulator::DrawContainer() const {
 
   ci::gl::color(ci::Color("black"));
   ci::gl::drawSolidRect(pixel_bounding_box);
+}
+
+void Simulator::DrawCentralLocation() const {
+  if (disease_.GetHaveCentralLocation()) {
+    vec2 pixel_top_left = vec2(location_left_margin_, location_top_margin_);
+    vec2 pixel_bottom_right =
+        pixel_top_left + vec2(kLocationDimension, kLocationDimension);
+    ci::Rectf pixel_bounding_box(pixel_top_left, pixel_bottom_right);
+
+    ci::gl::color(ci::Color("orange"));
+    ci::gl::drawSolidRect(pixel_bounding_box);
+  }
 }
 
 void Simulator::DrawParticles() const {
