@@ -19,7 +19,10 @@ Simulator::Simulator() : histogram_(disease_.GetPopulation(),
 
   disease_ = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth,
                      vec2(quarantine_box_top_left_x_, quarantine_box_top_left_y_),
-                     vec2(quarantine_box_bottom_right_x_, quarantine_box_bottom_right_y_));
+                     vec2(quarantine_box_bottom_right_x_, quarantine_box_bottom_right_y_),
+                     vec2(location_left_margin_, location_top_margin_),
+                     vec2(location_left_margin_ + kLocationDimension,
+                          location_top_margin_ + kLocationDimension));
   time_passed_ = 0;
   feature_currently_being_changed_ = FeatureChangeKey::kQuarantine;
 }

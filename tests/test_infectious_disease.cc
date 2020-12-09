@@ -7,7 +7,8 @@ using disease::Status;
 
 TEST_CASE("Create population", "[create population]") {
   SECTION("Create population when container is empty") {
-    Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100));
+    Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                              vec2(45, 45), vec2(55, 55));
 
     disease.CreatePopulation();
 
@@ -56,7 +57,8 @@ TEST_CASE("Create population", "[create population]") {
   }
 
   SECTION("Population isn't created more than once") {
-    Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100));
+    Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                              vec2(45, 45), vec2(55, 55));
 
     disease.CreatePopulation();
     disease.CreatePopulation();
@@ -108,7 +110,8 @@ TEST_CASE("Create population", "[create population]") {
 
 TEST_CASE("Person info updates after 1 frame (no collision)",
           "[one frame][no collision]") {
-  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100));
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                            vec2(45, 45), vec2(55, 55));
   Disease::Person person;
 
   SECTION("No particles") {
@@ -289,7 +292,8 @@ TEST_CASE("Person info updates after 1 frame (no collision)",
 
 TEST_CASE("Person info updates after 2 frames (no collision)",
           "[two frames][no collision]") {
-  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100));
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                            vec2(45, 45), vec2(55, 55));
   Disease::Person person;
 
   SECTION("No particles") {
@@ -472,7 +476,8 @@ TEST_CASE("Person info updates after 2 frames (no collision)",
 
 TEST_CASE("Person info updates after collision with wall",
           "[one frame][collision][wall]") {
-  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100));
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                            vec2(45, 45), vec2(55, 55));
   Disease::Person person;
 
   SECTION("One particle") {
@@ -743,7 +748,8 @@ TEST_CASE("Person info updates after collision with wall",
 
 TEST_CASE("Particle touches wall but isn't colliding (i.e. moving towards)",
           "[no collision][wall][touching]") {
-  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100));
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                            vec2(45, 45), vec2(55, 55));
   Disease::Person person;
 
   SECTION("One particle") {

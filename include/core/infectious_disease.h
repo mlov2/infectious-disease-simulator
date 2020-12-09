@@ -65,7 +65,8 @@ class Disease {
   Disease() = default;
   Disease(double left_margin, double top_margin,
           double container_height, double container_width,
-          const vec2& quarantine_top_left, const vec2& quarantine_bottom_right);
+          const vec2& quarantine_top_left, const vec2& quarantine_bottom_right,
+          const vec2& location_top_left, const vec2& location_bottom_right);
   Disease(double left_margin, double top_margin,
           double container_height, double container_width,
           const vec2& quarantine_top_left, const vec2& quarantine_bottom_right,
@@ -167,6 +168,14 @@ class Disease {
   double quarantine_top_wall_;
   double quarantine_bottom_wall_;
   double quarantine_right_wall_;
+
+  // ==========================
+  // Central location variables
+  // ==========================
+  double location_left_wall_;
+  double location_right_wall_;
+  double location_top_wall_;
+  double location_bottom_wall_;
 
   /*
    * Holds all the particles, each representing a person.
