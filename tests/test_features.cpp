@@ -1273,9 +1273,9 @@ TEST_CASE("Check social distancing") {
           person.has_been_exposed_in_frame = false;
           person.is_quarantined = false;
           person.is_social_distancing = true;
-          all_particles.push_back(person);
           person.is_going_to_central_location = false;
           person.is_at_central_location = false;
+          all_particles.push_back(person);
 
           // Particle 2
           person.radius = 10;
