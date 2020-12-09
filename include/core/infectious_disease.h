@@ -115,28 +115,28 @@ class Disease {
   // ================
   // Person constants
   // ================
-  double kRadius = 10;
+  constexpr static double kRadius = 10;
 
   // ==================
   // Stats as constants
   // ==================
-  double kOneHundred = 100;
-  size_t kSusceptiblePopulation = 200;
-  size_t kExposureTimeToBeInfected = 25;
-  size_t kMinimumExposureTime = 5;
-  size_t kMaximumExposureTime = 50;
-  size_t kInfectedTimeToBeRemoved = 500;
-  size_t kMinimumInfectedTime = 250;
-  size_t kMaximumInfectedTime = 750;
-  size_t kAmountOfSocialDistance = 5;
-  size_t kMinimumSocialDistancePercentage = 0;
-  size_t kMaximumSocialDistancePercentage = 100;
-  size_t kInfectionRadius = 10;
-  size_t kMinimumInfectionRadius = 5;
-  size_t kMaximumInfectionRadius = 45;
-  size_t kTimeToBeDetectedForQuarantine = 70;
-  double kProbabilityOfBeingAsymptomatic = 0.2;
-  double kProbabilityOfBeingSymptomatic = 0.8;
+  constexpr static double kOneHundred = 100;
+  const static size_t kSusceptiblePopulation = 200;
+  const static size_t kExposureTimeToBeInfected = 25;
+  const static size_t kMinimumExposureTime = 5;
+  const static size_t kMaximumExposureTime = 50;
+  const static size_t kInfectedTimeToBeRemoved = 500;
+  const static size_t kMinimumInfectedTime = 250;
+  const static size_t kMaximumInfectedTime = 750;
+  const static size_t kAmountOfSocialDistance = 5;
+  const static size_t kMinimumSocialDistancePercentage = 0;
+  const static size_t kMaximumSocialDistancePercentage = 100;
+  const static size_t kInfectionRadius = 10;
+  const static size_t kMinimumInfectionRadius = 5;
+  const static size_t kMaximumInfectionRadius = 45;
+  const static size_t kTimeToBeDetectedForQuarantine = 70;
+  constexpr static double kProbabilityOfBeingAsymptomatic = 0.2;
+  constexpr static double kProbabilityOfBeingSymptomatic = 0.8;
 
   // ==================
   // Stats as variables
