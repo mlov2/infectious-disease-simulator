@@ -492,7 +492,7 @@ bool Disease::IsMovingTowardsWall(const Disease::Person& current_particle,
 //                                     velocity_difference)) {
 //      return true;
 
-    if (is_outside_collision) {
+    if (is_outside_collision && !current_particle.is_going_to_central_location) {
       // Check it's moving towards the proper side
       if (is_lower_bound) {
         if (is_horizontal && velocity_difference.y < 0 &&
