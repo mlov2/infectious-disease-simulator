@@ -1800,4 +1800,8 @@ TEST_CASE("Check particle updates properly w/ a central location") {
   SECTION("Person is in quarantine--going to and at central location should be false") {
 
   }
+
+  SECTION("Person social distances while at central location") {
+
+  }
 }
