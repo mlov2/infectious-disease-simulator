@@ -240,6 +240,12 @@ void Disease::UpdateParticles() {
           population_[current].color = ci::vec3(1,0,1); // purple
         }
       } else if (population_[current].is_going_to_central_location) {
+        // Move person to central location--wouldn't use if I
+        // were to visually show the particle moving there
+        double new_x_position = ci::randFloat(location_left_wall_, location_right_wall_);
+        double new_y_position = ci::randFloat(location_top_wall_, location_bottom_wall_);
+        population_[current].position = vec2(new_x_position, new_y_position);
+
         // Check if person is at location yet
         population_[current].color = ci::vec3(0,1,0); // green
         if (population_[current].position.x >= location_left_wall_ &&
@@ -264,14 +270,7 @@ void Disease::UpdateParticles() {
           population_[current].color = ci::vec3(0,1,0);  // green
 
           // TODO: Visualize the particle moving to the new location instead of
-          //  immediately moving it there
-          // Moves person to central location--wouldn't use if I
-          // were to visually show the particle moving there
-          double new_x_position = ci::randFloat(location_left_wall_, location_right_wall_);
-          double new_y_position = ci::randFloat(location_top_wall_, location_bottom_wall_);
-          population_[current].position = vec2(new_x_position, new_y_position);
-          population_[current].is_going_to_central_location = false;
-          population_[current].is_at_central_location = true;
+          //  immediately moving it there--put that code here
         }
       }
     }
