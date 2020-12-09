@@ -259,9 +259,9 @@ void Disease::UpdateParticles() {
         double probability = ci::randFloat(0,1);
         if (!is_going_to_loc_random_) {
           if (is_below_threshold_) {
-            probability = kProbabilityOfLeavingLocation;
+            probability = kProbabilityOfGoingToLocation;
           } else {
-            probability = 1 - kProbabilityOfLeavingLocation;
+            probability = 1 - kProbabilityOfGoingToLocation;
           }
         }
 
