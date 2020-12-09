@@ -465,9 +465,16 @@ void Disease::UpdatePosition(size_t current_index) {
 
     vec2 updated_position = population_[current_index].position +
                             population_[current_index].velocity;
-    population_[current_index].position =
-        KeepWithinContainer(updated_position, population_[current_index].radius,
-                            left_wall_, top_wall_, right_wall_, bottom_wall_);
+    if (population_[current_index].is_at_central_location) {
+      population_[current_index].position =
+          KeepWithinContainer(updated_position, population_[current_index].radius,
+                              location_left_wall_, location_top_wall_,
+                              location_right_wall_, location_bottom_wall_);
+    } else {
+      population_[current_index].position =
+          KeepWithinContainer(updated_position, population_[current_index].radius,
+                              left_wall_, top_wall_, right_wall_, bottom_wall_);
+    }
   }
 }
 
