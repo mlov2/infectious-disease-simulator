@@ -250,11 +250,20 @@ void Disease::UpdateParticles() {
     // Check for wall collisions
     if (population_[current].is_quarantined) {
       if (should_quarantine_) {
+        // Check for collision with quarantine box walls
         CheckForWallCollisions(current, quarantine_left_wall_, quarantine_top_wall_,
-                               quarantine_right_wall_, quarantine_bottom_wall_);
+                               quarantine_right_wall_, quarantine_bottom_wall_, false);
       }
     } else {
-      CheckForWallCollisions(current, left_wall_, top_wall_, right_wall_, bottom_wall_);
+      // Check for collision with container walls
+      CheckForWallCollisions(current, left_wall_, top_wall_, right_wall_, bottom_wall_, false);
+
+      // TODO: Fix collision with outside of location walls
+      if (have_central_location_) {
+        // Check for collision with outside of central location walls
+        CheckForWallCollisions(current, location_right_wall_, location_bottom_wall_,
+                               location_left_wall_, location_top_wall_, true);
+      }
     }
 
     // Check if the person should be quarantined
@@ -380,20 +389,21 @@ bool Disease::WithinOneInfectionRadius(const Disease::Person& current_person, co
 }
 
 void Disease::CheckForWallCollisions(size_t current, double left_bound, double top_bound,
-                                     double right_bound, double bottom_bound) {
-  if (HasCollidedWithWall(population_[current],
-                          top_bound, true) ||
-      HasCollidedWithWall(population_[current],
-                          bottom_bound, true)) {
+                                     double right_bound, double bottom_bound,
+                                     bool is_outside_collision) {
+  if (HasCollidedWithWall(population_[current], top_bound, true, true,
+                          left_bound, right_bound, is_outside_collision) ||
+      HasCollidedWithWall(population_[current], bottom_bound, true, false,
+                          left_bound, right_bound, is_outside_collision)) {
     vec2 new_velocity = vec2(population_[current].velocity.x,
                              -population_[current].velocity.y);
     population_[current].velocity = new_velocity;
   }
 
-  if (HasCollidedWithWall(population_[current],
-                          left_bound, false) ||
-      HasCollidedWithWall(population_[current],
-                          right_bound, false)) {
+  if (HasCollidedWithWall(population_[current], left_bound, false, true,
+                          top_bound, bottom_bound, is_outside_collision) ||
+      HasCollidedWithWall(population_[current], right_bound, false, false,
+                          top_bound, bottom_bound, is_outside_collision)) {
     vec2 new_velocity = vec2(-population_[current].velocity.x,
                              population_[current].velocity.y);
     population_[current].velocity = new_velocity;
@@ -401,8 +411,11 @@ void Disease::CheckForWallCollisions(size_t current, double left_bound, double t
 }
 
 bool Disease::HasCollidedWithWall(const Disease::Person& current_particle,
-                                   double wall_boundary,
-                                   bool is_horizontal_wall) const {
+                                  double wall_boundary,
+                                  bool is_horizontal_wall, bool is_lower_bound,
+                                  double perpendicular_lower_bound,
+                                  double perpendicular_upper_bound,
+                                  bool is_outside_collision) const {
   double particle_position_component_different = current_particle.position.x;
   if (is_horizontal_wall) {
     particle_position_component_different = current_particle.position.y;
@@ -416,7 +429,11 @@ bool Disease::HasCollidedWithWall(const Disease::Person& current_particle,
     }
 
     // Checks if the particle is moving towards the wall
-    if (IsMovingTowardsWall(current_particle, wall_position)) {
+    if (IsMovingTowardsWall(current_particle, wall_position,
+                            is_lower_bound, is_horizontal_wall,
+                            perpendicular_lower_bound,
+                            perpendicular_upper_bound,
+                            is_outside_collision)) {
       return true;
     }
   }
@@ -424,7 +441,9 @@ bool Disease::HasCollidedWithWall(const Disease::Person& current_particle,
 }
 
 bool Disease::IsMovingTowardsWall(const Disease::Person& current_particle,
-                                   const vec2& wall_position) const {
+                                  const vec2& wall_position, bool is_lower_bound,
+                                  bool is_horizontal, double perpendicular_lower_bound,
+                                  double perpendicular_upper_bound, bool is_outside_collision) const {
   vec2 velocity_difference = current_particle.velocity;
   vec2 position_difference = current_particle.position - wall_position;
 

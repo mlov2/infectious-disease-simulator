@@ -277,7 +277,8 @@ class Disease {
    * @param bottom_bound The bottom bound of the container
    */
   void CheckForWallCollisions(size_t current, double left_bound, double top_bound,
-                              double right_bound, double bottom_bound);
+                              double right_bound, double bottom_bound,
+                              bool is_outside_collision);
 
   /*
    * Checks if the current particle has collided with a specific wall.
@@ -289,7 +290,26 @@ class Disease {
    * @return a bool representing if the current particle has collided with
    *     the wall
    */
-  bool HasCollidedWithWall(const Person& current_particle, double wall_boundary, bool is_horizontal_wall) const;
+  bool HasCollidedWithWall(const Person& current_particle, double wall_boundary,
+                           bool is_horizontal_wall, bool is_lower_bound,
+                           double perpendicular_lower_bound,
+                           double perpendicular_upper_bound,
+                           bool is_outside_collision) const;
+
+  /*
+   * Checks if the current particle is moving towards a wall from the outside.
+   *
+   * @param current_particle The current particle to check
+   * @param wall_position The position of the wall where the current particle
+   *      would be touching
+   * @return A bool representing if the current particle is moving towards
+   *     the wall
+   */
+  bool IsMovingTowardsWallOnOutside(const Person& current_particle, const vec2& wall_position,
+                                    bool is_lower_bound, bool is_horizontal,
+                                    double perpendicular_lower_bound,
+                                    double perpendicular_upper_bound, bool is_outside_collision,
+                                    const vec2& velocity_difference) const;
 
   /*
    * Checks if the current particle is moving towards a wall.
@@ -300,7 +320,10 @@ class Disease {
    * @return A bool representing if the current particle is moving towards
    *     the wall
    */
-  bool IsMovingTowardsWall(const Person& current_particle, const vec2& wall_position) const;
+  bool IsMovingTowardsWall(const Person& current_particle, const vec2& wall_position,
+                           bool is_lower_bound, bool is_horizontal,
+                           double perpendicular_lower_bound,
+                           double perpendicular_upper_bound, bool is_outside_collision) const;
 
   /*
    * Determines if the current person should be quarantined based on their statistics.
