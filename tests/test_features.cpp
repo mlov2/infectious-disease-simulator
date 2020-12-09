@@ -1617,3 +1617,94 @@ TEST_CASE("Check social distancing") {
     }
   }
 }
+
+TEST_CASE("Check wall collisions w/ central location") {
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                            vec2(45, 45), vec2(55, 55),
+                            25, 500, false, true, false,
+                            false, false, false);
+  Disease::Person person;
+  disease.SetHaveCentralLocation(true);
+
+  SECTION("Wall collisions on inside") {
+    SECTION("Particles who are at the location should collide with walls") {
+
+    }
+
+    SECTION("Particles who are going to the location should not collide"
+            "with walls") {
+
+    }
+
+    SECTION("Particles who don't have anything to do with the location"
+            "should not collide with walls") {
+
+    }
+  }
+
+  SECTION("Wall collisions on outside") {
+    SECTION("Particles who are not within the location should collide with outside walls") {
+      SECTION("Left wall") {
+
+      }
+
+      SECTION("Top wall") {
+
+      }
+
+      SECTION("Right wall") {
+
+      }
+
+      SECTION("Bottom wall") {
+
+      }
+    }
+  }
+}
+
+TEST_CASE("Check particle updates properly w/ a central location") {
+  Disease::Person person;
+
+  SECTION("Person meets threshold") {
+    Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                              vec2(45, 45), vec2(55, 55),
+                              25, 500, false, true, false,
+                              false, false, true);
+    disease.SetHaveCentralLocation(true);
+
+    SECTION("Person is currently not going or at location") {
+      // Person should go to location
+
+    }
+
+    SECTION("Person is currently at location") {
+      // Person should leave location
+    }
+  }
+
+  SECTION("Person doesn't meet threshold") {
+    Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                              vec2(45, 45), vec2(55, 55),
+                              25, 500, false, true, false,
+                              false, false, false);
+    disease.SetHaveCentralLocation(true);
+
+    SECTION("Person is currently not going or at location") {
+      // Person shouldn't go to location
+
+    }
+
+    SECTION("Person is currently at location") {
+      // Person shouldn't leave location
+    }
+  }
+
+  SECTION("Person is in quarantine--going to and at central location should be false") {
+    Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                              vec2(45, 45), vec2(55, 55),
+                              25, 500, false, true, false,
+                              false, false, false);
+    disease.SetHaveCentralLocation(true);
+  }
+}
