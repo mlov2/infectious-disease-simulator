@@ -274,8 +274,9 @@ void Disease::UpdateParticles() {
 
     // Check if the person should be quarantined
     if (ShouldBeQuarantined(population_[current])) {
-      if (should_quarantine_) {
+      if (should_quarantine_ && !population_[current].is_going_to_central_location) {
         population_[current] = QuarantinePerson(population_[current]);
+        population_[current].is_at_central_location = false;
       }
     } else {
       // Update position
