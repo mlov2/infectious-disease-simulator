@@ -454,8 +454,74 @@ bool Disease::IsMovingTowardsWall(const Disease::Person& current_particle,
   vec2 velocity_difference = current_particle.velocity;
   vec2 position_difference = current_particle.position - wall_position;
 
+  // Check if moving towards each other
   if (dot(velocity_difference, position_difference) < 0) {
-    return true;
+//    if (IsMovingTowardsWallOnOutside(current_particle, wall_position,
+//                                     is_lower_bound, is_horizontal,
+//                                     perpendicular_lower_bound,
+//                                     perpendicular_upper_bound,
+//                                     is_outside_collision,
+//                                     velocity_difference)) {
+//      return true;
+
+    if (is_outside_collision) {
+      // Check it's moving towards the proper side
+      if (is_lower_bound) {
+        if (is_horizontal && velocity_difference.y < 0 &&
+            current_particle.position.x > perpendicular_upper_bound &&
+            current_particle.position.x < perpendicular_lower_bound) {
+          return true;
+        } else if (!is_horizontal && velocity_difference.x < 0 &&
+                   current_particle.position.y > perpendicular_upper_bound &&
+                   current_particle.position.y < perpendicular_lower_bound) {
+          return true;
+        }
+      } else {
+        if (is_horizontal && velocity_difference.y > 0 &&
+            current_particle.position.x > perpendicular_upper_bound &&
+            current_particle.position.x < perpendicular_lower_bound) {
+          return true;
+        } else if (!is_horizontal && velocity_difference.x > 0 &&
+                   current_particle.position.y > perpendicular_upper_bound &&
+                   current_particle.position.y < perpendicular_lower_bound) {
+          return true;
+        }
+      }
+    } else {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool Disease::IsMovingTowardsWallOnOutside(const Disease::Person& current_particle, const vec2& wall_position,
+                                  bool is_lower_bound, bool is_horizontal,
+                                  double perpendicular_lower_bound,
+                                  double perpendicular_upper_bound, bool is_outside_collision,
+                                  const vec2& velocity_difference) const {
+  if (is_outside_collision) {
+    // Check it's moving towards the proper side
+    if (is_lower_bound) {
+      if (is_horizontal && velocity_difference.y < 0 &&
+          current_particle.position.x > perpendicular_upper_bound &&
+          current_particle.position.x < perpendicular_lower_bound) {
+        return true;
+      } else if (!is_horizontal && velocity_difference.x < 0 &&
+                 current_particle.position.y > perpendicular_upper_bound &&
+                 current_particle.position.y < perpendicular_lower_bound) {
+        return true;
+      }
+    } else {
+      if (is_horizontal && velocity_difference.y > 0 &&
+          current_particle.position.x > perpendicular_upper_bound &&
+          current_particle.position.x < perpendicular_lower_bound) {
+        return true;
+      } else if (!is_horizontal && velocity_difference.x > 0 &&
+                 current_particle.position.y > perpendicular_upper_bound &&
+                 current_particle.position.y < perpendicular_lower_bound) {
+        return true;
+      }
+    }
   }
   return false;
 }
