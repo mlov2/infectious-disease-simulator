@@ -1724,14 +1724,19 @@ TEST_CASE("Check wall collisions w/ central location") {
 }
 
 TEST_CASE("Check particle updates properly w/ a central location") {
+  Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+                            vec2(45, 45), vec2(55, 55),
+                            25, 500, false, true, false,
+                            false, false, false);
+  disease.SetHaveCentralLocation(true);
   Disease::Person person;
 
   SECTION("Person meets threshold") {
-    Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
+    Disease disease1 = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
                               vec2(45, 45), vec2(55, 55),
                               25, 500, false, true, false,
                               false, false, true);
-    disease.SetHaveCentralLocation(true);
+    disease1.SetHaveCentralLocation(true);
 
     SECTION("Person is currently not going or at location") {
       // Person should go to location
@@ -1744,12 +1749,6 @@ TEST_CASE("Check particle updates properly w/ a central location") {
   }
 
   SECTION("Person doesn't meet threshold") {
-    Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
-                              vec2(45, 45), vec2(55, 55),
-                              25, 500, false, true, false,
-                              false, false, false);
-    disease.SetHaveCentralLocation(true);
-
     SECTION("Person is currently not going or at location") {
       // Person shouldn't go to location
 
@@ -1761,10 +1760,6 @@ TEST_CASE("Check particle updates properly w/ a central location") {
   }
 
   SECTION("Person is in quarantine--going to and at central location should be false") {
-    Disease disease = Disease(0, 0, 100, 100, vec2(150, 0), vec2(250, 100),
-                              vec2(45, 45), vec2(55, 55),
-                              25, 500, false, true, false,
-                              false, false, false);
-    disease.SetHaveCentralLocation(true);
+
   }
 }
