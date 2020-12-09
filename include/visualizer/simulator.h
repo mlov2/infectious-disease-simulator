@@ -51,6 +51,8 @@ class Simulator {
 
   /*
    * Changes the specified feature.
+   *
+   * @param feature_to_change The FeatureChangeKey to change
    */
   void ChangeFeature(FeatureChangeKey feature_to_change);
 
