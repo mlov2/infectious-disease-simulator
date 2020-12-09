@@ -480,11 +480,9 @@ bool Disease::IsMovingTowardsWall(const Disease::Person& current_particle,
   if (dot(velocity_difference, position_difference) < 0) {
     if (is_outside_collision && !current_particle.is_going_to_central_location) {
       if (IsMovingTowardsWallOnOutside(current_particle, wall_position,
-                                       is_lower_bound, is_horizontal,
+                                       is_horizontal, is_lower_bound,
                                        perpendicular_lower_bound,
-                                       perpendicular_upper_bound,
-                                       is_outside_collision,
-                                       velocity_difference)) {
+                                       perpendicular_upper_bound)) {
         return true;
       }
     } else {
@@ -494,28 +492,28 @@ bool Disease::IsMovingTowardsWall(const Disease::Person& current_particle,
   return false;
 }
 
-bool Disease::IsMovingTowardsWallOnOutside(const Disease::Person& current_particle, const vec2& wall_position,
-                                  bool is_lower_bound, bool is_horizontal,
-                                  double perpendicular_lower_bound,
-                                  double perpendicular_upper_bound, bool is_outside_collision,
-                                  const vec2& velocity_difference) const {
+bool Disease::IsMovingTowardsWallOnOutside(const Disease::Person& current_particle,
+                                           const vec2& wall_position,
+                                           bool is_horizontal, bool is_lower_bound,
+                                           double perpendicular_lower_bound,
+                                           double perpendicular_upper_bound) const {
   // Check it's moving towards the proper side
   if (is_lower_bound) {
-    if (is_horizontal && velocity_difference.y < 0 &&
+    if (is_horizontal && current_particle.velocity.y < 0 &&
         current_particle.position.x > perpendicular_upper_bound &&
         current_particle.position.x < perpendicular_lower_bound) {
       return true;
-    } else if (!is_horizontal && velocity_difference.x < 0 &&
+    } else if (!is_horizontal && current_particle.velocity.x < 0 &&
                current_particle.position.y > perpendicular_upper_bound &&
                current_particle.position.y < perpendicular_lower_bound) {
       return true;
     }
   } else {
-    if (is_horizontal && velocity_difference.y > 0 &&
+    if (is_horizontal && current_particle.velocity.y > 0 &&
         current_particle.position.x > perpendicular_upper_bound &&
         current_particle.position.x < perpendicular_lower_bound) {
       return true;
-    } else if (!is_horizontal && velocity_difference.x > 0 &&
+    } else if (!is_horizontal && current_particle.velocity.x > 0 &&
                current_particle.position.y > perpendicular_upper_bound &&
                current_particle.position.y < perpendicular_lower_bound) {
       return true;

@@ -317,21 +317,6 @@ class Disease {
                            bool is_outside_collision) const;
 
   /*
-   * Checks if the current particle is moving towards a wall from the outside.
-   *
-   * @param current_particle The current particle to check
-   * @param wall_position The position of the wall where the current particle
-   *      would be touching
-   * @return A bool representing if the current particle is moving towards
-   *     the wall
-   */
-  bool IsMovingTowardsWallOnOutside(const Person& current_particle, const vec2& wall_position,
-                                    bool is_lower_bound, bool is_horizontal,
-                                    double perpendicular_lower_bound,
-                                    double perpendicular_upper_bound, bool is_outside_collision,
-                                    const vec2& velocity_difference) const;
-
-  /*
    * Checks if the current particle is moving towards a wall.
    *
    * @param current_particle The current particle to check
@@ -359,6 +344,34 @@ class Disease {
                            bool is_horizontal, bool is_lower_bound,
                            double perpendicular_lower_bound,
                            double perpendicular_upper_bound, bool is_outside_collision) const;
+
+  /*
+   * Checks if the current particle is moving towards a wall from the outside.
+   *
+   * @param current_particle The current particle to check
+   * @param wall_position The position of the wall where the current particle
+   *      would be touching
+   * @param is_horizontal A bool representing if the wall being checked
+   *     is a horizontal wall
+   * @param is_lower_bound A bool representing if the particle's velocity
+   *     should be negative (b/c within a regular container, the particle's
+   *     velocity would have to be negative in order for it to collide with
+   *     the inside part of the top or left wall (which have smaller x/y values
+   *     compared to their counterparts)
+   * @param perpendicular_lower_bound A double representing the lower bound of the
+   *     container that's perpendicular to the current wall to check (could either
+   *     be left wall or top wall value)
+   * @param perpendicular_upper_bound A double representing the upper bound of the
+   *     container that's perpendicular to the current wall to check (could either
+   *     be right wall or bottom wall value)
+   * @return A bool representing if the current particle is moving towards
+   *     the wall
+   */
+  bool IsMovingTowardsWallOnOutside(const Person& current_particle,
+                                    const vec2& wall_position,
+                                    bool is_horizontal, bool is_lower_bound,
+                                    double perpendicular_lower_bound,
+                                    double perpendicular_upper_bound) const;
 
   /*
    * Determines if the current person should be quarantined based on their statistics.
