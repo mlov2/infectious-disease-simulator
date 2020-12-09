@@ -14,6 +14,7 @@ enum class FeatureChangeKey {
   kInfectedTime,     // 2
   kSocialDistance,   // 3
   kInfectionRadius,  // 4
+  kCentralLocation,  // 5
 };
 
 namespace visualizer {
