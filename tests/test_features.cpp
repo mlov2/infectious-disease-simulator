@@ -2138,6 +2138,28 @@ TEST_CASE("Check particle updates properly w/ a central location") {
 
     SECTION("Person is currently at location") {
       // Person shouldn't leave location
+      vector<Disease::Person> all_particles;
+      person.position = vec2(47, 50);
+      person.velocity = vec2(-0.5, -0.6);
+      person.is_going_to_central_location = false;
+      person.is_at_central_location = true;
+      all_particles.push_back(person);
+
+      disease.SetPopulation(all_particles);
+      disease.UpdateParticles();
+      vector<Disease::Person> updated_particles = disease.GetPopulation();
+
+      REQUIRE(updated_particles[0].position == vec2(47.5, 49.4));
+      REQUIRE(updated_particles[0].velocity == vec2(0.5, -0.6));
+      REQUIRE(updated_particles[0].status == disease::Status::kSymptomatic);
+      REQUIRE(updated_particles[0].color == vec3(1, 0, 0));
+      REQUIRE(updated_particles[0].continuous_exposure_time == 0);
+      REQUIRE(updated_particles[0].time_infected == 1);
+      REQUIRE(updated_particles[0].is_quarantined == false);
+      REQUIRE(updated_particles[0].is_social_distancing == false);
+      REQUIRE(updated_particles[0].positions_of_people_in_bubble.empty());
+      REQUIRE(updated_particles[0].is_going_to_central_location == false);
+      REQUIRE(updated_particles[0].is_at_central_location == true);
     }
   }
 
