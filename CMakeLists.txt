@@ -60,7 +60,8 @@ list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
 
 list(APPEND TEST_FILES tests/test_infectious_disease.cc
         tests/test_histogram.cpp
-        tests/test_simulator.cpp)
+        tests/test_simulator.cpp
+        tests/test_features.cpp)
 
 ci_make_app(
         APP_NAME        infectious-disease-ui
