@@ -132,6 +132,12 @@ class Simulator {
    */
   void DrawFeatureLabels() const;
 
+  /*
+   * Converts a boolean value (true or false) to a string.
+   *
+   * @param boolean_value The bool to convert to a string
+   * @return A string representing the boolean value in terms of 'yes' or 'no'
+   */
   std::string ConvertFromBool(bool boolean_value) const;
 
   /*
