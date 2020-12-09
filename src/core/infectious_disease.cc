@@ -376,6 +376,75 @@ bool Disease::WithinOneInfectionRadius(const Disease::Person& current_person, co
   return (distance_between_centers <= (current_person.radius + other_person.radius + kInfectionRadius));
 }
 
+
+void Disease::DetermineCentralLocationStatus(size_t current) {
+  if (have_central_location_ && !population_[current].is_quarantined) {
+    if (population_[current].is_at_central_location) {
+      DetermineIfPersonLeavesCentralLocation(current);
+    } else if (population_[current].is_going_to_central_location) {
+      DetermineIfPersonArrivesAtCentralLocation(current);
+    } else {
+      DetermineIfPersonGoesToCentralLocation(current);
+    }
+  }
+}
+
+void Disease::DetermineIfPersonLeavesCentralLocation(size_t current) {
+  double probability = ci::randFloat(0,1);
+
+  // Following conditional section is mainly used for testing
+  if (!is_leaving_loc_random_) {
+    if (is_below_threshold_) {
+      probability = kProbabilityOfLeavingLocation;
+    } else {
+      probability = 1 - kProbabilityOfLeavingLocation;
+    }
+  }
+
+  if (probability <= kProbabilityOfLeavingLocation) {
+    population_[current].is_at_central_location = false;
+    population_[current].is_going_to_central_location = false;
+  }
+}
+
+void Disease::DetermineIfPersonArrivesAtCentralLocation(size_t current) {
+  // Move person to central location--wouldn't use if I
+  // were to visually show the particle moving there
+  double new_x_position = ci::randFloat(location_left_wall_, location_right_wall_);
+  double new_y_position = ci::randFloat(location_top_wall_, location_bottom_wall_);
+  population_[current].position = vec2(new_x_position, new_y_position);
+
+  // Check if person is at location yet
+  if (population_[current].position.x >= location_left_wall_ &&
+      population_[current].position.x <= location_right_wall_ &&
+      population_[current].position.y >= location_top_wall_ &&
+      population_[current].position.y <= location_bottom_wall_) {
+    population_[current].is_going_to_central_location = false;
+    population_[current].is_at_central_location = true;
+  }
+}
+
+void Disease::DetermineIfPersonGoesToCentralLocation(size_t current) {
+  double probability = ci::randFloat(0,1);
+
+  // Following conditional section is mainly used for testing
+  if (!is_going_to_loc_random_) {
+    if (is_below_threshold_) {
+      probability = kProbabilityOfGoingToLocation;
+    } else {
+      probability = 1 - kProbabilityOfGoingToLocation;
+    }
+  }
+
+  if (probability <= kProbabilityOfGoingToLocation) {
+    population_[current].is_going_to_central_location = true;
+
+    // TODO: Visualize the particle moving to the new location instead of
+    //  immediately moving it there (would need to adjust particle velocity
+    //  so it's moving towards the location--put that code here)
+  }
+}
+
 void Disease::CheckForWallCollisions(size_t current, double left_bound, double top_bound,
                                      double right_bound, double bottom_bound,
                                      bool is_outside_collision) {
