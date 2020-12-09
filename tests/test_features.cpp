@@ -1663,7 +1663,7 @@ TEST_CASE("Check wall collisions w/ central location") {
 
     SECTION("Particles who are going to the location should not collide"
             "with walls") {
-
+      // TODO: Figure out if it's possible to test this based on current implementation
     }
 
     SECTION("Particles who don't have anything to do with the location"
