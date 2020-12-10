@@ -22,6 +22,7 @@ status is symptomatic
 - The infected time of an infected individual to become removed
 - The percentage of the population performing social distance
 - The infection radius of an infected individual
+- Whether there should be a central location
 
 
 ### How to Set Up the Application
@@ -38,7 +39,7 @@ No other external libraries were used in this application.
 ##### Adjusting features
 Upon startup, the application window will look like the following:
 
-**INSERT THE FINALIZED IMAGE OF THE WINDOW UPON STARTUP HERE**
+![Startup Screen](/images/InfectiousDiseaseAppStartupScreen.png)
 
 At this moment, the user is allowed to make any adjustments to the
 features listed on the screen. The user can press the following
@@ -50,6 +51,7 @@ symptomatic gets quarantined
 - `d` to change the percentage of the population performing social
 distance
 - `r` to change the radius of infection
+- `c` to change whether there should be a central location
 
 To actually change the value, the user can press either the arrow up
 or arrow down keys.
@@ -59,7 +61,7 @@ To start the outbreak, the user can press the `enter` key.
 
 Note: once the outbreak begins, the user is not allowed to adjust
 any of the features unless the user ends the outbreak. The user can
-do this by pressing `clear`. This will take the user back to the
+do this by pressing `delete`. This will take the user back to the
 startup screen. Any values the user had changed prior to starting the
 outbreak will stay the same until the user changes the values again
 or the user quits the application, which will cause the values
@@ -71,11 +73,13 @@ spread throughout the population on the left half of the screen.
 On the right half of the screen, the user can see a histogram that
 visualizes the number of people belonging to each health status
 in the duration of the outbreak. Statistics regarding the health
-status of the population can also be viewed.
+status of the population can also be viewed. A simulation with the
+default values looks like the following:
 
-**INSERT THE FINALIZED IMAGE OF THE OUTBREAK W/O QUARANTINE HERE**
+![Default Values](/images/InfectiousDiseaseAppDefaultSettings.png)
 
-If the user has quarantine on, the screen will look like the
-following:
+If the user has quarantine on, central location on, social
+distancing at 100%, and exposure time down to 10, the simulation
+will look like the following:
 
-**INSERT THE FINALIZED IMAGE OF THE OUTBREAK WITH QUARANTINE HERE**
+![Custom Values](/images/InfectiousDiseaseAppCustomSettings.png)
