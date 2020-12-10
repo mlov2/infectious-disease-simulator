@@ -9,6 +9,7 @@ using glm::vec2;
 Simulator::Simulator() : histogram_(disease_.GetPopulation(),
                                    vec2(kLeftContainerMargin, kTopContainerMargin) +
                                    vec2(kContainerWidth, 0)) {
+  // Initialize container values
   quarantine_box_top_left_x_ = kLeftContainerMargin + kContainerWidth + kSpacesFromContainer;
   quarantine_box_top_left_y_ = histogram_.GetBottomMostBoundaryOfHistogram() + kSpacesFromContainer;
   quarantine_box_bottom_right_x_ = quarantine_box_top_left_x_ + kQuarantineBoxWidth;
@@ -30,6 +31,7 @@ Simulator::Simulator() : histogram_(disease_.GetPopulation(),
 void Simulator::Update() {
   disease_.UpdateParticles();
   particles_info = disease_.GetPopulation();
+
   if (particles_info.size() != 0) {
     time_passed_++;
   }
@@ -358,6 +360,7 @@ void Simulator::Clear() {
   disease_.SetPopulation(particles_info);
 }
 
+// Getters
 std::string Simulator::GetFeatureBeingChanged() const {
   std::string feature_being_changed;
 

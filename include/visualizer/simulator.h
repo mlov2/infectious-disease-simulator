@@ -63,18 +63,16 @@ class Simulator {
    */
   void ChangeFeatureValue(bool is_key_up);
 
-  const vector<Disease::Person>& GetParticlesInfo();
-  size_t GetTimePassed() const;
-  FeatureChangeKey GetFeatureCurrentlyChanging() const;
-  Disease GetDiseaseClass() const;
-
   /*
    * Changes the feature being changed from enum class type to a string.
    *
    * @return A string that holds the feature name
    */
   std::string GetFeatureBeingChanged() const;
-
+  const vector<Disease::Person>& GetParticlesInfo();
+  size_t GetTimePassed() const;
+  FeatureChangeKey GetFeatureCurrentlyChanging() const;
+  Disease GetDiseaseClass() const;
   double GetTopMargin();
 
  private:
