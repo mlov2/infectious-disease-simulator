@@ -74,6 +74,8 @@ class Simulator {
   FeatureChangeKey GetFeatureCurrentlyChanging() const;
   Disease GetDiseaseClass() const;
   double GetTopMargin();
+  double GetRightMargin();
+  double GetYLocForEnterInstructions();
 
  private:
   // Container info
@@ -97,6 +99,7 @@ class Simulator {
 
   const double kInitialYLocForFeatureStats = 100;
   const double kInitialYLocForGeneralInstructionsMultiplier = 3;
+  const double kNumOfFeatures = 6;
 
   Disease disease_;
   Histogram histogram_;

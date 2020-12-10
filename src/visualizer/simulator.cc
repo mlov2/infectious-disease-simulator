@@ -413,6 +413,16 @@ double Simulator::GetTopMargin() {
   return kTopContainerMargin;
 }
 
+double Simulator::GetRightMargin() {
+  return kLeftContainerMargin + kContainerHeight;
+}
+
+double Simulator::GetYLocForEnterInstructions() {
+  double y_location = histogram_.GetYCoordinateOfLastStatusStatLabel() + kInitialYLocForFeatureStats;
+  double y_location_for_new_line = y_location + (kNumOfFeatures) * kSpacesFromContainer;
+  return y_location_for_new_line + kSpacesFromContainer + kSpacesFromContainer;
+}
+
 }  // namespace visualizer
 
 }  // namespace disease
