@@ -14,6 +14,7 @@ enum class FeatureChangeKey {
   kInfectedTime,     // 2
   kSocialDistance,   // 3
   kInfectionRadius,  // 4
+  kCentralLocation,  // 5
 };
 
 namespace visualizer {
@@ -50,6 +51,8 @@ class Simulator {
 
   /*
    * Changes the specified feature.
+   *
+   * @param feature_to_change The FeatureChangeKey to change
    */
   void ChangeFeature(FeatureChangeKey feature_to_change);
 
@@ -58,11 +61,21 @@ class Simulator {
    *
    * @param is_key_up A bool representing if the up key was pressed
    */
-  void ChangeFeatureValue(bool is_key_up);  // TODO: Write tests for this function
+  void ChangeFeatureValue(bool is_key_up);
 
+  /*
+   * Changes the feature being changed from enum class type to a string.
+   *
+   * @return A string that holds the feature name
+   */
+  std::string GetFeatureBeingChanged() const;
   const vector<Disease::Person>& GetParticlesInfo();
-
+  size_t GetTimePassed() const;
+  FeatureChangeKey GetFeatureCurrentlyChanging() const;
+  Disease GetDiseaseClass() const;
   double GetTopMargin();
+  double GetRightMargin();
+  double GetYLocForEnterInstructions();
 
  private:
   // Container info
@@ -70,7 +83,11 @@ class Simulator {
   const double kLeftContainerMargin = 25;
   const double kContainerHeight = 580;
   const double kContainerWidth = 550;
-  //const size_t kUpdatesPerSecond = 50;
+
+  // Central location info
+  const double kLocationDimension = 100;
+  double location_left_margin_;
+  double location_top_margin_;
 
   // Quarantine box info
   const double kSpacesFromContainer = 20;
@@ -82,6 +99,7 @@ class Simulator {
 
   const double kInitialYLocForFeatureStats = 100;
   const double kInitialYLocForGeneralInstructionsMultiplier = 3;
+  const double kNumOfFeatures = 6;
 
   Disease disease_;
   Histogram histogram_;
@@ -94,6 +112,11 @@ class Simulator {
    * Draws the container.
    */
   void DrawContainer() const;
+
+  /*
+   * Draws the central location.
+   */
+  void DrawCentralLocation() const;
 
   /*
    * Draws the particles.
@@ -121,7 +144,22 @@ class Simulator {
    */
   void DrawFeatureLabels() const;
 
-  std::string GetFeatureBeingChanged() const;
+  /*
+   * Converts a boolean value (true or false) to a string.
+   *
+   * @param boolean_value The bool to convert to a string
+   * @return A string representing the boolean value in terms of 'yes' or 'no'
+   */
+  std::string ConvertFromBool(bool boolean_value) const;
+
+  /*
+   * Draws a message that will be displayed to the user if the feature
+   * they are currently changes reaches its min or max value.
+   *
+   * @param y_location A double representing the y_coordinate of the
+   *     location the string will be drawn
+   */
+  void DrawConstraintsMessage(double y_location) const;
 };
 
 }  // namespace visualizer

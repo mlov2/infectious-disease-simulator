@@ -17,6 +17,18 @@ void InfectiousDiseaseApp::draw() {
   ci::gl::clear(background_color);
 
   simulator_.Draw();
+
+  if (simulator_.GetParticlesInfo().size() != 0) {
+    cinder::gl::drawStringCentered(
+        "Press 'Delete' to end the simulation.",
+        glm::vec2((kWindowSizeX + simulator_.GetRightMargin()) / 2, simulator_.GetTopMargin() / 2),
+        ci::Color("black"));
+  } else {
+    cinder::gl::drawStringCentered(
+        "Press 'Enter' to begin the simulation.",
+        glm::vec2((kWindowSizeX + simulator_.GetRightMargin()) / 2, simulator_.GetYLocForEnterInstructions()),
+        ci::Color("black"));
+  }
 }
 
 void InfectiousDiseaseApp::keyDown(ci::app::KeyEvent event) {
@@ -43,6 +55,10 @@ void InfectiousDiseaseApp::keyDown(ci::app::KeyEvent event) {
 
     case ci::app::KeyEvent::KEY_d:
       simulator_.ChangeFeature(FeatureChangeKey::kSocialDistance);
+      break;
+
+    case ci::app::KeyEvent::KEY_c:
+      simulator_.ChangeFeature(FeatureChangeKey::kCentralLocation);
       break;
 
     case ci::app::KeyEvent::KEY_UP:

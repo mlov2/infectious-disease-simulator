@@ -50,7 +50,7 @@ class Histogram {
    *     corners of the histogram, in that order
    */
   vector<vec2> DrawHistogramBackground(double left_boundary_of_histogram,
-                                              double histogram_top_left_corner_y) const;
+                                       double histogram_top_left_corner_y) const;
 
   /*
    * Draws the bins of the histogram.

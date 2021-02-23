@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 set(CMAKE_CXX_STANDARD 11)
-project(ideal-gas-mlov2)
+project(final-project-mlov2)
 
 # This tells the compiler to not aggressively optimize and
 # to include debugging information so that the debugger
@@ -59,7 +59,9 @@ list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
         src/visualizer/simulator.cc)
 
 list(APPEND TEST_FILES tests/test_infectious_disease.cc
-        tests/test_histogram.cpp)
+        tests/test_histogram.cpp
+        tests/test_simulator.cpp
+        tests/test_features.cpp)
 
 ci_make_app(
         APP_NAME        infectious-disease-ui

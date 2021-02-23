@@ -8,6 +8,7 @@
 
 using glm::vec2;
 using glm::vec3;
+using std::map;
 using std::string;
 using std::vector;
 
@@ -45,6 +46,12 @@ class Disease {
    *     susceptible) has been exposed to an infected person within the
    *     current frame
    * is_quarantined: represents if the person is in quarantine
+   * is_social_distancing: represents if the person is social distancing
+   * positions_of_people_in_bubble: stores the count of people within social
+   *     distancing bubble (i.e. above, below, right, left)
+   * is_going_to_central_location: represents if the person is going to the
+   *     central location
+   * at_central_location: represents if the person is at the central location
    */
   struct Person {
       double radius;
@@ -56,30 +63,51 @@ class Disease {
       size_t time_infected;
       bool has_been_exposed_in_frame;
       bool is_quarantined;
+      bool is_social_distancing;
+      map<string, size_t> positions_of_people_in_bubble;
+      bool is_going_to_central_location;
+      bool is_at_central_location;
   };
 
   Disease() = default;
   Disease(double left_margin, double top_margin,
           double container_height, double container_width,
-          const vec2& quarantine_top_left, const vec2& quarantine_bottom_right);
+          const vec2& quarantine_top_left, const vec2& quarantine_bottom_right,
+          const vec2& location_top_left, const vec2& location_bottom_right);
   Disease(double left_margin, double top_margin,
           double container_height, double container_width,
           const vec2& quarantine_top_left, const vec2& quarantine_bottom_right,
+          const vec2& location_top_left, const vec2& location_bottom_right,
           size_t exposure_time, size_t infected_time,
-          bool is_infection_determination_random, bool is_symptomatic);  // used for testing
+          bool is_infection_determination_random, bool is_symptomatic,
+          bool is_new_distancing_velocity_random, bool is_going_to_loc_random,
+          bool is_leaving_loc_random, bool is_below_threshold);  // used for testing
 
   void SetPopulation(const vector<Person>& population_to_set_to);
   void SetShouldQuarantine(bool should_quarantine);
   void SetExposureTime(size_t exposure_time);
   void SetInfectedTime(size_t infected_time);
-  void SetAmountOfSocialDistance(size_t amount_of_social_distance);
+  void SetPercentPerformingSocialDistance(size_t percent_performing_social_distance);
   void SetRadiusOfInfection(size_t radius_of_infection);
+  void SetHaveCentralLocation(bool have_central_location);
+
   const vector<Person>& GetPopulation();
   bool GetShouldQuarantineValue() const;
   size_t GetExposureTime() const;
   size_t GetInfectedTime() const;
-  size_t GetAmountOfSocialDistance() const;
+  size_t GetPercentPerformingSocialDistance() const;
   size_t GetRadiusOfInfection() const;
+  bool GetHaveCentralLocation() const;
+
+  size_t GetMinimumExposureTime() const;
+  size_t GetMaximumExposureTime() const;
+  size_t GetMinimumInfectedTime() const;
+  size_t GetMaximumInfectedTime() const;
+  size_t GetAmountOfSocialDistance() const;
+  size_t GetMinimumSocialDistancePercentage() const;
+  size_t GetMaximumSocialDistancePercentage() const;
+  size_t GetMinimumInfectionRadius() const;
+  size_t GetMaximumInfectionRadius() const;
 
   /*
    * Create a population where all but one is susceptible to the disease (the
@@ -97,27 +125,45 @@ class Disease {
   // ================
   // Person constants
   // ================
-  double kRadius = 10;
+  constexpr static double kRadius = 10;
 
   // ==================
   // Stats as constants
   // ==================
-  size_t kSusceptiblePopulation = 200;
-  size_t kInfectionRadius = 5;
-  size_t kExposureTimeToBeInfected = 25;
-  size_t kInfectedTimeToBeRemoved = 500;
-  size_t kTimeToBeDetectedForQuarantine = 70;
-  double kProbabilityOfBeingAsymptomatic = 0.2;
-  double kProbabilityOfBeingSymptomatic = 0.8;
+  constexpr static double kOneHundred = 100;
+  const static size_t kSusceptiblePopulation = 200;
+  const static size_t kExposureTimeToBeInfected = 25;
+  const static size_t kMinimumExposureTime = 5;
+  const static size_t kMaximumExposureTime = 50;
+  const static size_t kInfectedTimeToBeRemoved = 500;
+  const static size_t kMinimumInfectedTime = 250;
+  const static size_t kMaximumInfectedTime = 750;
+  const static size_t kAmountOfSocialDistance = 5;
+  const static size_t kMinimumSocialDistancePercentage = 0;
+  const static size_t kMaximumSocialDistancePercentage = 100;
+  const static size_t kInfectionRadius = 10;
+  const static size_t kMinimumInfectionRadius = 5;
+  const static size_t kMaximumInfectionRadius = 45;
+  const static size_t kTimeToBeDetectedForQuarantine = 70;
+  constexpr static double kProbabilityOfBeingAsymptomatic = 0.2;
+  constexpr static double kProbabilityOfBeingSymptomatic = 0.8;
 
+  // ==================
+  // Stats as variables
+  // ==================
   bool should_quarantine_;
   size_t exposure_time_to_be_infected_;
   size_t infected_time_to_be_removed_;
-  size_t amount_of_social_distance_;
+  size_t percent_performing_social_distance_;
   size_t radius_of_infection_;
+  bool have_central_location_;
 
   bool is_infection_determination_random_;
   bool is_symptomatic_;
+  bool is_new_distancing_velocity_random_;
+  bool is_going_to_loc_random_;
+  bool is_leaving_loc_random_;
+  bool is_below_threshold_;
 
   // ===================
   // Container variables
@@ -134,6 +180,16 @@ class Disease {
   double quarantine_top_wall_;
   double quarantine_bottom_wall_;
   double quarantine_right_wall_;
+
+  // ==========================
+  // Central location variables
+  // ==========================
+  double location_left_wall_;
+  double location_right_wall_;
+  double location_top_wall_;
+  double location_bottom_wall_;
+  constexpr static double kProbabilityOfLeavingLocation = 0.005;
+  constexpr static double kProbabilityOfGoingToLocation = 0.0005;
 
   /*
    * Holds all the particles, each representing a person.
@@ -155,16 +211,10 @@ class Disease {
   Person CreatePatientZero();
 
   /*
-   * Resets each person's has_been_exposed_in_frame status to false.
+   * Resets each person's has_been_exposed_in_frame status to false and
+   * clears positions_of_people_in_bubble.
    */
-  void ResetExposureInFrame();
-
-  /*
-   * Updates the current person's position.
-   *
-   * @param current_index The index of the current person in the population vector
-   */
-  void UpdatePosition(size_t current_index);
+  void ResetFrame();
 
   /*
    * Updates the person's status based on the current stats for the person (i.e.
@@ -223,6 +273,47 @@ class Disease {
   bool WithinOneInfectionRadius(const Person& current_person, const Person& other_person) const;
 
   /*
+   * Determines if a person is going to, at, or leaving the central location.
+   * The person could also be doing none of the above.
+   *
+   * @param current The index of the current person in the population vector
+   */
+  void DetermineCentralLocationStatus(size_t current);
+
+  /*
+   * Determines if a person leaves the central location.
+   * If yes, their status gets changed.
+   *
+   * @param current The index of the current person in the population vector
+   */
+  void DetermineIfPersonLeavesCentralLocation(size_t current);
+
+  /*
+   * Determines if a person arrives at the central location.
+   * If yes, their status gets changed.
+   *
+   * @param current The index of the current person in the population vector
+   */
+  void DetermineIfPersonArrivesAtCentralLocation(size_t current);
+
+  /*
+   * Determines if a person goes to the central location.
+   * If yes, their status gets changed.
+   *
+   * @param current The index of the current person in the population vector
+   */
+  void DetermineIfPersonGoesToCentralLocation(size_t current);
+
+  /*
+   * Holds all the checks for wall collisions, depending on what the current
+   * person's status is in terms of location (i.e. quarantine, central location,
+   * general community).
+   *
+   * @param current The index of the current person in the population vector
+   */
+  void CheckForAllWallCollisions(size_t current);
+
+  /*
    * Checks for wall collisions with the current particle.
    *
    * @param current The index of the current particle
@@ -230,21 +321,41 @@ class Disease {
    * @param top_bound The top bound of the container
    * @param right_bound The right bound of the container
    * @param bottom_bound The bottom bound of the container
+   * @param is_outside_collision A bool representing if the collision to check is
+   *     a collision with the outside of the container
    */
   void CheckForWallCollisions(size_t current, double left_bound, double top_bound,
-                              double right_bound, double bottom_bound);
+                              double right_bound, double bottom_bound,
+                              bool is_outside_collision);
 
   /*
    * Checks if the current particle has collided with a specific wall.
    *
-   * @param particle the current Particle to check for a collision
-   * @param wall_boundary the wall to check for a collision with
-   * @param is_horizontal_wall a bool representing if the wall being checked
+   * @param current_particle The current Particle to check for a collision
+   * @param wall_boundary The wall to check for a collision with
+   * @param is_horizontal_wall A bool representing if the wall being checked
    *     is a horizontal wall
-   * @return a bool representing if the current particle has collided with
+   * @param is_lower_bound A bool representing if the particle's velocity
+   *     should be negative (b/c within a regular container, the particle's
+   *     velocity would have to be negative in order for it to collide with
+   *     the inside part of the top or left wall (which have smaller x/y values
+   *     compared to their counterparts)
+   * @param perpendicular_lower_bound A double representing the lower bound of the
+   *     container that's perpendicular to the current wall to check (could either
+   *     be left wall or top wall value)
+   * @param perpendicular_upper_bound A double representing the upper bound of the
+   *     container that's perpendicular to the current wall to check (could either
+   *     be right wall or bottom wall value)
+   * @param is_outside_collision A bool representing if the collision to check is
+   *     a collision with the outside of the container
+   * @return A bool representing if the current particle has collided with
    *     the wall
    */
-  bool HasCollidedWithWall(const Person& current_particle, double wall_boundary, bool is_horizontal_wall) const;
+  bool HasCollidedWithWall(const Person& current_particle, double wall_boundary,
+                           bool is_horizontal_wall, bool is_lower_bound,
+                           double perpendicular_lower_bound,
+                           double perpendicular_upper_bound,
+                           bool is_outside_collision) const;
 
   /*
    * Checks if the current particle is moving towards a wall.
@@ -252,10 +363,56 @@ class Disease {
    * @param current_particle The current particle to check
    * @param wall_position The position of the wall where the current particle
    *      would be touching
+   * @param is_horizontal_wall A bool representing if the wall being checked
+   *     is a horizontal wall
+   * @param is_lower_bound A bool representing if the particle's velocity
+   *     should be negative (b/c within a regular container, the particle's
+   *     velocity would have to be negative in order for it to collide with
+   *     the inside part of the top or left wall (which have smaller x/y values
+   *     compared to their counterparts)
+   * @param perpendicular_lower_bound A double representing the lower bound of the
+   *     container that's perpendicular to the current wall to check (could either
+   *     be left wall or top wall value)
+   * @param perpendicular_upper_bound A double representing the upper bound of the
+   *     container that's perpendicular to the current wall to check (could either
+   *     be right wall or bottom wall value)
+   * @param is_outside_collision A bool representing if the collision to check is
+   *     a collision with the outside of the container
    * @return A bool representing if the current particle is moving towards
    *     the wall
    */
-  bool IsMovingTowardsWall(const Person& current_particle, const vec2& wall_position) const;
+  bool IsMovingTowardsWall(const Person& current_particle, const vec2& wall_position,
+                           bool is_horizontal, bool is_lower_bound,
+                           double perpendicular_lower_bound,
+                           double perpendicular_upper_bound, bool is_outside_collision) const;
+
+  /*
+   * Checks if the current particle is moving towards a wall from the outside.
+   *
+   * @param current_particle The current particle to check
+   * @param wall_position The position of the wall where the current particle
+   *      would be touching
+   * @param is_horizontal A bool representing if the wall being checked
+   *     is a horizontal wall
+   * @param is_lower_bound A bool representing if the particle's velocity
+   *     should be negative (b/c within a regular container, the particle's
+   *     velocity would have to be negative in order for it to collide with
+   *     the inside part of the top or left wall (which have smaller x/y values
+   *     compared to their counterparts)
+   * @param perpendicular_lower_bound A double representing the lower bound of the
+   *     container that's perpendicular to the current wall to check (could either
+   *     be left wall or top wall value)
+   * @param perpendicular_upper_bound A double representing the upper bound of the
+   *     container that's perpendicular to the current wall to check (could either
+   *     be right wall or bottom wall value)
+   * @return A bool representing if the current particle is moving towards
+   *     the wall
+   */
+  bool IsMovingTowardsWallOnOutside(const Person& current_particle,
+                                    const vec2& wall_position,
+                                    bool is_horizontal, bool is_lower_bound,
+                                    double perpendicular_lower_bound,
+                                    double perpendicular_upper_bound) const;
 
   /*
    * Determines if the current person should be quarantined based on their statistics.
@@ -272,6 +429,49 @@ class Disease {
    * @return A Person representing the current person with updated info
    */
   Person QuarantinePerson(const Person& current_person);
+
+  /*
+   * Updates the current person's position.
+   *
+   * @param current_index The index of the current person in the population vector
+   */
+  void UpdatePosition(size_t current_index);
+
+  /*
+   * Determines how the current person, if performing social distancing, will social
+   * distance.
+   *
+   * @param current_index The index of the current person in the population vector
+   */
+  void SocialDistance(size_t current_index);
+
+  /*
+   * Determines whether a person is within the current person's social distancing bubble.
+   *
+   * @param current_person The current Person who is performing social distancing
+   * @param other_person The Person to check
+   * @return A bool representing if the other person is within the current person's social
+   *     distancing bubble
+   */
+  bool WithinDistancingBubble(const Disease::Person& current_person, const Disease::Person& other_person) const;
+
+
+
+  /*
+   * Saves the other person's position relative to the current person's.
+   *
+   * @param current_index The index of the current person in the population vector
+   * @param other_index The index of the other person in the population vector
+   */
+  void SavePositionRelativeToCurrentPerson(size_t current_index, size_t other_index);
+
+  /*
+   * Updates the current person's velocity based on who's within their
+   * social distancing bubble.
+   *
+   * @param current_index The index of the current person in the population vector
+   */
+  void UpdateVelocity(size_t current_index);
 
   /*
    * Adjusts the updated position so that the particle will still be within the

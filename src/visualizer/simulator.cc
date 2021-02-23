@@ -9,14 +9,21 @@ using glm::vec2;
 Simulator::Simulator() : histogram_(disease_.GetPopulation(),
                                    vec2(kLeftContainerMargin, kTopContainerMargin) +
                                    vec2(kContainerWidth, 0)) {
+  // Initialize container values
   quarantine_box_top_left_x_ = kLeftContainerMargin + kContainerWidth + kSpacesFromContainer;
   quarantine_box_top_left_y_ = histogram_.GetBottomMostBoundaryOfHistogram() + kSpacesFromContainer;
   quarantine_box_bottom_right_x_ = quarantine_box_top_left_x_ + kQuarantineBoxWidth;
   quarantine_box_bottom_right_y_ = kTopContainerMargin + kContainerHeight;
 
+  location_left_margin_ = (kLeftContainerMargin + kLeftContainerMargin + kContainerWidth - kLocationDimension) / 2;
+  location_top_margin_ = (kTopContainerMargin + kTopContainerMargin + kContainerHeight - kLocationDimension) / 2;
+
   disease_ = Disease(kLeftContainerMargin, kTopContainerMargin, kContainerHeight, kContainerWidth,
                      vec2(quarantine_box_top_left_x_, quarantine_box_top_left_y_),
-                     vec2(quarantine_box_bottom_right_x_, quarantine_box_bottom_right_y_));
+                     vec2(quarantine_box_bottom_right_x_, quarantine_box_bottom_right_y_),
+                     vec2(location_left_margin_, location_top_margin_),
+                     vec2(location_left_margin_ + kLocationDimension,
+                          location_top_margin_ + kLocationDimension));
   time_passed_ = 0;
   feature_currently_being_changed_ = FeatureChangeKey::kQuarantine;
 }
@@ -24,10 +31,16 @@ Simulator::Simulator() : histogram_(disease_.GetPopulation(),
 void Simulator::Update() {
   disease_.UpdateParticles();
   particles_info = disease_.GetPopulation();
+
   if (particles_info.size() != 0) {
     time_passed_++;
   }
   histogram_.Update(particles_info, time_passed_);
+
+  if (disease_.GetPercentPerformingSocialDistance() != 0 &&
+      disease_.GetRadiusOfInfection() < disease_.GetAmountOfSocialDistance() + kIncrementOrDecrementBy) {
+    disease_.SetRadiusOfInfection(disease_.GetAmountOfSocialDistance() + kIncrementOrDecrementBy);
+  }
 }
 
 void Simulator::Draw() const {
@@ -37,6 +50,7 @@ void Simulator::Draw() const {
 
   // Draw the container
   DrawContainer();
+  DrawCentralLocation();
 
   // Draw the histograms
   if (particles_info.size() != 0) {
@@ -59,6 +73,18 @@ void Simulator::DrawContainer() const {
 
   ci::gl::color(ci::Color("black"));
   ci::gl::drawSolidRect(pixel_bounding_box);
+}
+
+void Simulator::DrawCentralLocation() const {
+  if (disease_.GetHaveCentralLocation()) {
+    vec2 pixel_top_left = vec2(location_left_margin_, location_top_margin_);
+    vec2 pixel_bottom_right =
+        pixel_top_left + vec2(kLocationDimension, kLocationDimension);
+    ci::Rectf pixel_bounding_box(pixel_top_left, pixel_bottom_right);
+
+    ci::gl::color(ci::Color("orange"));
+    ci::gl::drawSolidRect(pixel_bounding_box);
+  }
 }
 
 void Simulator::DrawParticles() const {
@@ -96,6 +122,8 @@ void Simulator::DrawFeatureChangeInstructions() const {
     // General instructions
     double general_instructions_y_location = y_location - kInitialYLocForGeneralInstructionsMultiplier *
         kSpacesFromContainer;
+    DrawConstraintsMessage(general_instructions_y_location);
+
     ci::gl::drawString(
         "You are currently changing: " + GetFeatureBeingChanged(),
         glm::vec2(x_location, general_instructions_y_location), ci::Color("black"));
@@ -122,12 +150,17 @@ void Simulator::DrawFeatureChangeInstructions() const {
 
     y_location += kSpacesFromContainer;
     ci::gl::drawString(
-        "To change the amount of social distance, press 'd'",
+        "To change the percent of population social distancing, press 'd'",
         glm::vec2(x_location, y_location), ci::Color("black"));
 
     y_location += kSpacesFromContainer;
     ci::gl::drawString(
         "To change the radius of infection, press 'r'",
+        glm::vec2(x_location, y_location), ci::Color("black"));
+
+    y_location += kSpacesFromContainer;
+    ci::gl::drawString(
+        "To change the if there should be a central location, press 'c'",
         glm::vec2(x_location, y_location), ci::Color("black"));
   }
 }
@@ -140,12 +173,8 @@ void Simulator::DrawFeatureLabels() const {
       "FEATURE STATS",
       glm::vec2(x_location, y_location - kSpacesFromContainer), ci::Color("black"));
 
-  std::string quarantine = "No";
-  if (disease_.GetShouldQuarantineValue()) {
-    quarantine = "Yes";
-  }
   ci::gl::drawString(
-      "Should quarantine? " + quarantine,
+      "Should quarantine? " + ConvertFromBool(disease_.GetShouldQuarantineValue()),
       glm::vec2(x_location, y_location), ci::Color("black"));
 
   y_location += kSpacesFromContainer;
@@ -160,13 +189,82 @@ void Simulator::DrawFeatureLabels() const {
 
   y_location += kSpacesFromContainer;
   ci::gl::drawString(
-      "Amount of social distance: " + std::to_string(disease_.GetAmountOfSocialDistance()),
+      "Percent of population social distancing: " +
+      std::to_string(disease_.GetPercentPerformingSocialDistance()) + "%",
       glm::vec2(x_location, y_location), ci::Color("black"));
 
   y_location += kSpacesFromContainer;
   ci::gl::drawString(
       "Radius of infection: " + std::to_string(disease_.GetRadiusOfInfection()),
       glm::vec2(x_location, y_location), ci::Color("black"));
+
+  y_location += kSpacesFromContainer;
+  ci::gl::drawString(
+      "Have central location? " + ConvertFromBool(disease_.GetHaveCentralLocation()),
+      glm::vec2(x_location, y_location), ci::Color("black"));
+}
+
+std::string Simulator::ConvertFromBool(bool boolean_value) const {
+  std::string value = "No";
+  if (boolean_value) {
+    value = "Yes";
+  }
+
+  return value;
+}
+
+void Simulator::DrawConstraintsMessage(double y_location) const {
+  double x_location = histogram_.GetXCoordinateOfStatusStatLabels();
+
+  switch (int(feature_currently_being_changed_)) {
+    case 1:
+      if (disease_.GetExposureTime() >= disease_.GetMaximumExposureTime()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its max value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      } else if (disease_.GetExposureTime() <= disease_.GetMinimumExposureTime()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its min value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      }
+      break;
+
+    case 2:
+      if (disease_.GetInfectedTime() >= disease_.GetMaximumInfectedTime()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its max value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      } else if (disease_.GetInfectedTime() <= disease_.GetMinimumInfectedTime()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its min value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      }
+      break;
+
+    case 3:
+      if (disease_.GetPercentPerformingSocialDistance() >= disease_.GetMaximumSocialDistancePercentage()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its max value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      } else if (disease_.GetPercentPerformingSocialDistance() <= disease_.GetMinimumSocialDistancePercentage()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its min value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      }
+      break;
+
+    case 4:
+      if (disease_.GetRadiusOfInfection() >= disease_.GetMaximumInfectionRadius()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its max value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      } else if (disease_.GetRadiusOfInfection() <= disease_.GetMinimumInfectionRadius()) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its min value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+      } else if (disease_.GetRadiusOfInfection() <= (disease_.GetAmountOfSocialDistance() +
+          kIncrementOrDecrementBy) &&
+          disease_.GetPercentPerformingSocialDistance() != 0) {
+        ci::gl::drawString(GetFeatureBeingChanged() + " is at its min value",
+                           glm::vec2(x_location, y_location), ci::Color("red"));
+        ci::gl::drawString("when social distance is on",
+                           glm::vec2(x_location, y_location + kSpacesFromContainer),
+                           ci::Color("red"));
+      }
+      break;
+  }
 }
 
 void Simulator::CreatePopulation() {
@@ -190,33 +288,66 @@ void Simulator::ChangeFeatureValue(bool is_key_up) {
 
       case 1:  // kExposureTime
         if (is_key_up) {
-          disease_.SetExposureTime(disease_.GetExposureTime() + kIncrementOrDecrementBy);
+          if (disease_.GetExposureTime() < disease_.GetMaximumExposureTime()) {
+            disease_.SetExposureTime(disease_.GetExposureTime() + kIncrementOrDecrementBy);
+          }
         } else {
-          disease_.SetExposureTime(disease_.GetExposureTime() - kIncrementOrDecrementBy);
+          if (disease_.GetExposureTime() > disease_.GetMinimumExposureTime()) {
+            disease_.SetExposureTime(disease_.GetExposureTime() - kIncrementOrDecrementBy);
+          }
         }
         break;
 
       case 2:  // kInfectedTime
         if (is_key_up) {
-          disease_.SetInfectedTime(disease_.GetInfectedTime() + kIncrementOrDecrementBy);
+          if (disease_.GetInfectedTime() < disease_.GetMaximumInfectedTime()) {
+            disease_.SetInfectedTime(disease_.GetInfectedTime() + kIncrementOrDecrementBy);
+          }
         } else {
-          disease_.SetInfectedTime(disease_.GetInfectedTime() - kIncrementOrDecrementBy);
+          if (disease_.GetInfectedTime() > disease_.GetMinimumInfectedTime()) {
+            disease_.SetInfectedTime(disease_.GetInfectedTime() - kIncrementOrDecrementBy);
+          }
         }
         break;
 
       case 3:  // kSocialDistance
         if (is_key_up) {
-          disease_.SetAmountOfSocialDistance(disease_.GetAmountOfSocialDistance() + kIncrementOrDecrementBy);
+          if (disease_.GetPercentPerformingSocialDistance() < disease_.GetMaximumSocialDistancePercentage()) {
+            disease_.SetPercentPerformingSocialDistance(
+                disease_.GetPercentPerformingSocialDistance() + kIncrementOrDecrementBy);
+          }
         } else {
-          disease_.SetAmountOfSocialDistance(disease_.GetAmountOfSocialDistance() - kIncrementOrDecrementBy);
+          if (disease_.GetPercentPerformingSocialDistance() > disease_.GetMinimumSocialDistancePercentage()) {
+            disease_.SetPercentPerformingSocialDistance(
+                disease_.GetPercentPerformingSocialDistance() - kIncrementOrDecrementBy);
+          }
         }
         break;
 
       case 4:  // kInfectionRadius
         if (is_key_up) {
-          disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() + kIncrementOrDecrementBy);
+          if (disease_.GetRadiusOfInfection() < disease_.GetMaximumInfectionRadius()) {
+            disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() + kIncrementOrDecrementBy);
+          }
         } else {
-          disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() - kIncrementOrDecrementBy);
+          if (disease_.GetPercentPerformingSocialDistance() != 0) {
+            if ((disease_.GetRadiusOfInfection() > disease_.GetMinimumInfectionRadius()) &&
+                (disease_.GetRadiusOfInfection() > disease_.GetAmountOfSocialDistance() + kIncrementOrDecrementBy)) {
+              disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() - kIncrementOrDecrementBy);
+            }
+          } else {
+            if (disease_.GetRadiusOfInfection() > disease_.GetMinimumInfectionRadius()) {
+              disease_.SetRadiusOfInfection(disease_.GetRadiusOfInfection() - kIncrementOrDecrementBy);
+            }
+          }
+        }
+        break;
+
+      case 5:  // kCentralLocation
+        if (disease_.GetHaveCentralLocation()) {
+          disease_.SetHaveCentralLocation(false);
+        } else {
+          disease_.SetHaveCentralLocation(true);
         }
         break;
     }
@@ -229,6 +360,7 @@ void Simulator::Clear() {
   disease_.SetPopulation(particles_info);
 }
 
+// Getters
 std::string Simulator::GetFeatureBeingChanged() const {
   std::string feature_being_changed;
 
@@ -246,23 +378,49 @@ std::string Simulator::GetFeatureBeingChanged() const {
       break;
 
     case 3:
-      feature_being_changed = "'Amount of Social Distance'";
+      feature_being_changed = "'Percent Social Distancing'";
       break;
 
     case 4:
       feature_being_changed = "'Radius of Infection'";
+      break;
+
+    case 5:
+      feature_being_changed = "'Have Central Location'";
       break;
   }
 
   return feature_being_changed;
 }
 
+const vector<Disease::Person>& Simulator::GetParticlesInfo() {
+  return particles_info;
+}
+
+size_t Simulator::GetTimePassed() const {
+  return time_passed_;
+}
+
+FeatureChangeKey Simulator::GetFeatureCurrentlyChanging() const {
+  return feature_currently_being_changed_;
+}
+
+Disease Simulator::GetDiseaseClass() const {
+  return disease_;
+}
+
 double Simulator::GetTopMargin() {
   return kTopContainerMargin;
 }
 
-const vector<Disease::Person>& Simulator::GetParticlesInfo() {
-  return particles_info;
+double Simulator::GetRightMargin() {
+  return kLeftContainerMargin + kContainerHeight;
+}
+
+double Simulator::GetYLocForEnterInstructions() {
+  double y_location = histogram_.GetYCoordinateOfLastStatusStatLabel() + kInitialYLocForFeatureStats;
+  double y_location_for_new_line = y_location + (kNumOfFeatures) * kSpacesFromContainer;
+  return y_location_for_new_line + kSpacesFromContainer + kSpacesFromContainer;
 }
 
 }  // namespace visualizer

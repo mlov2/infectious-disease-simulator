@@ -47,6 +47,7 @@ size_t Histogram::GetYCoordinateOfLastStatusStatLabel() const {
 void Histogram::SortPopulation(const vector<Disease::Person>& population) {
   population_sorted_by_status_.clear();
 
+  // Sort population by status
   for (const Disease::Person& person : population) {
     population_sorted_by_status_[person.status].push_back(person);
   }
